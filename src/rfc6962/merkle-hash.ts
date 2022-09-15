@@ -1,8 +1,4 @@
-import {createHash, type Hash} from 'node:crypto'
-
-// const {
-//     createHash
-// } = await import('crypto')
+import * as hash from '../immu-hash/index.js'
 
 
 
@@ -34,12 +30,11 @@ import {createHash, type Hash} from 'node:crypto'
  * @returns merkle hash
  */
 export function merkelHashOf(things: Buffer[]) {
-    const hashingMachine = createHash('sha256')
     return merkleHashOfN(things)
 }
 
 
-function merkleHashOfN(things: Buffer[]) {
+function merkleHashOfN(things: Buffer[]): Buffer {
     const n = things.length
     switch (n) {
         case 0: return merkelHashOfEmpty()
@@ -56,12 +51,7 @@ function merkleHashOfN(things: Buffer[]) {
     const things_k_upto_n       = things.slice(k)
     const merkleHash_k_upto_n   = merkleHashOfN(things_k_upto_n)
 
-    const data = Buffer.concat([
-        padNode, 
-        merkleHash_0_upto_k, 
-        merkleHash_k_upto_n
-    ])
-    return createHash('sha256').update(data).digest()
+    return hash.ofBuffers(padNode, merkleHash_0_upto_k, merkleHash_k_upto_n)
 }
 
 
@@ -70,15 +60,13 @@ function merkleHashOfN(things: Buffer[]) {
 function merkelHashOfEmpty() {
     // same result
     // return Buffer.from([227, 176, 196, 66, 152, 252, 28, 20, 154, 251, 244, 200, 153, 111, 185, 36, 39, 174, 65, 228, 100, 155, 147, 76, 164, 149, 153, 27, 120, 82, 184, 85])
-    return createHash('sha256').update(Buffer.of()).digest()
+    return hash.data(Buffer.of())
 }
 
 
 
 function merkelHashOfOne(thing: Buffer) {
-    const padLeaf  = Buffer.from([0x00])
-    const data      = Buffer.concat([padLeaf, thing])
-    return createHash('sha256').update(data).digest()
+    return hash.ofBuffers(Buffer.from([0x00]), thing)
 }
 
 

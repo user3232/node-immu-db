@@ -7,7 +7,7 @@ import * as buffer from '../buffer.js'
 import Long from 'long'
 import { Entry__Output } from 'proto/immudb/schema/Entry.js'
 import { EntriesSpec } from 'proto/immudb/schema/EntriesSpec.js'
-import * as kvm from '../immu-key-value-meta/index.js'
+import * as kvm from '../immu-kvm/index.js'
 
 
 

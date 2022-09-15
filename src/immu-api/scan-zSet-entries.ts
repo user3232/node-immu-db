@@ -4,7 +4,7 @@ import * as immuConvert from '../immu-convert/index.js'
 import * as grpcjs from '@grpc/grpc-js'
 import * as immuGrpc from '../immu-grpc/index.js'
 import * as buffer from '../buffer.js'
-import * as stream from '../stream/index.js'
+import * as stream from '../immu-stream-kv/index.js'
 import { Buffer } from 'node:buffer'
 import Long from 'long'
 

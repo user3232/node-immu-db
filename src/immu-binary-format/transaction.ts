@@ -1,8 +1,8 @@
-// needed for JSDoc:
+
 import * as time from 'common/time.js'
 import {TxHeader__Output} from 'proto/immudb/schema/TxHeader.js'
 import Long from 'long'
-import { fromUInt16BE, fromUInt32Be } from '../buffer.js'
+import { fromUInt16BE, fromUInt32BE } from '../buffer.js'
 import * as hash from '../immu-hash/hash.js'
 
 
@@ -39,7 +39,7 @@ export function fromTxHeader__Output_v1(props: TxHeader__Output) {
             Buffer.from(props.ts.toBytesBE()),      // timestamp
             fromUInt16BE(props.version),      // header version
             fromUInt16BE(0),                  // empty tx metadata
-            fromUInt32Be(props.nentries),     // tx entries count
+            fromUInt32BE(props.nentries),     // tx entries count
             props.eH,                               // tx entries mht hash
             Buffer.from(props.blTxId.toBytesBE()),  // previous tx id
             props.blRoot,                           // previous tx'es mht hash

@@ -19,14 +19,16 @@ import {
 export function dbUpdatableSettingsToGrpcDbSettings(
     settings: types.DatabaseSettingsUpdatable
 ): DatabaseNullableSettings {
+    const indexSettings = toMutableIndexNullableSettings(settings.indexSettings)
+    const replicationSettings = toReplicationNullableSettings(settings.replicationSettings)
     return {
         autoload:                   {value: settings.autoload},
         commitLogMaxOpenedFiles:    {value: settings.commitLogMaxOpenedFiles},
         excludeCommitTime:          {value: settings.excludeCommitTime},
-        indexSettings:              toMutableIndexNullableSettings(settings.indexSettings),
+        indexSettings,
         maxConcurrency:             {value: settings.maxConcurrency},
         maxIOConcurrency:           {value: settings.maxIOConcurrency},
-        replicationSettings:        toReplicationNullableSettings(settings.replicationSettings),
+        replicationSettings,
         txLogCacheSize:             {value: settings.txLogCacheSize},
         txLogMaxOpenedFiles:        {value: settings.txLogMaxOpenedFiles},
         vLogMaxOpenedFiles:         {value: settings.vLogMaxOpenedFiles},
@@ -41,12 +43,17 @@ export function grpcDbSettingsToDbSettings(
     databaseSettings: DatabaseNullableSettings__Output | null
 ): types.DatabaseSettings {
 
+    const indexSettings = fromIndexNullableSettings__Output(databaseSettings?.indexSettings)
+    const replicationSettings = fromReplicationNullableSettings__Output(
+        databaseSettings?.replicationSettings
+    )
+
     return {
         autoload:                   databaseSettings?.autoload?.value,
         commitLogMaxOpenedFiles:    databaseSettings?.commitLogMaxOpenedFiles?.value,
         fileSize:                   databaseSettings?.fileSize?.value,
 
-        indexSettings:              fromIndexNullableSettings__Output(databaseSettings?.indexSettings),
+        indexSettings,
 
         maxConcurrency:             databaseSettings?.maxConcurrency?.value,
         maxIOConcurrency:           databaseSettings?.maxIOConcurrency?.value,
@@ -54,7 +61,7 @@ export function grpcDbSettingsToDbSettings(
         maxTxEntries:               databaseSettings?.maxTxEntries?.value,
         maxValueLen:                databaseSettings?.maxValueLen?.value,
 
-        replicationSettings:        fromReplicationNullableSettings__Output(databaseSettings?.replicationSettings),
+        replicationSettings,
 
         txLogCacheSize:             databaseSettings?.txLogCacheSize?.value,
         txLogMaxOpenedFiles:        databaseSettings?.txLogMaxOpenedFiles?.value,
@@ -138,9 +145,10 @@ export function toImmutableIndexNullableSettings(
 export function toImmutableDatabaseNullableSettings(
     settings: types.DatabaseSettingsReadonly
 ): DatabaseNullableSettings {
+    const indexSettings = toImmutableIndexNullableSettings(settings.indexSettings)
     return {
         fileSize:                   {value: settings.fileSize},
-        indexSettings:              toImmutableIndexNullableSettings(settings.indexSettings),
+        indexSettings,
         maxKeyLen:                  {value: settings.maxKeyLen},
         maxTxEntries:               {value: settings.maxTxEntries},
         maxValueLen:                {value: settings.maxValueLen},

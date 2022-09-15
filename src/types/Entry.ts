@@ -1,9 +1,9 @@
 import { Buffer } from 'node:buffer'
 import Long from 'long'
 import { Tx } from './Tx.js'
-import { ValEntry } from './ValEntry.js'
-import { RefEntry } from './RefEntry.js'
-import { ZEntry } from './ZEntry.js'
+import { ValEntryData } from './ValEntry.js'
+import { RefEntryData } from './RefEntry.js'
+import { ZEntryData } from './ZEntry.js'
 
 
 
@@ -14,7 +14,7 @@ import { ZEntry } from './ZEntry.js'
 export type ValEntryVerifiable = {
     type: 'val',
     /** Val Entry. */
-    entry: ValEntry,
+    entry: ValEntryData,
     /** Parent tx id. */
     txId: Long,
     /** Parent tx (if available)*/
@@ -30,7 +30,7 @@ export type ValEntryVerifiable = {
  export type RefEntryVerifiable = {
     type: 'ref',
     /** Key. */
-    entry: RefEntry,
+    entry: RefEntryData,
     /** Parent tx id. */
     txId: Long,
     /** Parent tx (if available)*/
@@ -45,7 +45,7 @@ export type ValEntryVerifiable = {
  export type ValRefEntryVerifiable = {
     type: 'val-ref',
     /** Val Entry. */
-    entry: ValEntry,
+    entry: ValEntryData,
     /** Parent tx id. */
     txId: Long,
     /** Parent tx (if available)*/
@@ -54,7 +54,7 @@ export type ValEntryVerifiable = {
     id?: number,
 
     /** Ref Entry. */
-    refEntry: RefEntry,
+    refEntry: RefEntryData,
     /** Ref Entry Parent tx id. */
     refTxId: Long,
     /** Ref Entry Parent tx (if available)*/
@@ -70,7 +70,7 @@ export type ValEntryVerifiable = {
  export type ZEntryVerifiable = {
     type: 'zSet',
     /** Z Entry. */
-    entry: ZEntry,
+    entry: ZEntryData,
     /** Parent tx id. */
     txId: Long,
     /** Parent tx (if available)*/

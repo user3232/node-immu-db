@@ -45,7 +45,7 @@ export type SetEntryProps = {
 
 
 export type SetOperation = 
-    | ({ type: 'val'  } & types.ValEntry)
+    | ({ type: 'val'  } & types.ValEntryData)
     | ({ type: 'ref'  } & SetRefEntryProps) 
     | ({ type: 'zSet' } & SetZEntryProps)
 

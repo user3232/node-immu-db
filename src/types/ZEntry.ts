@@ -4,7 +4,7 @@ import Long from 'long'
 
 
 /** Represents Z Entry. */
-export type ZEntry = {
+export type ZEntryData = {
     /** Z Entry set. */
     zSet: Buffer,
     /** Z Entry index in the set. */
@@ -21,3 +21,6 @@ export type ZEntry = {
     refKeySeenFromTxId: Long,
 }
 
+export type ZEntry = {
+    type: 'zSet'
+} & ZEntryData

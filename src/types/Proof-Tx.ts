@@ -1,4 +1,4 @@
-import { RefTx, Tx } from "./Tx.js"
+import { RefToTx, Tx } from "./Tx.js"
 import { Buffer } from 'node:buffer'
 
 export type TxInRefTxProof = {
@@ -24,31 +24,31 @@ export type TxIsRefTxProof = {
 
 
 
-export type TxProofProps = 
-    | TxInRefTxProofProps 
-    | RefTxInTxProofProps 
-    | TxIsRefTxProofProps
-
 export type TxInRefTxProofProps = {
     type: 'txInRefTx',
     data: {
-        refTx: RefTx,
+        refTx: RefToTx,
         proof: TxInRefTxProof,
     }
 }
 export type RefTxInTxProofProps = {
     type: 'refTxInTx';
     data: {
-        refTx: RefTx,
+        refTx: RefToTx,
         proof: RefTxInTxProof;
     }
 }
 export type TxIsRefTxProofProps = {
     type: 'txIsRefTx';
     data: {
-        refTx: RefTx,
+        refTx: RefToTx,
         proof: TxIsRefTxProof;
     }
 }
 
 
+
+export type TxProofProps = 
+    | TxInRefTxProofProps 
+    | RefTxInTxProofProps 
+    | TxIsRefTxProofProps

@@ -10,7 +10,7 @@ import Long from "long";
 
 export function grpcZEntryToZSetEntry(
     entry: ZEntry__Output
-): types.ZEntry {
+): types.ZEntryData {
     if(entry.entry == undefined) {
         throw 'ZEntry__Output["entry"]: Entry__Output must be defined'
     }

@@ -106,11 +106,11 @@ export function fromTreeBuffers(buffers: BufferTree[]) {
 }
 function fromTreeBuffersInternal(inout__hashState: Hash, buffers: BufferTree[]) {
     for (const buffer of buffers) {
-        if(Array.isArray(buffer)) {
-            fromTreeBuffersInternal(inout__hashState, buffer)
+        if(Buffer.isBuffer(buffer)) {
+            inout__hashState.update(buffer)
         }
         else {
-            inout__hashState.update(buffer)
+            fromTreeBuffersInternal(inout__hashState, buffer)
         }
     }
 }

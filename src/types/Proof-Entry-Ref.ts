@@ -1,10 +1,10 @@
-import { RefEntry } from "./RefEntry.js";
+import { RefEntryData } from "./RefEntry.js";
 import { 
     RefTxInTxWithEntryProof, 
     TxWithEntryInRefTxProof, 
     TxWithEntryIsRefTxProof 
 } from "./Proof-Entry.js";
-import { RefTx } from "./Tx.js";
+import { RefToTx } from "./Tx.js";
 
 
 
@@ -16,24 +16,24 @@ export type TxWithRefEntryProofProps =
 export type TxWithRefEntryInRefTxProofProps = {
     type: 'txWithRefEntryInRefTx';
     data: {
-        entry: RefEntry,
-        refTx: RefTx,
+        entry: RefEntryData,
+        refTx: RefToTx,
         proof: TxWithEntryInRefTxProof;
     }
 } 
 export type RefTxInTxWithRefEntryProofProps = {
     type: 'refTxInTxWithRefEntry';
     data: {
-        entry: RefEntry,
-        refTx: RefTx,
+        entry: RefEntryData,
+        refTx: RefToTx,
         proof: RefTxInTxWithEntryProof;
     }
 } 
 export type TxWithRefEntryIsRefTxProofProps = {
     type: 'txWithRefEntryIsRefTx';
     data: {
-        entry: RefEntry,
-        refTx: RefTx,
+        entry: RefEntryData,
+        refTx: RefToTx,
         proof: TxWithEntryIsRefTxProof;
     }
 }

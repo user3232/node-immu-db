@@ -7,7 +7,7 @@ import Long from 'long'
 /**
  * Represents key value pair with optional additional properties
  */
- export type ValEntry = {
+export type ValEntryData = {
     /** Key. */
     key: Buffer,
     /** Value */
@@ -16,10 +16,13 @@ import Long from 'long'
     meta?: EntryMetadata
 }
 
+export type ValEntry = {
+    type: 'val',
+} & ValEntryData
 
 
 /**
- * {@link ValEntry} entry and additional informations about
+ * {@link ValEntryData} entry and additional informations about
  * entry transaction context and ImmuDb server indexer.
  * 
  * This structure is returned from query operations.

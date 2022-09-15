@@ -4,7 +4,7 @@ import * as immuConvert from '../immu-convert/index.js'
 import * as grpcjs from '@grpc/grpc-js'
 import * as immuGrpc from '../immu-grpc/index.js'
 import * as buffer from '../buffer.js'
-import * as kvm from '../immu-key-value-meta/index.js'
+import * as kvm from '../immu-kvm/index.js'
 import Long from 'long'
 import { DatabaseWithSettings__Output } from 'proto/immudb/schema/DatabaseWithSettings.js'
 

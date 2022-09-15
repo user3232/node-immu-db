@@ -1,10 +1,10 @@
-import { ZEntry } from "./ZEntry.js";
+import { ZEntryData } from "./ZEntry.js";
 import { 
     RefTxInTxWithEntryProof, 
     TxWithEntryInRefTxProof, 
     TxWithEntryIsRefTxProof 
 } from "./Proof-Entry.js";
-import { RefTx } from "./Tx.js";
+import { RefToTx } from "./Tx.js";
 
 
 
@@ -16,24 +16,24 @@ export type TxWithZEntryProofProps =
 export type TxWithZEntryInRefTxProofProps = {
     type: 'txWithZEntryInRefTx';
     data: {
-        entry: ZEntry,
-        refTx: RefTx,
+        entry: ZEntryData,
+        refTx: RefToTx,
         proof: TxWithEntryInRefTxProof;
     }
 } 
 export type RefTxInTxWithZEntryProofProps = {
     type: 'refTxInTxWithZEntry';
     data: {
-        entry: ZEntry,
-        refTx: RefTx,
+        entry: ZEntryData,
+        refTx: RefToTx,
         proof: RefTxInTxWithEntryProof;
     }
 } 
 export type TxWithZEntryIsRefTxProofProps = {
     type: 'txWithZEntryIsRefTx';
     data: {
-        entry: ZEntry,
-        refTx: RefTx,
+        entry: ZEntryData,
+        refTx: RefToTx,
         proof: TxWithEntryIsRefTxProof;
     }
 }

@@ -1,9 +1,10 @@
-import { Client, devConfig } from './immu-client.js'
+import { Client } from './immu-client.js'
 import * as types from 'types/index.js'
-import * as stream from './stream/index.js'
-import * as kvm from './immu-key-value-meta/index.js'
+import * as stream from './immu-stream-kv/index.js'
+import * as kvm from './immu-kvm/index.js'
 import Long from 'long'
-import { SqlRow } from './immu-key-value-meta/sql-row.js'
+import { SqlRow } from './immu-kvm/sql-row.js'
+import { verifyVerification } from './immu-verify-verification/index.js'
 
 
 
@@ -246,6 +247,22 @@ async function run() {
     console.log('setAndProof9.verified')
     console.log(setAndProof9.verified)
 
+
+
+    const stateAt9 = await client.getDbCurrentState()
+    console.log('stateAt9')
+    console.log(stateAt9)
+
+    const getTx2AndVerification = await client.getTxAndVerification({
+        txId: Long.fromInt(2, true),
+        refHash: stateAt9.txHash,
+        refTxId: stateAt9.txId,
+    })
+    console.log('getTx2AndVerification')
+    console.dir(getTx2AndVerification, {depth: 10})
+
+    console.log('verifyVerification result:')
+    console.log(verifyVerification(getTx2AndVerification.verification))
 
 
     await client.close()

@@ -1,7 +1,7 @@
 import * as hash from '../immu-hash/index.js'
 import * as prove from '../immu-rfc6962/index.js'
 import Long from 'long'
-import type { RefEntry } from '../types/index.js'
+import type { RefEntryData } from '../types/index.js'
 import { 
     refTxInTx, 
     txInRefTx, 
@@ -13,7 +13,7 @@ import type {
     TxWithEntryInRefTxProof,
     TxWithEntryIsRefTxProof,
 } from 'types/Proof-Entry.js'
-import type { RefTx } from 'types/Tx.js'
+import type { RefToTx } from 'types/Tx.js'
 import type { TxWithRefEntryProofProps } from 'types/Proof-Entry-Ref.js'
 
 
@@ -22,7 +22,7 @@ import type { TxWithRefEntryProofProps } from 'types/Proof-Entry-Ref.js'
 
 
 export function refEntryInTxEntriesMht(props: {
-    entry:  RefEntry,
+    entry:  RefEntryData,
     proof:  EntryInTxEntriesMhtProof
 }) {
 
@@ -58,8 +58,8 @@ export function refEntryInTxEntriesMht(props: {
 
 
 export function txWithRefEntryInRefTx(props: {
-    entry:  RefEntry,
-    refTx:  RefTx,
+    entry:  RefEntryData,
+    refTx:  RefToTx,
     proof:  TxWithEntryInRefTxProof
 }) {
     if(props.proof.txTx.id.greaterThanOrEqual(props.refTx.id)) {
@@ -73,8 +73,8 @@ export function txWithRefEntryInRefTx(props: {
 
 
 export function refTxInTxWithRefEntry(props: {
-    entry: RefEntry,
-    refTx: RefTx,
+    entry: RefEntryData,
+    refTx: RefToTx,
     proof: RefTxInTxWithEntryProof
 }) {
     if(props.proof.txTx.id.greaterThanOrEqual(props.refTx.id)) {
@@ -88,8 +88,8 @@ export function refTxInTxWithRefEntry(props: {
 
 
 export function txWithRefEntryIsRefTx(props: {
-    entry: RefEntry,
-    refTx: RefTx,
+    entry: RefEntryData,
+    refTx: RefToTx,
     proof: TxWithEntryIsRefTxProof
 }) {
     if(props.proof.txTx.id.notEquals(props.refTx.id)) {

@@ -48,11 +48,15 @@ export type Tx = {
 
 
 
+
+
+
+
 /**
  * Structure representing transaction {@link Tx},
  * useful for referring to transaction.
  */
-export type RefTx = {
+export type RefToTx = {
     /**
      * Hash (sha256) of transaction.
      */

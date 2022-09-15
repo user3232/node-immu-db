@@ -22,3 +22,6 @@ export * from './delete-val-ref.js'
 export * from './instance.js'
 export * from './user.js'
 export * from './db.js'
+
+
+export * from './verification.js'

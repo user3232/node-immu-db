@@ -1,6 +1,6 @@
 import * as hash from '../immu-hash/index.js'
 import * as prove from '../immu-rfc6962/index.js'
-import type { RefTx } from 'types/Tx.js'
+import type { RefToTx } from 'types/Tx.js'
 import type { 
     RefTxInTxProof, 
     TxInRefTxProof, 
@@ -14,7 +14,7 @@ import type {
 
 
 export function txInRefTx(props: {
-    refTx:  RefTx,
+    refTx:  RefToTx,
     proof:  TxInRefTxProof
 }) {
 
@@ -77,7 +77,7 @@ export function txInRefTx(props: {
 
 
 export function refTxInTx(props: {
-    refTx: RefTx,
+    refTx: RefToTx,
     proof: RefTxInTxProof
 }) {
 
@@ -110,41 +110,6 @@ export function refTxInTx(props: {
             // throw 'hash.leaf(props.proof.refTx.prevTxHash) must match proof.refTxInRefPrevTxesMhtAndTxPrevTxesMht[0]'
         }
     }
-    // for odd id we probably would must have props.proof.refTx.prevTx.prevTxHash ...
-
-
-    // if (props.proof.refTx.prevTxHash.equals(props.proof.refTxInRefPrevTxesMhtAndTxPrevTxesMht[0]) === false) {
-    //     console.log('fail 1: props.proof.refTx.prevTxHash')
-    //     // throw 'props.proof.refTx.prevTxHash must match proof.refTxInRefPrevTxesMhtAndTxPrevTxesMht[0]'
-    // }
-    // if (hash.leaf(props.proof.refTx.prevTxHash).equals(props.proof.refTxInRefPrevTxesMhtAndTxPrevTxesMht[0]) === false) {
-    //     console.log('fail 2: hash.leaf(props.proof.refTx.prevTxHash)')
-    //     // throw 'hash.leaf(props.proof.refTx.prevTxHash) must match proof.refTxInRefPrevTxesMhtAndTxPrevTxesMht[0]'
-    // }
-    // if (props.proof.txTx.prevTxHash.equals(props.proof.refTxInRefPrevTxesMhtAndTxPrevTxesMht[0]) === false) {
-    //     console.log('fail 3: props.proof.txTx.prevTxHash')
-    //     // throw 'props.proof.txTx.prevTxHash must match proof.refTxInRefPrevTxesMhtAndTxPrevTxesMht[0]'
-    // }
-    // if (hash.leaf(props.proof.txTx.prevTxHash).equals(props.proof.refTxInRefPrevTxesMhtAndTxPrevTxesMht[0]) === false) {
-    //     console.log('fail 4: hash.leaf(props.proof.txTx.prevTxHash)')
-    //     // throw 'hash.leaf(props.proof.txTx.prevTxHash) must match proof.refTxInRefPrevTxesMhtAndTxPrevTxesMht[0]'
-    // }
-    // if (props.refTx.hash.equals(props.proof.refTxInRefPrevTxesMhtAndTxPrevTxesMht[0]) === false) {
-    //     console.log('fail 5: props.refTx.hash')
-    //     // throw 'props.refTx.hash must match proof.refTxInRefPrevTxesMhtAndTxPrevTxesMht[0]'
-    // }
-    // if (hash.leaf(props.refTx.hash).equals(props.proof.refTxInRefPrevTxesMhtAndTxPrevTxesMht[0]) === false) {
-    //     console.log('fail 6: hash.leaf(props.refTx.hash)')
-    //     // throw 'hash.leaf(props.refTx.hash) must match proof.refTxInRefPrevTxesMhtAndTxPrevTxesMht[0]'
-    // }
-    // if (hash.ofTxHeader(props.proof.txTx).equals(props.proof.refTxInRefPrevTxesMhtAndTxPrevTxesMht[0]) === false) {
-    //     console.log('fail 7: hash.ofTxHeader(props.proof.txTx)')
-    //     // throw 'hash.ofTxHeader(props.proof.txTx) must match proof.refTxInRefPrevTxesMhtAndTxPrevTxesMht[0]'
-    // }
-    // if (hash.leaf(hash.ofTxHeader(props.proof.txTx)).equals(props.proof.refTxInRefPrevTxesMhtAndTxPrevTxesMht[0]) === false) {
-    //     console.log('fail 8: hash.leaf(hash.ofTxHeader(props.proof.txTx))')
-    //     // throw 'hash.leaf(hash.ofTxHeader(props.proof.txTx)) must match proof.refTxInRefPrevTxesMhtAndTxPrevTxesMht[0]'
-    // }
 
 
     const {
@@ -194,7 +159,7 @@ export function refTxInTx(props: {
 
 
 export function txIsRefTx(props: {
-    refTx: RefTx,
+    refTx: RefToTx,
     proof: TxIsRefTxProof
 }) {
 

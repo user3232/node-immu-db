@@ -222,7 +222,7 @@ export function fromUInt16BE(number: number): Buffer {
  * // <Buffer 00 03 0d 40>
  * ```
  */
-export function fromUInt32Be(number: number): Buffer {
+export function fromUInt32BE(number: number): Buffer {
     const buf = Buffer.alloc(4)
     buf.writeUInt32BE(number)
     return buf

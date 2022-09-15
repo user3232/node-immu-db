@@ -4,7 +4,7 @@ import * as grpcjs from '@grpc/grpc-js'
 import type * as types from './types/index.js'
 import { grpcClientFactory } from './grpc-client.js'
 import { ImmuServiceClient } from './proto/immudb/schema/ImmuService.js'
-import * as kmv from 'immu-key-value-meta/index.js'
+import * as kmv from 'immu-kvm/index.js'
 import Long from 'long'
 import { RefEntryVerifiable, ValEntryVerifiable } from './types/index.js'
 
@@ -67,33 +67,33 @@ function createImmuGrpcApi(grpcClient: ImmuServiceClient) {
         setValRefZSetEntries:       api.createSetEntries(grpcClient),
         setValZSetEntriesStreaming: api.createSetEntriesStreaming(grpcClient),
         setValEntries:              api.createSetValEntries(grpcClient),
-        setValEntriesGetProof:      api.createSetValEntriesGetProof(grpcClient),
         setValEntriesStreaming:     api.createSetValEntriesStreaming(grpcClient),
         setZSetEntry:               api.createSetZSetEntry(grpcClient),
         setRefEntry:                api.createSetRefEntry(grpcClient),
         deleteValRef:               api.createDeleteValRef(grpcClient),
-
-
+        
+        
         // sql
         sqlExec:                    api.createSqlExec(grpcClient),
         sqlQuery:                   api.createSqlQuery(grpcClient),
         sqlQueryTable:              api.createSqlQueryTable(grpcClient),
         sqlQueryTables:             api.createSqlQueryTables(grpcClient),
-
+        
         // sql tx
         sqlTxNew:                   api.createSqlTxNew(grpcClient),
         sqlTxCommit:                api.createSqlTxCommit(grpcClient),
         sqlTxRollback:              api.createSqlTxRollback(grpcClient),
         sqlTxExec:                  api.createSqlTxExec(grpcClient),
         sqlTxQuery:                 api.createSqlTxQuery(grpcClient),
-
+        
         // instance 
         replicateTx:                api.createReplicateTx(grpcClient),
         exportTx:                   api.createExportTx(grpcClient),
-
-
-        // proofed
-
+        
+        
+        // with verification
+        setValEntriesGetProof:      api.createSetValEntriesGetProof(grpcClient),
+        getTxAndVerification:       api.createGetTxAndVerification(grpcClient),
     }
 }
 
@@ -956,6 +956,27 @@ export class Client {
             credentials: await this.getCallCredentials(),
         })
     }
+
+
+
+
+
+
+    // **************************
+    // With verification
+    // **************************
+
+
+
+
+    async getTxAndVerification(props: api.GetTxAndVerificationProps) {
+        return this.immuGrpcApi.getTxAndVerification({
+            ...props,
+            credentials: await this.getCallCredentials(),
+        })
+    }
+
+
 }
 
 

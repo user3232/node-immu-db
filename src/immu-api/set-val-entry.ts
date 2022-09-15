@@ -7,10 +7,11 @@ import * as buffer from '../buffer.js'
 import * as verify from '../verify/index.js'
 import * as hash from '../immu-hash/index.js'
 import * as rfc6962 from '../immu-rfc6962/index.js'
+import type * as immu from '../types/A.js'
 
 import { Chunk } from 'proto/immudb/schema/Chunk.js'
 import Long from 'long'
-import { RefTx, Tx, TxProofProps, TxWithKVEntryProofProps } from '../types/index.js'
+import { RefToTx, Tx, TxProofProps, TxWithKVEntryProofProps } from '../types/index.js'
 import { VerifiableTx__Output } from 'proto/immudb/schema/VerifiableTx.js'
 
 
@@ -18,7 +19,7 @@ export type SetVEntryProps = {
     /**
      * Array of key value pairs to set.
      */
-    kvs: types.ValEntry[], 
+    kvs: types.ValEntryData[], 
     /**
      * All conditions must be fullfilled for all key values.
      */
@@ -135,7 +136,7 @@ export function createSetValEntriesStreaming(client: ImmuServiceClient) {
 
 
 export type ProofRequestProps = {
-    refTx: RefTx
+    refTx: RefToTx
 }
 
 
@@ -172,6 +173,9 @@ export function createSetValEntriesGetProof(client: ImmuServiceClient) {
             : Promise.reject('VerifiableTx__Output must be defined')
         )
         .then(verifiableTxGrpc => {
+            // console.log('set value result:')
+            // console.dir(verifiableTxGrpc, {depth: 10})
+
             const tx = immuConvert.toTxFromTxHeader__Output(verifiableTxGrpc?.tx?.header)
             const valEntries: types.ValEntryVerifiable[] = props.kvs.map((vEntry, entryIndex) => ({
                 type: 'val',
@@ -206,36 +210,46 @@ export function createSetValEntriesGetProof(client: ImmuServiceClient) {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 function grpcValProofToValProof(
     proofGrpc: VerifiableTx__Output,
-    refTx: RefTx,
+    refTx: RefToTx,
 ): TxProofProps {
 
     if(proofGrpc.tx?.header == undefined) {
         throw 'verTx must be defined'
     }
     const verTx = immuConvert.toTxFromTxHeader__Output(proofGrpc.tx?.header)
-    // console.log('verTx')
-    // console.log(verTx)
-    // console.log('refTx')
-    // console.log(refTx)
+    
 
 
     if(proofGrpc.dualProof == undefined) {
         throw 'DualProof__Output must be defined'
     }
 
-    // console.log('proofGrpc.dualProof.consistencyProof.length')
-    // console.log(proofGrpc.dualProof.consistencyProof.length)
-    // console.log('proofGrpc.dualProof.inclusionProof.length')
-    // console.log(proofGrpc.dualProof.inclusionProof.length)
-    // console.log('proofGrpc.dualProof.lastInclusionProof.length')
-    // console.log(proofGrpc.dualProof.lastInclusionProof.length)
 
     const type = verTxAndRefTxToProofType(verTx, refTx)
-    // console.log('type')
-    // console.log(type)
-
+    
     switch(type) {
         case 'txInRefTx': return {
             type,
@@ -283,7 +297,7 @@ function grpcValProofToValProof(
 
 function verTxAndRefTxToProofType(
     verTx: Tx,
-    refTx: RefTx,
+    refTx: RefToTx,
 ): TxProofProps['type'] {
     switch(verTx.id.compare(refTx.id)) {
         case -1:    return 'txInRefTx'

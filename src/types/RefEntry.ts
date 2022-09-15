@@ -5,7 +5,7 @@ import Long from 'long'
 
 
 /** Represents Reference Entry. */
-export type RefEntry = {
+export type RefEntryData = {
     /** Reference Entry additional properties. */
     meta?: EntryMetadata,
     /** Reference key. */
@@ -22,16 +22,19 @@ export type RefEntry = {
     refKeySeenFromTxId: Long,
 }
 
+export type RefEntry = {
+    type: 'ref',
+} & RefEntryData
 
 /**
- * {@link RefEntry} entry and additional informations about
+ * {@link RefEntryData} entry and additional informations about
  * entry transaction context and ImmuDb server indexer.
  * 
  * This structure is returned from query operations.
  */
- export type RefEntryWithInfo = RefEntry & {
+ export type RefEntryWithInfo = RefEntryData & {
     /** Ref Entry. */
-    refEntry:       RefEntry,
+    refEntry:       RefEntryData,
     /** Entry transaction context - transaction id. */
     transactionId:  Long,
     /** 

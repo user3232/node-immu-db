@@ -1,6 +1,6 @@
 import * as buffer from '../buffer.js'
 import { Buffer } from 'node:buffer'
-import { ZEntry } from '../types/index.js'
+import { ZEntryData } from '../types/index.js'
 
 
 /**
@@ -18,7 +18,7 @@ import { ZEntry } from '../types/index.js'
  * - value hash of:
  *   - empty value as Buffer
  */
-export function fromZEntry(props: ZEntry): Buffer[] {
+export function fromZEntry(props: ZEntryData): Buffer[] {
     return [
         buffer.fromUInt16BE(0),                 // kv meta length
         buffer.fromUInt16BE(
@@ -60,7 +60,7 @@ export function fromZEntry(props: ZEntry): Buffer[] {
  *   - empty value as Buffer
  */
  export function fromZEntry2(
-    props: ZEntry
+    props: ZEntryData
 ): {
     key: Buffer[], 
     val: Buffer[],
@@ -101,7 +101,7 @@ export function fromZEntry(props: ZEntry): Buffer[] {
 
 
 /**
- * Creates {@link ZEntry} from ZEntry binary format defined as fallows:
+ * Creates {@link ZEntryData} from ZEntry binary format defined as fallows:
  * - metadata binary Buffer length as UInt16 BE Buffer
  * - metadata binary as Buffer Buffer
  * - zSet Prefix length + zSet key length as UInt16 BE Buffer
@@ -115,7 +115,7 @@ export function fromZEntry(props: ZEntry): Buffer[] {
  * - value hash of:
  *   - empty value as Buffer
  */
- export function toZEntry(zEntryBuf: Buffer): ZEntry {
+ export function toZEntry(zEntryBuf: Buffer): ZEntryData {
 
     const kvMetaLength = buffer.toUInt16BE(zEntryBuf, 0)
     const zSetKeyLength = buffer.toUInt16BE(zEntryBuf, 2)

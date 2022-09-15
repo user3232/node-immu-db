@@ -1,4 +1,4 @@
-import Long from 'long'
+import * as immu from '../types/A.js'
 import * as hash from './hash.js'
 import * as buffer from '../buffer.js'
 import { 
@@ -7,7 +7,19 @@ import {
     binaryFormatKVMetadata__Output 
 } from '../immu-binary-format/entryMetadata.js'
 import { Entry__Output } from 'proto/immudb/schema/Entry.js'
-import { ValEntry } from '../types/index.js'
+import { ValEntryData } from '../types/index.js'
+import { hashOfBinEntry } from './binEntry.js'
+import { hashOfValEntry } from './valEntry.js'
+import { hashOfRefEntry } from './refEntry.js'
+import { hashOfZSetEntry } from './zSetEntry.js'
+import { 
+    hashOfSqlColumnEntry, 
+    hashOfSqlDbEntry, 
+    hashOfSqlIndexEntry, 
+    hashOfSqlRowEntry, 
+    hashOfSqlTableEntry 
+} from './sqlEntry.js'
+import { hashOfLeafEntry } from './leafEntry.js'
 
 
 
@@ -23,7 +35,7 @@ import { ValEntry } from '../types/index.js'
  *   - value 
  */
  export function ofEntry(
-    props: ValEntry
+    props: ValEntryData
 ): Buffer {
 
     return hash.ofBuffers(
@@ -77,4 +89,24 @@ export function ofEntry__Output(props: Entry__Output): Buffer {
             props.value                            // value
         ),
     )
+}
+
+
+
+export function hashOfEntry(entry: immu.Entry): Buffer {
+    switch(entry.type) {
+        case 'val':     return hashOfValEntry(entry)
+        case 'ref':     return hashOfRefEntry(entry)
+        case 'zSet':    return hashOfZSetEntry(entry)
+        case 'hash':    return hashOfLeafEntry(entry)
+        case 'bin':     return hashOfBinEntry(entry)
+        case 'sql': 
+            switch(entry.sqlType) {
+                case 'row':     return hashOfSqlRowEntry(entry)
+                case 'column':  return hashOfSqlColumnEntry(entry)
+                case 'index':   return hashOfSqlIndexEntry(entry)
+                case 'table':   return hashOfSqlTableEntry(entry)
+                case 'db':      return hashOfSqlDbEntry(entry)
+            }
+    }   
 }

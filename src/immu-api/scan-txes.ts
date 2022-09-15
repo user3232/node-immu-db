@@ -6,7 +6,7 @@ import * as immuGrpc from '../immu-grpc/index.js'
 import * as buffer from '../buffer.js'
 import { Buffer } from 'node:buffer'
 import Long from 'long'
-import * as kvm from '../immu-key-value-meta/index.js'
+import * as kvm from '../immu-kvm/index.js'
 
 
 
@@ -204,6 +204,7 @@ export function createScanDb(client: ImmuServiceClient) {
             if(tx.header == undefined) {
                 throw 'transaction must be defined'
             }
+            
 
             const meta = entry.metadata == undefined 
                 ? undefined

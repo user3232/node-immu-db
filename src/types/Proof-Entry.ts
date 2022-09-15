@@ -1,4 +1,4 @@
-import { RefTx, Tx } from "./Tx.js"
+import { RefToTx, Tx } from "./Tx.js"
 import { Buffer } from 'node:buffer'
 import Long from 'long'
 import { RefTxInTxProof, TxInRefTxProof, TxIsRefTxProof, TxProofProps } from "./Proof-Tx.js";
