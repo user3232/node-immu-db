@@ -1,7 +1,2 @@
 node_modules
 dist
-**_old
-
-# data persistance file set by immu-node
-root
-example-data
