@@ -1,5 +1,37 @@
 import Long from "long"
-import type { EntryMetadata } from "./EntryMetadata.js"
+
+
+
+
+
+
+/** 
+ * Structure influencing ImmuDb Indexer behaviour for
+ * indexing {@link Entry}'ies.
+ */
+export type EntryMetadata = {
+    /**
+     * If set to `true` key value will be marked as deleted.
+     * 
+     * Get key will not return value ok key value marked as deleted.
+     */
+    deleted?: boolean,
+    /**
+     * If set to `true` key value will be marked as non indexable and
+     * skipped by ImuuDb indexer. Effectively this would mean that if this
+     * key value was set with this property, and we ask for latest key,
+     * returned value will be not of this key value but of last indexed.
+     */
+    nonIndexable?: boolean,
+    /**
+     * If set and ImmuDb server time is after, this key value will be marked as expired
+     * when queried. Latest key value may than return other value.
+     */
+    expiresAt?: Long,
+}
+
+
+
 
 
 
@@ -119,6 +151,14 @@ export type SqlDbEntry = {
 }
 
 
+/**
+ * ImmuDb sql entry, one of:
+ * - row entry - {@link SqlRowEntry},
+ * - column entry - {@link SqlColumnEntry},
+ * - index entry - {@link SqlIndexEntry},
+ * - table entry - {@link SqlTableEntry},
+ * - database entry - {@link SqlDbEntry}.
+ */
 export type SqlEntry = 
     | SqlRowEntry
     | SqlColumnEntry
@@ -127,6 +167,15 @@ export type SqlEntry =
     | SqlDbEntry
 
 
+/**
+ * ImmuDb entry, one of:
+ * - binary entry - {@link BinEntry},
+ * - hash entry - {@link LeafEntry},
+ * - value entry - {@link ValEntry},
+ * - reference entry - {@link RefEntry},
+ * - z-Set entry - {@link ZSetEntry},
+ * - sql entry - {@link SqlEntry},
+ */
 export type Entry = 
     | BinEntry
     | LeafEntry
@@ -184,6 +233,27 @@ export type SqlDbTxEntry        = TxContext & SqlDbEntry
 
 
 
+
+/**
+ * Entry and additional informations from ImmuDb server indexer.
+ * 
+ */
+export type IndexerInfo = {
+    /** 
+     * Entry indexer context - entry revision.
+     * 
+     * (Assuming that for same key (different) values was set
+     * multiple times, `revision` number is sequence number of
+     * set operation.)
+     */
+    revision:       Long,
+    /** 
+     * Entry indexer context - is entry expired?
+     * 
+     * If `true` than entry metadata expiresAt
+     */
+    expired?:        boolean,
+}
 
 
 

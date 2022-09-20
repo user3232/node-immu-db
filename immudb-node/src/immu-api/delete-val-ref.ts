@@ -1,9 +1,7 @@
 import { type ImmuServiceClient } from 'immudb-grpcjs/immudb/schema/ImmuService.js'
-import type * as types from '../types/index.js'
-import * as immuConvert from '../immu-convert/index.js'
 import * as grpcjs from '@grpc/grpc-js'
 import * as immuGrpc from '../immu-grpc/index.js'
-import * as buffer from '../buffer.js'
+import * as igt from '../immu-grpc-tx/index.js'
 import Long from 'long'
 
 
@@ -65,10 +63,7 @@ export function createDeleteValRef(client: ImmuServiceClient) {
             ? maybeResponse 
             : Promise.reject('tx must be defined')
         )
-        .then(grpcTx => {
-            const tx = immuConvert.toTxFromTxHeader__Output(grpcTx)
-            return tx
-        })
+        .then(grpcTx => igt.grpcTxHeaderToTxCore)
     }
 }
 

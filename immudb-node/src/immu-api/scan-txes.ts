@@ -1,12 +1,8 @@
 import { type ImmuServiceClient } from 'immudb-grpcjs/immudb/schema/ImmuService.js'
-import type * as types from '../types/index.js'
-import * as immuConvert from '../immu-convert/index.js'
 import * as grpcjs from '@grpc/grpc-js'
 import * as immuGrpc from '../immu-grpc/index.js'
-import * as buffer from '../buffer.js'
-import { Buffer } from 'node:buffer'
 import Long from 'long'
-import * as kvm from '../immu-kvm/index.js'
+import * as ige from '../immu-grpc-entry/index.js'
 
 
 
@@ -200,38 +196,15 @@ export function createScanDb(client: ImmuServiceClient) {
             zEntryAction:           'RAW_VALUE',
             sqlEntryAction:         'RAW_VALUE',
         })
-        .then(out => out.flatMap(tx => tx.entries.map((entry, entryIndex) => {
-            if(tx.header == undefined) {
-                throw 'transaction must be defined'
-            }
-            
-
-            const meta = entry.metadata == undefined 
-                ? undefined
-                : {
-                    deleted: entry.metadata?.deleted,
-                    nonIndexable: entry.metadata?.nonIndexable,
-                    expiresAt: entry.metadata?.expiration?.expiresAt,
+        .then(out => out.flatMap(
+            tx => tx.entries.map(
+                (grpcEntry, entryIndex) => {
+                    return ige.grpcTxEntryToTxEntry(tx, grpcEntry)
                 }
-
-            const decoded: kvm.GenericVerifiableEntry = {
-                ...kvm.decodeKeyValMeta({
-                    key: entry.key, 
-                    val: entry.value, 
-                    meta,
-                }),
-                entryTxId: tx.header.id,
-                entryId: entryIndex + 1, 
-            }
-            return decoded
-            
-        })))
-
+            )
+        ))
 
         return allEntries
-
-
-        
     }
 
 }

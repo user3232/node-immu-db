@@ -1,13 +1,11 @@
+import Long from 'long'
 import { type ImmuServiceClient } from 'immudb-grpcjs/immudb/schema/ImmuService.js'
-import type * as types from '../types/index.js'
-import * as immuConvert from '../immu-convert/index.js'
 import * as grpcjs from '@grpc/grpc-js'
 import * as immuGrpc from '../immu-grpc/index.js'
-import * as buffer from '../buffer.js'
-import Long from 'long'
-import { Entry__Output } from 'immudb-grpcjs/immudb/schema/Entry.js'
-import { EntriesSpec } from 'immudb-grpcjs/immudb/schema/EntriesSpec.js'
-import * as kvm from '../immu-kvm/index.js'
+import * as ige from '../immu-grpc-entry/index.js'
+
+
+
 
 
 
@@ -93,7 +91,7 @@ export function createGetValRef(client: ImmuServiceClient) {
             ? maybeResponse 
             : Promise.reject('tx must be defined')
         )
-        .then(immuConvert.grpcEntryToValOrValRefEntry)
+        .then(ige.grpcEntryToValTxEntryAndRefTxEntry)
     }
 }
 
@@ -147,7 +145,7 @@ export function createGetValRefs(client: ImmuServiceClient) {
             : Promise.reject('tx must be defined')
         )
         .then(grpcEntries => grpcEntries.entries.map(
-            immuConvert.grpcEntryToValOrValRefEntry
+            ige.grpcEntryToValTxEntryAndRefTxEntry
         ))
     }
 }
@@ -284,7 +282,7 @@ export function createGetTxWithEntries(client: ImmuServiceClient) {
 
 
 
-export type GetTxWGenericEntriesProps = {
+export type GetTxGenericEntriesProps = {
     /**
      * Resolve references or not:
      * - `true` - resolve,
@@ -329,7 +327,7 @@ export function createGetTxGenericEntries(client: ImmuServiceClient) {
     /**
      * 
      */
-    return function getTxWGenericEntries(props: GetTxWGenericEntriesProps & {
+    return function getTxGenericEntries(props: GetTxGenericEntriesProps & {
         credentials: grpcjs.CallCredentials,
     }) {
 
@@ -356,31 +354,11 @@ export function createGetTxGenericEntries(client: ImmuServiceClient) {
             : Promise.reject('Tx__Output must be defined')
         )
         .then(tx => {
-            
 
-            return tx.entries.map((entry, entryIndex) => {
-                if(tx.header == undefined) {
-                    throw 'transaction must be defined'
-                }
-                const meta = entry.metadata == undefined 
-                ? undefined
-                : {
-                    deleted: entry.metadata?.deleted,
-                    nonIndexable: entry.metadata?.nonIndexable,
-                    expiresAt: entry.metadata?.expiration?.expiresAt,
-                }
-
-                const decoded: kvm.GenericVerifiableEntry = {
-                    ...kvm.decodeKeyValMeta({
-                        key: entry.key, 
-                        val: entry.value, 
-                        meta,
-                    }),
-                    entryTxId: tx.header.id,
-                    entryId: entryIndex + 1, 
-                }
-                return decoded
+            return tx.entries.map((grpcEntry, entryIndex) => {
+                return ige.grpcTxEntryToTxEntry(tx, grpcEntry)
             })
+
         })
     }
 }

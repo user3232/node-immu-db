@@ -490,7 +490,7 @@ export class Client {
      * Gets value, ref, zSet entries of transaction heaving specified id.
      * Obtained entries are verifiable.
      */
-    async getTxGenericEntries(props: api.GetTxWGenericEntriesProps) {
+    async getTxGenericEntries(props: api.GetTxGenericEntriesProps) {
         return this.immuGrpcApi.getTxGenericEntries({
             ...props,
             credentials: await this.getCallCredentials(),
