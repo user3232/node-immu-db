@@ -1,9 +1,11 @@
 import { type ImmuServiceClient } from 'immudb-grpcjs/immudb/schema/ImmuService.js'
 import type * as types from '../types/index.js'
-import * as immuConvert from '../immu-convert/index.js'
+import type * as immu from '../types/A.js'
+import * as igp from '../immu-grpc-precond/index.js'
+import * as igt from '../immu-grpc-tx/index.js'
 import * as grpcjs from '@grpc/grpc-js'
 import * as immuGrpc from '../immu-grpc/index.js'
-import * as buffer from '../buffer.js'
+import * as ike from '../immu-kvm-entry/index.js'
 import Long from 'long'
 import { Op } from 'immudb-grpcjs/immudb/schema/Op.js'
 import { SetVEntryProps } from './set-val-entry.js'
@@ -45,7 +47,7 @@ export type SetEntryProps = {
 
 
 export type SetOperation = 
-    | ({ type: 'val'  } & types.ValEntryData)
+    | ({ type: 'val'  } & immu.KeyValMeta)
     | ({ type: 'ref'  } & SetRefEntryProps) 
     | ({ type: 'zSet' } & SetZEntryProps)
 
@@ -62,7 +64,7 @@ export function createSetEntries(client: ImmuServiceClient) {
             request: {
                 Operations:     props.ops.map(operationToGrpcOperation),
                 preconditions:  props.preconditions?.map(
-                    immuConvert.toPreconditionFromKVEntryPrecondition
+                    igp.precondToGrpcPrecond
                 ),
                 noWait:         props.options?.dontWaitForIndexer,
             },
@@ -75,12 +77,15 @@ export function createSetEntries(client: ImmuServiceClient) {
             : Promise.reject('TxHeader__Output  must be defined')
         )
         .then(grpcTx => {
-            const tx = immuConvert.toTxFromTxHeader__Output(grpcTx)
-            return props.ops.map((entry, entryIndex) => operationToVerifiableOperation(
+
+            const tx = igt.grpcTxHeaderToTxCore(grpcTx)
+            const txEntries = props.ops.map((entry) => operationToVerifiableOperation(
                 entry, 
                 tx, 
-                entryIndex
             ))
+
+            return {txEntries, tx}
+
         })
     }
 }
@@ -92,7 +97,7 @@ function operationToGrpcOperation(op: SetOperation): Op {
     switch(op.type) {
         case 'val': return {
             operation: 'kv',
-            kv: immuConvert.toKeyValueFromKVEntry(op)
+            kv: ike.kvmToGrpcKeyValue(op)
         }
         case 'ref': return {
             operation: 'ref',
@@ -103,19 +108,19 @@ function operationToGrpcOperation(op: SetOperation): Op {
                 boundRef:       op.boundRef,
                 noWait:         op.options?.dontWaitForIndexer,
                 preconditions:  op.preconditions?.map(
-                    immuConvert.toPreconditionFromKVEntryPrecondition
+                    igp.precondToGrpcPrecond
                 ),
             }
         }
         case 'zSet': return {
             operation: 'zAdd',
             zAdd: {
-                set:        op.set,
-                key:        op.key,
-                score:      op.keyIndex,
-                atTx:       op.keyTxId,
+                set:        op.zSet,
+                key:        op.referredKey,
+                score:      op.referredKeyScore,
+                atTx:       op.referredKeyAtTxId,
                 noWait:     op.options?.dontWaitForIndexer,
-                boundRef:   op.boundRef,
+                boundRef:   op.boundReferredKeyAtTxId,
             },
         }
     }
@@ -127,49 +132,40 @@ function operationToGrpcOperation(op: SetOperation): Op {
 
 function operationToVerifiableOperation(
     op: SetOperation, 
-    tx: types.Tx,
-    entryIndex: number
-): types.ZEntryVerifiable | types.RefEntryVerifiable | types.ValEntryVerifiable {
+    tx: immu.TxCore,
+): immu.ZSetTxEntry | immu.RefTxEntry | immu.ValTxEntry {
 
     switch(op.type) {
         case 'val': return {
-            type: 'val',
-            entry: {
-                key: op.key,
-                val: op.val,
-                meta: op.meta,
-            },
-            txId: tx.id,
-            tx,
-            id: entryIndex + 1,
+            type:       'val',
+            version:    '1',
+            meta:       op.meta,
+            id:         tx.id,
+            key:        op.key,
+            val:        op.val,
         }
         case 'ref': return {
             type: 'ref',
-            entry: {
-                key: op.key,
-                refKey: op.referToKey,
-                refKeySeenFromTxId: op.keyTxId !== undefined
-                    ? op.keyTxId
-                    : op.boundRef === true 
-                        ? tx.id
-                        : Long.UZERO,
-                meta: undefined,
-            },
-            txId: tx.id,
-            tx: tx,
-            id: entryIndex + 1,
+            version: '1',
+            meta: undefined,
+            id: tx.id,
+            key: op.key,
+            referredKey: op.referToKey,
+            referredAtTxId: op.keyTxId !== undefined
+                ? op.keyTxId
+                : op.boundRef === true 
+                    ? tx.id
+                    : Long.UZERO,
         }
         case 'zSet': return {
-            type: 'zSet',
-            entry: {
-                refKey: op.key,
-                refKeySeenFromTxId: op.keyTxId ?? Long.UZERO,
-                score: op.keyIndex,
-                zSet: op.set,
-            },
-            txId: tx.id,
-            tx: tx,
-            id: entryIndex + 1,
+            type:               'zSet',
+            version:            '1',
+            id:                 tx.id,
+            meta:               undefined,
+            referredKey:        op.referredKey,
+            referredAtTxId:     op.referredKeyAtTxId ?? Long.UZERO,
+            referredKeyScore:   op.referredKeyScore,
+            zSet:               op.zSet,
         }
     }
 
@@ -226,7 +222,7 @@ export function createSetEntriesStreaming(client: ImmuServiceClient) {
             ? res 
             : Promise.reject('TxHeader__Output must be defined')
         )
-        .then(txGrpc => immuConvert.toTxFromTxHeader__Output(txGrpc))
+        .then(igt.grpcTxHeaderToTxCore)
         
     }
 }

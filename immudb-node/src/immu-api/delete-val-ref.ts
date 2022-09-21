@@ -63,7 +63,7 @@ export function createDeleteValRef(client: ImmuServiceClient) {
             ? maybeResponse 
             : Promise.reject('tx must be defined')
         )
-        .then(grpcTx => igt.grpcTxHeaderToTxCore)
+        .then(igt.grpcTxHeaderToTxCore)
     }
 }
 

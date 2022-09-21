@@ -31,6 +31,15 @@ export type EntryMetadata = {
 }
 
 
+export type KeyValMeta = {
+    meta?:              EntryMetadata,
+    key:                Buffer,
+    val:                Buffer,
+}
+
+
+
+
 
 
 

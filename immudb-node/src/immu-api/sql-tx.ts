@@ -1,11 +1,9 @@
 import { type ImmuServiceClient } from 'immudb-grpcjs/immudb/schema/ImmuService.js'
 import type * as types from '../types/index.js'
-import * as immuConvert from '../immu-convert/index.js'
 import * as grpcjs from '@grpc/grpc-js'
 import * as immuGrpc from '../immu-grpc/index.js'
-import * as buffer from '../buffer.js'
-import Long from 'long'
-
+import * as igt from '../immu-grpc-tx/index.js'
+import * as igs from '../immu-grpc-sql/index.js'
 
 
 
@@ -24,7 +22,7 @@ export function createSqlTxNew(client: ImmuServiceClient) {
 
     /**
      * Starts new interactive transation. If successful returns
-     * transaction token used  to connect grpc call with
+     * transaction token used  to associate further grpc calls with
      * interactive transaction.
      */
     return function sqlTxNew(props: SqlTxNewProps & {
@@ -77,17 +75,21 @@ export function createSqlTxCommit(client: ImmuServiceClient) {
             : Promise.reject('CommittedSQLTx__Output must be defined')
         )
         .then(grpcSqlCommitedTxResult => {
-
-            const tx = grpcSqlCommitedTxResult.header == undefined
-                ? undefined
-                : immuConvert.toTxFromTxHeader__Output?.(grpcSqlCommitedTxResult.header)
-            const updatedRows = grpcSqlCommitedTxResult.updatedRows
             
-
-            return {
-                tx,
-                updatedRows,
-            }
+            const tx = igt.grpcTxHeaderToTxCore(grpcSqlCommitedTxResult.header)
+                const updatedRowsCount = grpcSqlCommitedTxResult.updatedRows
+                const firstPK = igs.grpcSqlObjectNamedValueToNamedValues(
+                    grpcSqlCommitedTxResult.firstInsertedPKs
+                )
+                const lastPK = igs.grpcSqlObjectNamedValueToNamedValues(
+                    grpcSqlCommitedTxResult.lastInsertedPKs
+                )
+                return {
+                    tx,
+                    firstPK,
+                    lastPK,
+                    updatedRowsCount,
+                }
         })
     }
 }
@@ -175,7 +177,7 @@ export function createSqlTxExec(client: ImmuServiceClient) {
         return sqlTxExecGrpc({
             request: {
                 sql:    props.sql,
-                params: props.params?.map(immuConvert.sqlNamedValueToGrpcSqlVal),
+                params: props.params?.map(igs.sqlNamedValueToGrpcSqlNamedParam),
                 noWait: props.options?.dontWaitForIndexer,
             },
             options: {
@@ -235,7 +237,7 @@ export function createSqlTxQuery(client: ImmuServiceClient) {
         return sqlTxQueryGrpc({
             request: {
                 sql:    props.sql,
-                params: props.params?.map(immuConvert.sqlNamedValueToGrpcSqlVal),
+                params: props.params?.map(igs.sqlNamedValueToGrpcSqlNamedParam),
                 reuseSnapshot: props.reuseSnapshot
             },
             options: {
@@ -247,7 +249,7 @@ export function createSqlTxQuery(client: ImmuServiceClient) {
             : Promise.reject('SQLQueryResult__Output must be defined')
         )
         .then(grpcSqlRows => {
-            return grpcSqlRows.rows.map(immuConvert.mapGrpcSqlRowToSqlNamedValues)
+            return igs.grpcQueryResultToListoOfSqlNamedValues(grpcSqlRows)
         })
         
     }

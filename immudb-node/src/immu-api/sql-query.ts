@@ -1,11 +1,8 @@
 import { type ImmuServiceClient } from 'immudb-grpcjs/immudb/schema/ImmuService.js'
 import type * as types from '../types/index.js'
-import * as immuConvert from '../immu-convert/index.js'
 import * as grpcjs from '@grpc/grpc-js'
 import * as immuGrpc from '../immu-grpc/index.js'
-import * as buffer from '../buffer.js'
-import Long from 'long'
-
+import * as igs from '../immu-grpc-sql/index.js'
 
 
 
@@ -54,7 +51,7 @@ export function createSqlQuery(client: ImmuServiceClient) {
         return sqlQueryGrpc({
             request: {
                 sql:    props.sql,
-                params: props.params?.map(immuConvert.sqlNamedValueToGrpcSqlVal),
+                params: props.params?.map(igs.sqlNamedValueToGrpcSqlNamedParam),
                 reuseSnapshot: props.reuseSnapshot
             },
             options: {
@@ -66,7 +63,7 @@ export function createSqlQuery(client: ImmuServiceClient) {
             : Promise.reject('SQLQueryResult__Output must be defined')
         )
         .then(grpcSqlRows => {
-            return grpcSqlRows.rows.map(immuConvert.mapGrpcSqlRowToSqlNamedValues)
+            return igs.grpcQueryResultToListoOfSqlNamedValues(grpcSqlRows)
         })
     }
 }
@@ -94,7 +91,7 @@ export function createSqlQueryTables(client: ImmuServiceClient) {
             : Promise.reject('SQLQueryResult__Output must be defined')
         )
         .then(grpcSqlRows => {
-            return grpcSqlRows.rows.map(immuConvert.mapGrpcSqlRowToSqlNamedValues)
+            return igs.grpcQueryResultToListoOfSqlNamedValues(grpcSqlRows)
         })
     }
 }
@@ -132,7 +129,7 @@ export function createSqlQueryTable(client: ImmuServiceClient) {
             : Promise.reject('SQLQueryResult__Output must be defined')
         )
         .then(grpcSqlRows => {
-            return grpcSqlRows.rows.map(immuConvert.mapGrpcSqlRowToSqlNamedValues)
+            return igs.grpcQueryResultToListoOfSqlNamedValues(grpcSqlRows)
         })
     }
 }

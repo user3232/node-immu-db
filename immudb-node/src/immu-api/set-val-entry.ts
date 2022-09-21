@@ -1,24 +1,22 @@
 import { type ImmuServiceClient } from 'immudb-grpcjs/immudb/schema/ImmuService.js'
 import type * as types from '../types/index.js'
-import * as immuConvert from '../immu-convert/index.js'
+import type * as immu from '../types/A.js'
 import * as grpcjs from '@grpc/grpc-js'
 import * as immuGrpc from '../immu-grpc/index.js'
-import * as buffer from '../buffer.js'
-import * as hash from '../immu-hash/index.js'
-import * as rfc6962 from '../immu-rfc6962/index.js'
-import type * as immu from '../types/A.js'
-
+import * as igt from '../immu-grpc-tx/index.js'
+import * as ige from '../immu-grpc-entry/index.js'
+import * as igp from '../immu-grpc-precond/index.js'
+import * as ver from '../immu-verification/index.js'
+import * as ike from '../immu-kvm-entry/index.js'
 import { Chunk } from 'immudb-grpcjs/immudb/schema/Chunk.js'
 import Long from 'long'
-import { RefToTx, Tx, TxProofProps, TxWithKVEntryProofProps } from '../types/index.js'
-import { VerifiableTx__Output } from 'immudb-grpcjs/immudb/schema/VerifiableTx.js'
 
 
 export type SetVEntryProps = {
     /**
      * Array of key value pairs to set.
      */
-    kvs: types.ValEntryData[], 
+    kvms: immu.KeyValMeta[], 
     /**
      * All conditions must be fullfilled for all key values.
      */
@@ -57,10 +55,10 @@ export function createSetValEntries(client: ImmuServiceClient) {
 
         return setGrpc({
             request: {
-                KVs:            props.kvs.map(immuConvert.toKeyValueFromKVEntry),
+                KVs:            props.kvms.map(ike.kvmToGrpcKeyValue),
                 noWait:         props.options?.dontWaitForIndexer,
                 preconditions:  props.preconditions?.map(
-                    immuConvert.toPreconditionFromKVEntryPrecondition
+                    igp.precondToGrpcPrecond
                 ),
             },
             options: {
@@ -72,16 +70,13 @@ export function createSetValEntries(client: ImmuServiceClient) {
             : Promise.reject('tx must be defined')
         )
         .then(txGrpc => {
-            const tx = immuConvert.toTxFromTxHeader__Output(txGrpc)
-            const vEntries: (types.ValEntryVerifiable & {id: number})[] = props.kvs.map((vEntry, entryIndex) => ({
-                type: 'val',
-                entry: vEntry,
-                txId: tx.id,
-                tx,
-                id: entryIndex + 1,
-            }))
 
-            return vEntries
+            const txCore = igt.grpcTxHeaderToTxCore(txGrpc)
+            const valEntries = props.kvms.map(
+                grpcEntry => ike.kvmToValTxEntry(grpcEntry, txCore.id)
+            )
+
+            return {valEntries, txCore}
         })
     }
 }
@@ -127,7 +122,7 @@ export function createSetValEntriesStreaming(client: ImmuServiceClient) {
             ? res 
             : Promise.reject('TxHeader__Output must be defined')
         )
-        .then(txGrpc => immuConvert.toTxFromTxHeader__Output(txGrpc))
+        .then(igt.grpcTxHeaderToTxCore)
         
     }
 }
@@ -135,7 +130,9 @@ export function createSetValEntriesStreaming(client: ImmuServiceClient) {
 
 
 export type ProofRequestProps = {
-    refTx: RefToTx
+    txId:       Long,
+    refTxId:    Long,
+    refHash:    Buffer,
 }
 
 
@@ -155,13 +152,13 @@ export function createSetValEntriesGetProof(client: ImmuServiceClient) {
         return setGrpc({
             request: {
                 setRequest: {
-                    KVs:            props.kvs.map(immuConvert.toKeyValueFromKVEntry),
+                    KVs:            props.kvms.map(ike.kvmToGrpcKeyValue),
                     noWait:         props.options?.dontWaitForIndexer,
                     preconditions:  props.preconditions?.map(
-                        immuConvert.toPreconditionFromKVEntryPrecondition
+                        igp.precondToGrpcPrecond
                     ),
                 },
-                proveSinceTx: props.refTx.id,
+                proveSinceTx: props.refTxId,
             },
             options: {
                 credentials: props.credentials,
@@ -171,35 +168,15 @@ export function createSetValEntriesGetProof(client: ImmuServiceClient) {
             ? maybeResponse 
             : Promise.reject('VerifiableTx__Output must be defined')
         )
-        .then(verifiableTxGrpc => {
-            // console.log('set value result:')
-            // console.dir(verifiableTxGrpc, {depth: 10})
-
-            const tx = immuConvert.toTxFromTxHeader__Output(verifiableTxGrpc?.tx?.header)
-            const valEntries: types.ValEntryVerifiable[] = props.kvs.map((vEntry, entryIndex) => ({
-                type: 'val',
-                entry: vEntry,
-                txId: tx.id,
-                tx,
-                id: entryIndex + 1,
-            }))
+        .then(grpcVerTx => {
             
+            return ver.verificationAndTxFromGrpcVerTx({
+                grpcVerTx,
+                txId:   props.txId,
+                refHash: props.refHash,
+                refTxId: props.refTxId,
+            })
             
-            const entriesHashes = valEntries.map(vEntry => hash.ofEntry(vEntry.entry))
-            const entriesMhtHash = new rfc6962.MemoryMht(entriesHashes).getRoot()
-
-            if(tx.entriesMht.equals(entriesMhtHash) === false) {
-                throw 'tx.entriesMht must equal computed entriesMhtHash'
-            }
-
-
-            // const proof = grpcValProofToValProof(verifiableTxGrpc, props.refTx)
-            // verify.tx(proof)
-
-            return {
-                entries: valEntries,
-                // verified: proof,
-            }
         })
     }
 }

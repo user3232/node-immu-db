@@ -3,6 +3,7 @@ import { type ImmuServiceClient } from 'immudb-grpcjs/immudb/schema/ImmuService.
 import * as grpcjs from '@grpc/grpc-js'
 import * as immuGrpc from '../immu-grpc/index.js'
 import * as ige from '../immu-grpc-entry/index.js'
+import * as igt from '../immu-grpc-tx/index.js'
 
 
 
@@ -45,6 +46,10 @@ export type GetValRefProps = {
      * - to most recent transaction.
      */
     seenSinceTxId?: Long, 
+    dbTxesWindow?: {
+        startId?: Long,
+        endId?: Long,
+    }
     /**
      * Operation options.
      */
@@ -353,10 +358,10 @@ export function createGetTxGenericEntries(client: ImmuServiceClient) {
             ? maybeResponse 
             : Promise.reject('Tx__Output must be defined')
         )
-        .then(tx => {
-
-            return tx.entries.map((grpcEntry, entryIndex) => {
-                return ige.grpcTxEntryToTxEntry(tx, grpcEntry)
+        .then(grpcTx => {
+            const tx = igt.grpcTxHeaderToTxCore(grpcTx.header)
+            return grpcTx.entries.map((grpcEntry) => {
+                return ige.grpcTxEntryToTxEntry(grpcTx, grpcEntry)
             })
 
         })
@@ -377,11 +382,15 @@ export function createGetValRefStreaming(client: ImmuServiceClient) {
      * ```ts
      * 
      * const buffs: Buffer[] = []
-     * for await (const chunk of getValRefStreaming({key: Buffer.from('some key')})) {
+     * const kvStream = getValRefStreaming({key: Buffer.from('some key')})
+     * for await (const chunk of kvStream) {
      *     buffs.push(chunk.content)
      * }
-     * const history = toKVEntry(Buffer.concat(buffs))
-     * console.log(history)
+     * // buf will contain ValEntry 
+     * // or resolved referenced ValEntry 
+     * // encoded as StreamKVEntry !!!
+     * const referencedValEntry = toKVEntry(Buffer.concat(buffs))
+     * console.log(ref)
      * 
      * ```
      * 

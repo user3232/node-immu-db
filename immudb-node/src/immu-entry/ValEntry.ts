@@ -1,7 +1,7 @@
 import { Buffer } from 'node:buffer'
 import * as immu from '../types/A.js'
-import * as buffer from '../buffer.js'
-import { PrefixKeyVal, PrefixValVal } from '../immu-hash/consts.js'
+import * as consts from '../immu-hash/consts.js'
+
 
 
 
@@ -25,18 +25,18 @@ export function valEntryToBinEntry(props: immu.ValEntry): immu.BinEntry {
         version: '1',
         meta: props.meta,
         prefixedKey: Buffer.concat([
-            PrefixKeyVal,
+            consts.PrefixKeyVal,
             props.key,
         ]),
         prefixedVal: Buffer.concat([
-            PrefixValVal,
+            consts.PrefixValVal,
             props.val,
         ]),
     }
 }
 
 export function valEntryToLeafEntryPrefixedKey(props: immu.ValEntry) {
-    return Buffer.concat([PrefixKeyVal, props.key])
+    return Buffer.concat([consts.PrefixKeyVal, props.key])
 }
 
 

@@ -1,10 +1,9 @@
 import { type ImmuServiceClient } from 'immudb-grpcjs/immudb/schema/ImmuService.js'
 import type * as types from '../types/index.js'
-import * as immuConvert from '../immu-convert/index.js'
 import * as grpcjs from '@grpc/grpc-js'
 import * as immuGrpc from '../immu-grpc/index.js'
-import * as buffer from '../buffer.js'
-import Long from 'long'
+import * as igt from '../immu-grpc-tx/index.js'
+import * as igs from '../immu-grpc-sql/index.js'
 
 
 
@@ -63,7 +62,7 @@ export function createSqlExec(client: ImmuServiceClient) {
         return sqlExecGrpc({
             request: {
                 sql:    props.sql,
-                params: props.params?.map(immuConvert.sqlNamedValueToGrpcSqlVal),
+                params: props.params?.map(igs.sqlNamedValueToGrpcSqlNamedParam),
                 noWait: props.options?.dontWaitForIndexer,
             },
             options: {
@@ -75,18 +74,29 @@ export function createSqlExec(client: ImmuServiceClient) {
             : Promise.reject('SQLExecResult__Output must be defined')
         )
         .then(grpcSqlExecResults => {
-
-            const ongoingTx = grpcSqlExecResults.ongoingTx
-            const txes = grpcSqlExecResults.txs.map(grpcCommitedSqlTx => {
-                const tx = grpcCommitedSqlTx.header == undefined
-                    ? undefined
-                    : immuConvert.toTxFromTxHeader__Output?.(grpcCommitedSqlTx.header)
-                const updatedRows = grpcCommitedSqlTx.updatedRows
+            
+            const isInTransaction = grpcSqlExecResults.ongoingTx
+            const subTxes = grpcSqlExecResults.txs.map(grpcCommitedSqlTx => {
+                
+                const tx = igt.grpcTxHeaderToTxCore(grpcCommitedSqlTx.header)
+                const updatedRowsCount = grpcCommitedSqlTx.updatedRows
+                const firstPK = igs.grpcSqlObjectNamedValueToNamedValues(
+                    grpcCommitedSqlTx.firstInsertedPKs
+                )
+                const lastPK = igs.grpcSqlObjectNamedValueToNamedValues(
+                    grpcCommitedSqlTx.lastInsertedPKs
+                )
+                return {
+                    tx,
+                    firstPK,
+                    lastPK,
+                    updatedRowsCount,
+                }
             })
 
             return {
-                txes,
-                ongoingTx,
+                subTxes,
+                isInTransaction,
             }
         })
     }

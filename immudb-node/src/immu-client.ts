@@ -236,7 +236,7 @@ export class Client {
         props: api.SetVEntryProps
     ) {
         return this.immuGrpcApi.setValEntries({
-            kvs:            props.kvs,
+            kvms:            props.kvms,
             preconditions:  props.preconditions,
             options:        props.options,
             credentials:    await this.getCallCredentials()
@@ -312,55 +312,14 @@ export class Client {
             ...props,
             credentials: await this.getCallCredentials(),
         })
-        const delTxEntries = await this.scanDbEntries({
+        const delTxEntries = await this.getTxGenericEntries({
+            txId: delTx.id,
             seenSinceTxId: props.seenSinceTxId,
-            scanStartAtTxId: delTx.id,
-            limit: 1,
-        })
-
-        type X1 = kmv.EntryRef & { entryTxId: Long; entryId: number; }
-        type X2 = kmv.EntryVal & { entryTxId: Long; entryId: number; }
-        const delTxRefOrValEntries = delTxEntries.filter<X1 | X2>(
-            function(x: kmv.EntryGeneric): x is X1 | X2  {
-                return x.type === 'reference' || x.type === 'value'
-            }
-        )
-
-        return delTxRefOrValEntries.map((refOrVal, refOrValIndex) => {
-            switch(refOrVal.type) {
-                case 'reference': {
-                    const ref: RefEntryVerifiable = {
-                        type: 'ref',
-                        entry: {
-                            key:                refOrVal.key,
-                            refKey:             refOrVal.refKey,
-                            refKeySeenFromTxId: refOrVal.refKeySeenFromTxId,
-                            meta:               refOrVal.meta,
-                        },
-                        txId: delTx.id,
-                        tx: delTx,
-                        id: refOrValIndex + 1,
-                    }
-                    return ref
-                }
-                case 'value': {
-                    const ref: ValEntryVerifiable = {
-                        type: 'val',
-                        entry: {
-                            key:                refOrVal.key,
-                            val:                refOrVal.val,
-                            meta:               refOrVal.meta,
-                        },
-                        txId: delTx.id,
-                        tx: delTx,
-                        id: refOrValIndex + 1,
-                    }
-                    return ref
-                }
-            }
         })
 
         
+        
+        return delTxEntries
     }
 
 
@@ -706,7 +665,7 @@ export class Client {
             }),
         })
 
-        type SqlExecSummary = {tx?: types.Tx, updatedRows: number}
+        type SqlExecSummary = Awaited<ReturnType<typeof this.immuGrpcApi.sqlTxCommit>>
         type SqlCommitRollback = SqlExecSummary | string
 
         const operation = new Promise<SqlCommitRollback>((resolve, reject) => {

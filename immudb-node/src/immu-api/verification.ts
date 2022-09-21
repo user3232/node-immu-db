@@ -2,7 +2,7 @@ import { type ImmuServiceClient } from 'immudb-grpcjs/immudb/schema/ImmuService.
 import * as grpcjs from '@grpc/grpc-js'
 import * as immuGrpc from '../immu-grpc/index.js'
 import Long from 'long'
-import { verificationAndTxFromGrpcVerTx } from '../immu-verification/index.js'
+import * as ver from '../immu-verification/index.js'
 
 
 
@@ -11,6 +11,9 @@ export type GetTxAndVerificationProps = {
     txId:       Long,
     refTxId:    Long,
     refHash:    Buffer,
+    dbTxesWindow?: {
+        startId?: Long
+    }
 }
 
 
@@ -31,7 +34,8 @@ export function createGetTxAndVerification(client: ImmuServiceClient) {
                 proveSinceTx:               props.refTxId,
                 tx:                         props.txId,
                 keepReferencesUnresolved:   true,
-                // sinceTx:                    props.refTxId,
+                sinceTx:                    props.dbTxesWindow?.startId,
+
                 entriesSpec: {
                     kvEntriesSpec:  {action: 'RAW_VALUE'},
                     zEntriesSpec:   {action: 'RAW_VALUE'},
@@ -48,7 +52,7 @@ export function createGetTxAndVerification(client: ImmuServiceClient) {
         )
         .then(grpcVerTx => {
             
-            return verificationAndTxFromGrpcVerTx({
+            return ver.verificationAndTxFromGrpcVerTx({
                 grpcVerTx,
                 txId:   props.txId,
                 refHash: props.refHash,

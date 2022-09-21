@@ -7,17 +7,44 @@ import { Row__Output } from "immudb-grpcjs/immudb/schema/Row.js";
 
 
 
-export function mapGrpcSqlRowToSqlNamedValues(grpcRow: Row__Output): SqlNamedValue[] {
-    return grpcRow.values.map((val, i) => ({
-        name: grpcRow.columns[i],
-        ...grpcSqlValueToSqlVal(val)
+export function grpcSqlObjectNamedValueToNamedValues(
+    objectNamedValue: {
+        [key: string]: SQLValue__Output;
+    }
+): SqlNamedValue[] {
+
+    return Object.entries(objectNamedValue).map(([name, grpcSqlValue]) => ({
+        name,
+        ...grpcSqlValueToSqlValue(grpcSqlValue)
     }))
 }
 
 
 
 
-export function sqlNamedValueToGrpcSqlValue(param: SqlNamedValue): NamedParam {
+
+export function grpcQueryResultToListoOfSqlNamedValues(
+    queryResult: SQLQueryResult__Output
+): SqlNamedValue[][] {
+    
+    return queryResult.rows.map(grpcSqlRowToSqlNamedValues)
+}
+
+export function grpcSqlRowToSqlNamedValues(
+    grpcRow: Row__Output
+): SqlNamedValue[] {
+    return grpcRow.values.map((val, i) => ({
+        name: grpcRow.columns[i],
+        ...grpcSqlValueToSqlValue(val)
+    }))
+}
+
+
+
+
+export function sqlNamedValueToGrpcSqlNamedParam(
+    param: SqlNamedValue
+): NamedParam {
     switch(param.type) {
         case 'BOOLEAN': 
             return {name: param.name, value: { value: 'b',  b: param.value}}
@@ -37,7 +64,7 @@ export function sqlNamedValueToGrpcSqlValue(param: SqlNamedValue): NamedParam {
 
 
 /** Maps grpc sql value and value name to more js friendly value.  */
-export function grpcNamedParamToSqlNamedValue(
+export function grpcSqlNamedParamToSqlNamedValue(
     param: NamedParam__Output
 ): SqlNamedValue {
     
@@ -47,7 +74,7 @@ export function grpcNamedParamToSqlNamedValue(
 
     return {
         name: param.name,
-        ...grpcSqlValueToSqlVal(param.value)
+        ...grpcSqlValueToSqlValue(param.value)
     }
 
 }
@@ -55,7 +82,7 @@ export function grpcNamedParamToSqlNamedValue(
 
 
 /** Maps grpc sql value to more js friendly value.  */
-export function grpcSqlValueToSqlVal(
+export function grpcSqlValueToSqlValue(
     param: SQLValue__Output
 ): SqlValue {
     
@@ -93,21 +120,3 @@ export function grpcSqlValueToSqlVal(
 }
 
 
-export function grpcQueryResultToSqlNamedValues(
-    queryResult: SQLQueryResult__Output
-): SqlNamedValue[][] {
-
-    const rows: SqlNamedValue[][] = []
-    queryResult.rows.forEach((row, rowIndex) => {
-        const columns: SqlNamedValue[] = []
-        row.values.forEach((column, columnIndex) => {
-            columns.push({
-                ...grpcSqlValueToSqlVal(column),
-                name: row.columns[columnIndex]
-            })
-        })
-        rows.push(columns)
-    })
-
-    return rows
-}

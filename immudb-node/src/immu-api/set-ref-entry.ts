@@ -1,9 +1,10 @@
 import { type ImmuServiceClient } from 'immudb-grpcjs/immudb/schema/ImmuService.js'
 import type * as types from '../types/index.js'
-import * as immuConvert from '../immu-convert/index.js'
+import type * as immu from '../types/A.js'
+import * as igp from '../immu-grpc-precond/index.js'
 import * as grpcjs from '@grpc/grpc-js'
 import * as immuGrpc from '../immu-grpc/index.js'
-import * as buffer from '../buffer.js'
+import * as igt from '../immu-grpc-tx/index.js'
 import Long from 'long'
 
 
@@ -74,7 +75,7 @@ export function createSetRefEntry(client: ImmuServiceClient) {
                 atTx:           props.keyTxId,
                 boundRef:       props.boundRef,
                 preconditions:  props.preconditions?.map(
-                    immuConvert.toPreconditionFromKVEntryPrecondition
+                    igp.precondToGrpcPrecond
                 ),
                 
                 noWait:         props.options?.dontWaitForIndexer,
@@ -88,28 +89,22 @@ export function createSetRefEntry(client: ImmuServiceClient) {
             : Promise.reject('TxHeader__Output  must be defined')
         )
         .then(grpcTx => {
-            const tx = immuConvert.toTxFromTxHeader__Output(grpcTx)
 
-            const refKeySeenFromTxId: Long = props.keyTxId !== undefined
-                ? props.keyTxId
-                : props.boundRef === true 
-                    ? tx.id
-                    : Long.UZERO
-
-            const ref: types.RefEntryVerifiable = {
-                type:                   'ref',
-                entry: {
-                    key:                props.key,
-                    refKey:             props.referToKey,
-                    refKeySeenFromTxId: refKeySeenFromTxId,
-                    meta:               undefined,
-                },
-                txId:                   tx.id,
-                tx:                     tx,
-                id:                     1,
+            const txCore = igt.grpcTxHeaderToTxCore(grpcTx)
+            const ref: immu.RefTxEntry = {
+                type:           'ref',
+                version:        '1',
+                id:             txCore.id,
+                key:            props.key,
+                referredKey:    props.referToKey,
+                referredAtTxId: props.keyTxId !== undefined
+                    ? props.keyTxId
+                    : props.boundRef === true 
+                        ? txCore.id
+                        : Long.UZERO,
             }
-
-            return ref
+            
+            return {ref, txCore}
         })
     }
 }
