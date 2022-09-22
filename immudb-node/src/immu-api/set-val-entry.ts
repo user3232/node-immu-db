@@ -1,6 +1,5 @@
 import { type ImmuServiceClient } from 'immudb-grpcjs/immudb/schema/ImmuService.js'
-import type * as types from '../types/index.js'
-import type * as immu from '../types/A.js'
+import type * as immu from '../types/index.js'
 import * as grpcjs from '@grpc/grpc-js'
 import * as immuGrpc from '../immu-grpc/index.js'
 import * as igt from '../immu-grpc-tx/index.js'
@@ -20,7 +19,7 @@ export type SetVEntryProps = {
     /**
      * All conditions must be fullfilled for all key values.
      */
-    preconditions?: types.ValOrRefKeyPrecondition[], 
+    preconditions?: immu.ValOrRefKeyPrecondition[], 
     /**
      * Operation options.
      */
@@ -130,7 +129,6 @@ export function createSetValEntriesStreaming(client: ImmuServiceClient) {
 
 
 export type ProofRequestProps = {
-    txId:       Long,
     refTxId:    Long,
     refHash:    Buffer,
 }
@@ -169,10 +167,11 @@ export function createSetValEntriesGetProof(client: ImmuServiceClient) {
             : Promise.reject('VerifiableTx__Output must be defined')
         )
         .then(grpcVerTx => {
-            
+            if(grpcVerTx.tx?.header == undefined) {
+                throw 'grpcVerTx.tx?.header must be defined'
+            }
             return ver.verificationAndTxFromGrpcVerTx({
                 grpcVerTx,
-                txId:   props.txId,
                 refHash: props.refHash,
                 refTxId: props.refTxId,
             })

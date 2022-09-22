@@ -1,4 +1,4 @@
-import { Precondition } from "immudb-grpcjs/immudb/schema/Precondition";
+import { Precondition } from "immudb-grpcjs/immudb/schema/Precondition.js";
 import * as immu from "../types/index.js";
 
 

@@ -1,8 +1,18 @@
-import * as immu from '../types/A.js'
+import * as immu from '../types/index.js'
 import * as hash from './hash.js'
 import * as buffer from '../buffer.js'
-import * as binary from '../immu-binary-format/index.js'
-import { PrefixKeyVal, PrefixValVal, setColumnFlags, PrefixKeySql, TagSqlColumn, TagSqlDb, TagSqlIndex, TagSqlRow, TagSqlTable } from './consts.js'
+import { 
+    PrefixKeyVal, 
+    PrefixValVal, 
+    setColumnFlags, 
+    PrefixKeySql, 
+    TagSqlColumn, 
+    TagSqlDb, 
+    TagSqlIndex, 
+    TagSqlRow, 
+    TagSqlTable 
+} from './consts.js'
+import { entryMetaToBuffer } from './EntryMetadata.js'
 
 
 
@@ -33,7 +43,7 @@ export function hashOfSqlRowEntry(
 ): Buffer {
 
 
-    const meta = binary.fromEntryMetadata(props.meta)
+    const meta = entryMetaToBuffer(props.meta)
     const metaLength = meta.byteLength
 
     const prefixKey = PrefixKeyVal
@@ -125,7 +135,7 @@ export function hashOfSqlRowEntry(
     props: immu.SqlColumnEntry
 ): Buffer {
 
-    const meta = binary.fromEntryMetadata(props.meta)
+    const meta = entryMetaToBuffer(props.meta)
     const metaLength = meta.byteLength
 
 
@@ -202,7 +212,7 @@ export function hashOfSqlRowEntry(
     props: immu.SqlIndexEntry
 ): Buffer {
 
-    const meta = binary.fromEntryMetadata(props.meta)
+    const meta = entryMetaToBuffer(props.meta)
     const metaLength = meta.byteLength
 
 
@@ -279,7 +289,7 @@ export function hashOfSqlRowEntry(
     props: immu.SqlTableEntry
 ): Buffer {
 
-    const meta = binary.fromEntryMetadata(props.meta)
+    const meta = entryMetaToBuffer(props.meta)
     const metaLength = meta.byteLength
 
 
@@ -344,7 +354,7 @@ export function hashOfSqlRowEntry(
     props: immu.SqlDbEntry
 ): Buffer {
 
-    const meta = binary.fromEntryMetadata(props.meta)
+    const meta = entryMetaToBuffer(props.meta)
     const metaLength = meta.byteLength
 
 

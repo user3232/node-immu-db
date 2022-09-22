@@ -16,6 +16,16 @@ export const PrefixSqlUpperBound    = Buffer.of(0xFF)
 
 
 
+// entry metadata tags
+
+/** `0x00` */
+export const TagEntryMetadataDeleted = Buffer.of(0x00)
+/** `0x01` */
+export const TagEntryMetadataExpiresAt = Buffer.of(0x01)
+/** `0x02` */
+export const TagEntryMetadataNonIndexable = Buffer.of(0x02)
+
+
 /** `R.` */
 export const TagSqlRow           = Buffer.from('R.')
 /** `CTL.COLUMN.` */

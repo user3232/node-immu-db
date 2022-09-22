@@ -2,7 +2,13 @@ import Long from "long"
 
 
 
-/** Entry additional properties. */
+
+
+
+/** 
+ * Structure influencing ImmuDb Indexer behaviour for
+ * indexing {@link Entry}'ies.
+ */
 export type EntryMetadata = {
     /**
      * If set to `true` key value will be marked as deleted.

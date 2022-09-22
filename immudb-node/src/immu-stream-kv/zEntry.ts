@@ -1,5 +1,4 @@
 import { Buffer } from 'node:buffer'
-import { ZEntryData } from '../types/index.js'
 import * as buffer from '../buffer.js'
 
 
@@ -20,7 +19,7 @@ import * as buffer from '../buffer.js'
  */
 export function toZEntry(
     everything: Buffer
-): ZEntryData & { referencedKeyVal: Buffer } {
+) {
     if (everything.byteLength < 5 * 8) {
         throw 'buffers are too small for zEntry'
     }
@@ -83,8 +82,8 @@ export function toZEntry(
  *   - refVal length - UInt64BE
  *   - refVal
  */
- export function toZEntries(everything: Buffer) {
-    const zEntries: (ZEntryData & { referencedKeyVal: Buffer })[] = []
+export function toZEntries(everything: Buffer) {
+    const zEntries = []
     let rest = everything
     while (rest.byteLength > 0) {
         const zEntry = toZEntry(rest)

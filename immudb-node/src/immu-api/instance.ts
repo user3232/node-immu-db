@@ -1,12 +1,10 @@
 import { type ImmuServiceClient } from 'immudb-grpcjs/immudb/schema/ImmuService.js'
-import type * as types from '../types/index.js'
-import * as immuConvert from '../immu-convert/index.js'
+import type * as immu from '../types/index.js'
 import * as grpcjs from '@grpc/grpc-js'
 import * as immuGrpc from '../immu-grpc/index.js'
-import * as buffer from '../buffer.js'
+import * as igt from '../immu-grpc-tx/index.js'
 import Long from 'long'
 import { Chunk } from 'immudb-grpcjs/immudb/schema/Chunk.js'
-
 
 
 export function createServerInfo(client: ImmuServiceClient) {
@@ -15,7 +13,7 @@ export function createServerInfo(client: ImmuServiceClient) {
     
     return function serverInfo(props: {
         credentials: grpcjs.CallCredentials,
-    }): Promise<types.ServerInfo> {
+    }): Promise<immu.ServerInfo> {
 
         return healthGrpc({
             request: {
@@ -78,7 +76,7 @@ export function createReplicateTx(client: ImmuServiceClient) {
             ? res 
             : Promise.reject('TxHeader__Output must be defined')
         )
-        .then(txGrpc => immuConvert.toTxFromTxHeader__Output(txGrpc))
+        .then(txGrpc => igt.grpcTxHeaderToTxCore(txGrpc))
         
     }
 }

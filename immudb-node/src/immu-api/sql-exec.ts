@@ -1,5 +1,5 @@
 import { type ImmuServiceClient } from 'immudb-grpcjs/immudb/schema/ImmuService.js'
-import type * as types from '../types/index.js'
+import type * as immu from '../types/index.js'
 import * as grpcjs from '@grpc/grpc-js'
 import * as immuGrpc from '../immu-grpc/index.js'
 import * as igt from '../immu-grpc-tx/index.js'
@@ -43,7 +43,7 @@ export type SqlExecProps = {
      * })
      * ```
      */
-    params?: types.SqlNamedValue[],
+    params?: immu.SqlNamedValue[],
     
 }
 
@@ -77,8 +77,11 @@ export function createSqlExec(client: ImmuServiceClient) {
             
             const isInTransaction = grpcSqlExecResults.ongoingTx
             const subTxes = grpcSqlExecResults.txs.map(grpcCommitedSqlTx => {
-                
-                const tx = igt.grpcTxHeaderToTxCore(grpcCommitedSqlTx.header)
+
+                // execution may not cause effects!!!
+                const tx = grpcCommitedSqlTx.header == undefined
+                    ? undefined
+                    : igt.grpcTxHeaderToTxCore(grpcCommitedSqlTx.header)
                 const updatedRowsCount = grpcCommitedSqlTx.updatedRows
                 const firstPK = igs.grpcSqlObjectNamedValueToNamedValues(
                     grpcCommitedSqlTx.firstInsertedPKs

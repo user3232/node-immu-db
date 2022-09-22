@@ -1,6 +1,6 @@
 import { type ImmuServiceClient } from 'immudb-grpcjs/immudb/schema/ImmuService.js'
-import type * as types from '../types/index.js'
-import * as immuConvert from '../immu-convert/index.js'
+import type * as immu from '../types/index.js'
+import * as ip from '../immu-permission.js'
 import * as grpcjs from '@grpc/grpc-js'
 import * as immuGrpc from '../immu-grpc/index.js'
 import { Buffer } from 'node:buffer'
@@ -41,7 +41,7 @@ export function createListUsers(client: ImmuServiceClient) {
 /**
  * Transforms User__Output to more friendly object.
  */
-function grpcUserInfoToUserInfo(userResponse: User__Output): types.UserInfo {
+function grpcUserInfoToUserInfo(userResponse: User__Output): immu.UserInfo {
     
     return {
         
@@ -59,10 +59,10 @@ function grpcUserInfoToUserInfo(userResponse: User__Output): types.UserInfo {
  */
 function grpcPermissionToDatabasePermission(
     p: Permission__Output
-): types.DatabasePermission {
+): immu.DatabasePermission {
     return {
         database:       p.database,
-        permission:     immuConvert.permissionFromCode(p.permission),
+        permission:     ip.permissionFromCode(p.permission),
     }
 }
 
@@ -91,7 +91,7 @@ export type CreateUsersProps = {
       * New user creator must have permissions for giving permissions
       * on selected database.
       */
-    permission: types.Permission
+    permission: immu.Permission
 }
 
 
@@ -108,7 +108,7 @@ export function createCreateUser(client: ImmuServiceClient) {
                 database:   props.database,
                 user:       Buffer.from(props.username),
                 password:   Buffer.from(props.password),
-                permission: immuConvert.permissionToCode(props.permission)
+                permission: ip.permissionToCode(props.permission)
             },
             options: {
                 credentials: props.credentials,
@@ -119,7 +119,7 @@ export function createCreateUser(client: ImmuServiceClient) {
             : Promise.reject('Empty__Output must be defined')
         )
         .then(_ => {
-            const res: types.UserCredentials & types.DatabasePermission = props
+            const res: immu.UserCredentials & immu.DatabasePermission = props
             return res
         })
     }
@@ -225,7 +225,7 @@ export type SetUserDbPermissionsProps = {
      /**
       * New permissions for user.
       */
-    permission: types.KnownPermissionName,
+    permission: immu.KnownPermissionName,
     /**
      * 
      */
@@ -246,7 +246,7 @@ export function createSetUserDbPermissions(client: ImmuServiceClient) {
                 action:         props.grantRevoke,
                 username:       props.username,
                 database:       props.database,
-                permission:     immuConvert.permissionToCode((props.permission)),
+                permission:     ip.permissionToCode((props.permission)),
             },
             options: {
                 credentials: props.credentials,

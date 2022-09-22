@@ -1,7 +1,7 @@
 import { KeyValue } from 'immudb-grpcjs/immudb/schema/KeyValue.js';
 import { KVMetadata } from 'immudb-grpcjs/immudb/schema/KVMetadata.js';
 import Long from 'long';
-import * as immu from '../types/A.js'
+import * as immu from '../types/index.js'
 
 
 
@@ -17,6 +17,21 @@ export function kvmToValTxEntry(
         val:        kvm.val,
         meta:       kvm.meta,
         id:         txId,
+    }
+
+}
+
+
+export function kvmToValEntry(
+    kvm: immu.KeyValMeta,
+): immu.ValEntry {
+
+    return {
+        type:       'val',
+        version:    '1',
+        key:        kvm.key,
+        val:        kvm.val,
+        meta:       kvm.meta,
     }
 
 }

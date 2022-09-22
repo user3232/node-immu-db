@@ -1,5 +1,5 @@
 import { type ImmuServiceClient } from 'immudb-grpcjs/immudb/schema/ImmuService.js'
-import type * as types from '../types/index.js'
+import type * as immu from '../types/index.js'
 import * as grpcjs from '@grpc/grpc-js'
 import * as immuGrpc from '../immu-grpc/index.js'
 import * as igt from '../immu-grpc-tx/index.js'
@@ -43,7 +43,7 @@ export function createSqlTxNew(client: ImmuServiceClient) {
         )
         .then(grpcNewTxResponse => {
 
-            const token: types.TransactionTokens = {
+            const token: immu.TransactionTokens = {
                 transactionid: grpcNewTxResponse.transactionID
             }
             return token
@@ -76,20 +76,23 @@ export function createSqlTxCommit(client: ImmuServiceClient) {
         )
         .then(grpcSqlCommitedTxResult => {
             
-            const tx = igt.grpcTxHeaderToTxCore(grpcSqlCommitedTxResult.header)
-                const updatedRowsCount = grpcSqlCommitedTxResult.updatedRows
-                const firstPK = igs.grpcSqlObjectNamedValueToNamedValues(
-                    grpcSqlCommitedTxResult.firstInsertedPKs
-                )
-                const lastPK = igs.grpcSqlObjectNamedValueToNamedValues(
-                    grpcSqlCommitedTxResult.lastInsertedPKs
-                )
-                return {
-                    tx,
-                    firstPK,
-                    lastPK,
-                    updatedRowsCount,
-                }
+            // execution may not cause effects!!!
+            const tx = grpcSqlCommitedTxResult.header == undefined
+                ? undefined
+                : igt.grpcTxHeaderToTxCore(grpcSqlCommitedTxResult.header)
+            const updatedRowsCount = grpcSqlCommitedTxResult.updatedRows
+            const firstPK = igs.grpcSqlObjectNamedValueToNamedValues(
+                grpcSqlCommitedTxResult.firstInsertedPKs
+            )
+            const lastPK = igs.grpcSqlObjectNamedValueToNamedValues(
+                grpcSqlCommitedTxResult.lastInsertedPKs
+            )
+            return {
+                tx,
+                firstPK,
+                lastPK,
+                updatedRowsCount,
+            }
         })
     }
 }
@@ -162,7 +165,7 @@ export type SqlTxExecProps = {
      * })
      * ```
      */
-    params?: types.SqlNamedValue[],
+    params?: immu.SqlNamedValue[],
     
 }
 
@@ -214,7 +217,7 @@ export type SqlTxQueryProps = {
      * })
      * ```
      */
-    params?: types.SqlNamedValue[],
+    params?: immu.SqlNamedValue[],
     /**
      * Does this query operation needs refreshed index
      * or not? (perhaps earlier operation was also read).

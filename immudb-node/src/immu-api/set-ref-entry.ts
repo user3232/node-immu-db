@@ -1,6 +1,5 @@
 import { type ImmuServiceClient } from 'immudb-grpcjs/immudb/schema/ImmuService.js'
-import type * as types from '../types/index.js'
-import type * as immu from '../types/A.js'
+import type * as immu from '../types/index.js'
 import * as igp from '../immu-grpc-precond/index.js'
 import * as grpcjs from '@grpc/grpc-js'
 import * as immuGrpc from '../immu-grpc/index.js'
@@ -32,7 +31,7 @@ export type SetRefEntryProps = {
     /**
      * All conditions must be fullfilled for all key values.
      */
-    preconditions?: types.ValOrRefKeyPrecondition[],
+    preconditions?: immu.ValOrRefKeyPrecondition[],
     /**
      * Key to include in set {@link SetRefEntryProps.set}.
      */

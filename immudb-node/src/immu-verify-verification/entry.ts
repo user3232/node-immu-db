@@ -1,4 +1,4 @@
-import * as immu from '../types/A.js'
+import * as immu from '../types/index.js'
 import * as hash from '../immu-hash/index.js'
 import * as prove from '../immu-rfc6962/index.js'
 import Long from 'long'

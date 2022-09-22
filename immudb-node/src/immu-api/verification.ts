@@ -54,7 +54,6 @@ export function createGetTxAndVerification(client: ImmuServiceClient) {
             
             return ver.verificationAndTxFromGrpcVerTx({
                 grpcVerTx,
-                txId:   props.txId,
                 refHash: props.refHash,
                 refTxId: props.refTxId,
             })

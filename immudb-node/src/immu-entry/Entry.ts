@@ -1,5 +1,5 @@
 import { TxEntry__Output } from 'immudb-grpcjs/immudb/schema/TxEntry.js'
-import * as immu from '../types/A.js'
+import * as immu from '../types/index.js'
 import { 
     binEntryToRefEntry, 
     refEntryToBinEntry, 

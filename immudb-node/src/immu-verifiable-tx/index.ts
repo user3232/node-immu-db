@@ -1,4 +1,4 @@
-import * as immu from '../types/A.js'
+import * as immu from '../types/index.js'
 
 
 

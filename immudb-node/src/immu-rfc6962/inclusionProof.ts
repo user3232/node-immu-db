@@ -1,5 +1,4 @@
 import Long from 'long'
-import { createGenerator } from '../immu-hash/hash.js'
 import * as hash from '../immu-hash/hash.js'
 
 

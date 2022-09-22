@@ -2,6 +2,10 @@
 import { createHash, type Hash } from 'node:crypto'
 import * as stream from 'stream'
 
+
+
+
+
 export function createGenerator() {
     return function computeHash(data: Buffer) {
         return createHash('sha256').update(data).digest()

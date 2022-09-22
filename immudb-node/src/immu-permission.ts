@@ -1,11 +1,11 @@
-import * as types from '../types/index.js'
+import * as immu from './types/index.js'
 
 
 
 
 export function permissionToKnownIfPossible(
-    permission: types.KnownPermissionName
-): types.Permission {
+    permission: immu.KnownPermissionName
+): immu.Permission {
     if(typeof permission === 'string') {
         return permission
     }
@@ -17,18 +17,18 @@ export function permissionToKnownIfPossible(
 
 export function permissionFromCode(
     code: number
-): types.Permission {
+): immu.Permission {
     const map: Record<
         number, 
-        types.KnownPermissionName | undefined
+        immu.KnownPermissionName | undefined
     > = knownPermissionCodeToName
     return map[code] ?? code
 }
 
 
 export function permissionToCode(
-    permission: types.Permission
-): types.PermissionCode {
+    permission: immu.Permission
+): immu.PermissionCode {
     return typeof permission === 'number' 
         ? permission 
         : knownPermissionNameToCode[permission]

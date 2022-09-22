@@ -1,6 +1,6 @@
 import * as buffer from '../buffer.js'
 import { Buffer } from 'node:buffer'
-import * as immu from '../types/A.js'
+import * as immu from '../types/index.js'
 import { PrefixKeySql, TagSqlRow } from '../immu-hash/consts.js'
 
 

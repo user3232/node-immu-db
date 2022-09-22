@@ -4,7 +4,6 @@ import {
     verifyVerification, 
     types, 
     stream, 
-    kvm
 } from 'immudb-node'
 
 
@@ -39,7 +38,7 @@ async function scanningShowcase() {
 
 
     const valEntries2 = await client.setValEntries({
-        kvs: [
+        kvms: [
             {key: Buffer.of(0), val: Buffer.of(0)},
             {key: Buffer.of(1), val: Buffer.of(1)},
         ]
@@ -49,7 +48,7 @@ async function scanningShowcase() {
 
 
     const valEntry3 = await client.setValEntries({
-        kvs: [
+        kvms: [
             {key: Buffer.of(2), val: Buffer.of(2)},
         ]
     })
@@ -59,8 +58,8 @@ async function scanningShowcase() {
 
     const refEntry4 = await client.setRefEntry({
         key:        Buffer.of(3),
-        referToKey: valEntries2[0].entry.key,
-        keyTxId:    valEntries2[0].txId,
+        referToKey: valEntries2.valEntries[0].key,
+        keyTxId:    valEntries2.valEntries[0].id,
         boundRef:   true,
     })
     console.log('refEntry4:')
@@ -68,9 +67,9 @@ async function scanningShowcase() {
 
 
     const zSetEntry5 = await client.setZSetEntry({
-        set:        Buffer.of(4),
-        key:        valEntry3[0].entry.key,
-        keyIndex:   3,
+        zSet:        Buffer.of(4),
+        referredKey:        valEntry3.valEntries[0].key,
+        referredKeyScore:   3,
     })
     console.log('zSetEntry5:')
     console.log(zSetEntry5)
@@ -85,13 +84,13 @@ async function scanningShowcase() {
             {
                 type:       'ref',
                 key:        Buffer.of(3),
-                referToKey: valEntry3[0].entry.key
+                referToKey: valEntry3.valEntries[0].key
             },
             {
                 type:   'zSet',
-                set:    zSetEntry5.entry.zSet,
-                key:    valEntries2[1].entry.key,
-                keyIndex: 9,
+                referredKey: valEntries2.valEntries[1].key,
+                zSet:    zSetEntry5.zSetTxEntry.zSet,
+                referredKeyScore: 9,
             }
         ]
     })
@@ -100,21 +99,21 @@ async function scanningShowcase() {
 
 
     const scanZEntriesAt6 = await client.scanZEntries({
-        set: zSetEntry5.entry.zSet,
+        set: zSetEntry5.zSetTxEntry.zSet,
     })
     console.log('scanZEntriesAt6:')
     console.log(scanZEntriesAt6)
 
 
     const scanValRefEntriesAt6 = await client.scanValRefEntries({
-        scanSkipToKey: valEntries2[1].entry.key,
+        scanSkipToKey: valEntries2.valEntries[1].key,
     })
     console.log('scanValRefEntriesAt6:')
     console.log(scanValRefEntriesAt6)
 
 
     const scanHistoryAt6 = await client.scanHistory({
-        key: valEntry3[0].entry.key
+        key: valEntry3.valEntries[0].key
     })
     console.log('scanHistoryAt6:')
     console.log(scanHistoryAt6)
@@ -207,49 +206,21 @@ async function scanningShowcase() {
 
 
 
-    type VerifiableSqlRow = kvm.SqlRow & {
-        type:   'sql',
-        meta?:  types.EntryMetadata,
-    } & {
-        entryTxId:  Long,
-        entryId:    number,
-    }
-    const dbScanSqlRowsAt8 = dbScanAt8.filter<VerifiableSqlRow>(
-        function(x : kvm.GenericVerifiableEntry): x is VerifiableSqlRow {
-            return x.type === 'sql' && x.sqlType === 'row'
-        }
-    )
-    const mapTestTableRow = kvm.createSqlMap({
-        id1:        {type: 'int',       id: 0},
-        id2:        {type: 'string',    id: 1},
-        created:    {type: 'timestamp', id: 2},
-        data:       {type: 'string',    id: 3},
-        isActive:   {type: 'boolean',   id: 4},
-    })
-    const prettySqlAt8 = dbScanSqlRowsAt8.map(row => mapTestTableRow(row.columns))
-    console.log('prettySqlAt8')
-    console.log(prettySqlAt8)
-
-
-
-
-
     const stateAt8 = await client.getDbCurrentState()
     console.log('stateAt8')
     console.log(stateAt8)
 
 
     const setAndProof9 = await client.setValEntriesAndVerify({
-        kvs: [{key: Buffer.from('yo'), val: Buffer.from('man')}],
-        refTx: {
-            id: stateAt8.txId,
-            hash: stateAt8.txHash,
-        }
+        kvms: [{key: Buffer.from('yo'), val: Buffer.from('man')}],
+        refTxId: stateAt8.txId,
+        refHash: stateAt8.txHash,
     })
-    console.log('setAndProof9.entries')
-    console.log(setAndProof9.entries)
-    // console.log('setAndProof9.verified')
-    // console.log(setAndProof9.verified)
+    console.log('setAndProof9')
+    console.dir(setAndProof9, {depth: 10})
+
+    console.log('verifyVerification(setAndProof9) result:')
+    console.log(verifyVerification(setAndProof9.verification))
 
 
 
@@ -265,7 +236,7 @@ async function scanningShowcase() {
     console.log('getTx2AndVerification')
     console.dir(getTx2AndVerification, {depth: 10})
 
-    console.log('verifyVerification result:')
+    console.log('verifyVerification(getTx2AndVerification) result:')
     console.log(verifyVerification(getTx2AndVerification.verification))
 
 

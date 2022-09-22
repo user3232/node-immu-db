@@ -1,3 +1,4 @@
+import type * as immu from './types/index.js'
 import { 
     IndexNullableSettings, 
     IndexNullableSettings__Output 
@@ -6,7 +7,6 @@ import {
     DatabaseNullableSettings, 
     DatabaseNullableSettings__Output 
 } from 'immudb-grpcjs/immudb/schema/DatabaseNullableSettings.js'
-import type * as types from '../types/index.js'
 import { 
     ReplicationNullableSettings, 
     ReplicationNullableSettings__Output 
@@ -17,7 +17,7 @@ import {
 
 
 export function dbUpdatableSettingsToGrpcDbSettings(
-    settings: types.DatabaseSettingsUpdatable
+    settings: immu.DatabaseSettingsUpdatable
 ): DatabaseNullableSettings {
     const indexSettings = toMutableIndexNullableSettings(settings.indexSettings)
     const replicationSettings = toReplicationNullableSettings(settings.replicationSettings)
@@ -41,7 +41,7 @@ export function dbUpdatableSettingsToGrpcDbSettings(
 
 export function grpcDbSettingsToDbSettings(
     databaseSettings: DatabaseNullableSettings__Output | null
-): types.DatabaseSettings {
+): immu.DatabaseSettings {
 
     const indexSettings = fromIndexNullableSettings__Output(databaseSettings?.indexSettings)
     const replicationSettings = fromReplicationNullableSettings__Output(
@@ -77,7 +77,7 @@ export function grpcDbSettingsToDbSettings(
 
 
 export function toDatabaseNullableSettings(
-    settings: types.DatabaseSettings
+    settings: immu.DatabaseSettings
 ): DatabaseNullableSettings {
     return {
         ...dbUpdatableSettingsToGrpcDbSettings(settings),
@@ -92,7 +92,7 @@ export function toDatabaseNullableSettings(
 
 export function fromIndexNullableSettings__Output(
     indexSettings?: IndexNullableSettings__Output | null
-): types.IndexSettings {
+): immu.IndexSettings {
     return {
         cacheSize:                  indexSettings?.cacheSize?.value,
         cleanupPercentage:          indexSettings?.cleanupPercentage?.value,
@@ -112,7 +112,7 @@ export function fromIndexNullableSettings__Output(
 
 
 export function toMutableIndexNullableSettings(
-    settings?: types.IndexSettings
+    settings?: immu.IndexSettings
 ): IndexNullableSettings {
     return {
         cacheSize:                  {value: settings?.cacheSize},
@@ -132,7 +132,7 @@ export function toMutableIndexNullableSettings(
 
 
 export function toImmutableIndexNullableSettings(
-    settings?: types.IndexSettingsReadonly
+    settings?: immu.IndexSettingsReadonly
 ): IndexNullableSettings {
     return {
         maxNodeSize:                {value: settings?.maxNodeSize},
@@ -143,7 +143,7 @@ export function toImmutableIndexNullableSettings(
 
 
 export function toImmutableDatabaseNullableSettings(
-    settings: types.DatabaseSettingsReadonly
+    settings: immu.DatabaseSettingsReadonly
 ): DatabaseNullableSettings {
     const indexSettings = toImmutableIndexNullableSettings(settings.indexSettings)
     return {
@@ -158,7 +158,7 @@ export function toImmutableDatabaseNullableSettings(
 
 export function fromReplicationNullableSettings__Output(
     replicationSettings?: ReplicationNullableSettings__Output | null
-): types.ReplicationSettings {
+): immu.ReplicationSettings {
     
     return {
         followerPassword:   replicationSettings?.followerPassword?.value,
@@ -171,7 +171,7 @@ export function fromReplicationNullableSettings__Output(
 }
 
 export function toReplicationNullableSettings(
-    settings?: types.ReplicationSettings
+    settings?: immu.ReplicationSettings
 ): ReplicationNullableSettings {
     return {
         followerPassword:       {value: settings?.followerPassword},

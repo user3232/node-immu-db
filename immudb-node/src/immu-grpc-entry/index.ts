@@ -4,7 +4,7 @@ import { Tx__Output } from 'immudb-grpcjs/immudb/schema/Tx.js'
 import { TxEntry__Output } from 'immudb-grpcjs/immudb/schema/TxEntry.js'
 import { ZEntry__Output } from 'immudb-grpcjs/immudb/schema/ZEntry.js'
 import * as ie from '../immu-entry/index.js'
-import type * as immu from '../types/A.js'
+import type * as immu from '../types/index.js'
 
 
 

@@ -5,7 +5,6 @@
  * any of tree leafs.
  *
  */
-import Long from 'long'
 import * as hash from '../immu-hash/index.js'
 
 

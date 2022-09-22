@@ -1,12 +1,8 @@
 import * as api from './immu-api/index.js'
 import * as session from './immu-session.js'
 import * as grpcjs from '@grpc/grpc-js'
-import type * as types from './types/index.js'
+import type * as immu from './types/index.js'
 import { grpcClientFactory } from './grpc-client.js'
-// import { ImmuServiceClient } from 'immudb-grpcjs'
-import * as kmv from './immu-kvm/index.js'
-import Long from 'long'
-import { RefEntryVerifiable, ValEntryVerifiable } from './types/index.js'
 import { ImmuServiceClient } from 'immudb-grpcjs/immudb/schema/ImmuService.js'
 
 
@@ -110,7 +106,7 @@ export class Client {
     private readonly conf:              Config
     private readonly immuGrpcClient:    ImmuServiceClient
     private readonly immuGrpcApi:       ReturnType<typeof createImmuGrpcApi>
-    private sessionTokens?:             types.SessionTokens
+    private sessionTokens?:             immu.SessionTokens
     private callCredentials?:           grpcjs.CallCredentials
 
     constructor(conf: Config) {
@@ -250,7 +246,7 @@ export class Client {
      *
      * Returns entries set and verification structure of transaction.
      */
-     async setValEntriesAndVerify(
+    async setValEntriesAndVerify(
         props: api.SetVEntryProps & api.ProofRequestProps
     ) {
         return this.immuGrpcApi.setValEntriesGetProof({
@@ -652,7 +648,7 @@ export class Client {
     async executeSqlTx(
         mode: "ReadOnly" | "WriteOnly" | "ReadWrite",
         run: (txApi: {
-            query(props: api.SqlTxQueryProps): Promise<types.SqlNamedValue[][]>,
+            query(props: api.SqlTxQueryProps): Promise<immu.SqlNamedValue[][]>,
             exec(props: api.SqlTxExecProps): Promise<void>,
         }) => Promise<void>,
     ) {

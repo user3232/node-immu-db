@@ -1,5 +1,5 @@
 import Long from "long"
-import { SqlRowColumn } from "../types/A"
+import * as immu from "../types/index.js"
 
 
 
@@ -65,7 +65,7 @@ export type SqlDecoder = {
 export function createSqlMap<T extends {[key in string]: {type: SqlValueType, id: number}}>(
     def: T
 ) {
-    return function mapSql(data: SqlRowColumn[]) {
+    return function mapSql(data: immu.SqlRowColumn[]) {
         const res: any = {}
 
         const keys = Object.keys(def) as (keyof T)[]

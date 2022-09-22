@@ -1,5 +1,5 @@
 import { TxHeader__Output } from 'immudb-grpcjs/immudb/schema/TxHeader.js'
-import type * as immu from './types/A.js'
+import type * as immu from './types/index.js'
 
 
 export function fromGrpcTxHeader(

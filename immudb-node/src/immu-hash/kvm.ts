@@ -16,8 +16,8 @@ import { entryMetaToBuffer } from './EntryMetadata.js'
  *   - value prefix (0x00)
  *   - value 
  */
- export function hashOfValEntry(
-    props: immu.ValEntry
+ export function hashOfKeyValMeta(
+    props: immu.KeyValMeta
 ): Buffer {
 
     const meta = entryMetaToBuffer(props.meta)

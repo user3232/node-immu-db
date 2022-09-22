@@ -1,11 +1,8 @@
 import { type ImmuServiceClient } from 'immudb-grpcjs/immudb/schema/ImmuService.js'
-import type * as types from '../types/index.js'
-import * as immuConvert from '../immu-convert/index.js'
+import type * as immu from '../types/index.js'
+import * as igd from '../immu-grpc-db.js'
 import * as grpcjs from '@grpc/grpc-js'
 import * as immuGrpc from '../immu-grpc/index.js'
-import * as buffer from '../buffer.js'
-import * as kvm from '../immu-kvm/index.js'
-import Long from 'long'
 import { DatabaseWithSettings__Output } from 'immudb-grpcjs/immudb/schema/DatabaseWithSettings.js'
 
 
@@ -18,7 +15,7 @@ export type CreateDatabaseProps = {
     /**
      * Database settings
      */
-    settings: types.DatabaseSettingsUpdatable;
+    settings: immu.DatabaseSettingsUpdatable;
     /**
      * What to do when database exists?
      * * silently ignore --> set this value to true
@@ -40,7 +37,7 @@ export function createCreateDb(client: ImmuServiceClient) {
             request: {
                 name:        props.database,
                 ifNotExists: props.ifNotExists,
-                settings:    immuConvert.dbUpdatableSettingsToGrpcDbSettings(props.settings)
+                settings:    igd.dbUpdatableSettingsToGrpcDbSettings(props.settings)
             },
             options: {
                 credentials: props.credentials,
@@ -54,7 +51,7 @@ export function createCreateDb(client: ImmuServiceClient) {
             return {
                 database:       resp.name,
                 alreadyExisted: resp.alreadyExisted,
-                settings: immuConvert.grpcDbSettingsToDbSettings(resp.settings),
+                settings: igd.grpcDbSettingsToDbSettings(resp.settings),
             }
         })
     }
@@ -203,7 +200,7 @@ export function createGetDbSettings(client: ImmuServiceClient) {
         .then(resp => {
             return {
                 database : resp.database,
-                settings: immuConvert.grpcDbSettingsToDbSettings(resp.settings)
+                settings: igd.grpcDbSettingsToDbSettings(resp.settings)
             }
         })
     }
@@ -239,11 +236,11 @@ export function createListDbs(client: ImmuServiceClient) {
 
 function grpcDbRunInfoToDbRunInfo(
     props: DatabaseWithSettings__Output
-): types.DBRuntimeInfo {
+): immu.DBRuntimeInfo {
     return {
         database: props.name,
         isLoaded: props.loaded,
-        settings: immuConvert.grpcDbSettingsToDbSettings(props.settings)
+        settings: igd.grpcDbSettingsToDbSettings(props.settings)
     }
 }
 
@@ -329,7 +326,7 @@ export type SetDbSettingsProps = {
     /**
      * Database settings
      */
-    settings: types.DatabaseSettingsUpdatable;
+    settings: immu.DatabaseSettingsUpdatable;
 }
 
 
@@ -344,7 +341,7 @@ export function createSetDbSettings(client: ImmuServiceClient) {
         return updateDatabaseV2Grpc({
             request: {
                 database: props.database,
-                settings: immuConvert.dbUpdatableSettingsToGrpcDbSettings(props.settings)
+                settings: igd.dbUpdatableSettingsToGrpcDbSettings(props.settings)
             },
             options: {
                 credentials: props.credentials,
@@ -356,7 +353,7 @@ export function createSetDbSettings(client: ImmuServiceClient) {
         )
         .then(resp => ({
             database: resp.database,
-            settings: immuConvert.grpcDbSettingsToDbSettings(resp.settings)
+            settings: igd.grpcDbSettingsToDbSettings(resp.settings)
         }))
     }
 }

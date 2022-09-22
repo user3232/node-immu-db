@@ -1,5 +1,5 @@
+import * as immu from "../types/index.js";
 import { NamedParam, NamedParam__Output } from "immudb-grpcjs/immudb/schema/NamedParam.js";
-import { SqlNamedValue, SqlValue } from "../types/index.js";
 import type { SQLQueryResult__Output } from "immudb-grpcjs/immudb/schema/SQLQueryResult.js";
 import { SQLValue__Output } from "immudb-grpcjs/immudb/schema/SQLValue.js";
 import { Row__Output } from "immudb-grpcjs/immudb/schema/Row.js";
@@ -11,7 +11,7 @@ export function grpcSqlObjectNamedValueToNamedValues(
     objectNamedValue: {
         [key: string]: SQLValue__Output;
     }
-): SqlNamedValue[] {
+): immu.SqlNamedValue[] {
 
     return Object.entries(objectNamedValue).map(([name, grpcSqlValue]) => ({
         name,
@@ -25,14 +25,14 @@ export function grpcSqlObjectNamedValueToNamedValues(
 
 export function grpcQueryResultToListoOfSqlNamedValues(
     queryResult: SQLQueryResult__Output
-): SqlNamedValue[][] {
+): immu.SqlNamedValue[][] {
     
     return queryResult.rows.map(grpcSqlRowToSqlNamedValues)
 }
 
 export function grpcSqlRowToSqlNamedValues(
     grpcRow: Row__Output
-): SqlNamedValue[] {
+): immu.SqlNamedValue[] {
     return grpcRow.values.map((val, i) => ({
         name: grpcRow.columns[i],
         ...grpcSqlValueToSqlValue(val)
@@ -43,7 +43,7 @@ export function grpcSqlRowToSqlNamedValues(
 
 
 export function sqlNamedValueToGrpcSqlNamedParam(
-    param: SqlNamedValue
+    param: immu.SqlNamedValue
 ): NamedParam {
     switch(param.type) {
         case 'BOOLEAN': 
@@ -66,7 +66,7 @@ export function sqlNamedValueToGrpcSqlNamedParam(
 /** Maps grpc sql value and value name to more js friendly value.  */
 export function grpcSqlNamedParamToSqlNamedValue(
     param: NamedParam__Output
-): SqlNamedValue {
+): immu.SqlNamedValue {
     
     if(param.value == undefined) {
         throw 'grpc sql param must have value'
@@ -84,7 +84,7 @@ export function grpcSqlNamedParamToSqlNamedValue(
 /** Maps grpc sql value to more js friendly value.  */
 export function grpcSqlValueToSqlValue(
     param: SQLValue__Output
-): SqlValue {
+): immu.SqlValue {
     
     switch(param.value) {
         case 'b': 

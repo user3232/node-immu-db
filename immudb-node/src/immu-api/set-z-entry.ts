@@ -1,5 +1,5 @@
 import { type ImmuServiceClient } from 'immudb-grpcjs/immudb/schema/ImmuService.js'
-import type * as immu from '../types/A.js'
+import type * as immu from '../types/index.js'
 import * as igt from '../immu-grpc-tx/index.js'
 import * as grpcjs from '@grpc/grpc-js'
 import * as immuGrpc from '../immu-grpc/index.js'

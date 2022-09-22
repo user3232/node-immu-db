@@ -581,6 +581,9 @@ export type ProvableTx = {
 export type Provable = ProvableTx | ProvableTx[] | TxEntry | TxEntry[]
 
 
+
+
+
 /** 
  * Logical transaction with omitted filds connected to verification,
  * composed from {@link TxCore} and {@link Entry}

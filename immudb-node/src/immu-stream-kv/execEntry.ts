@@ -1,5 +1,4 @@
 import * as pb from 'immudb-pbjs'
-// import immuSchemaPb = pb.immudb.schema
 import { fromKVEntry } from './kvEntry.js'
 import Long from 'long'
 import * as buffer from '../buffer.js'

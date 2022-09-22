@@ -1,6 +1,6 @@
 import { ImmuServiceClient } from 'immudb-grpcjs/immudb/schema/ImmuService.js'
-import type * as types from '../types/index.js'
-import * as immuConvert from '../immu-convert/index.js'
+import type * as immu from '../types/index.js'
+import * as igs from '../immu-grpc-session/index.js'
 import * as grpcjs from '@grpc/grpc-js'
 import * as immuGrpc from '../immu-grpc/index.js'
 
@@ -10,18 +10,18 @@ import * as immuGrpc from '../immu-grpc/index.js'
 export function createOpenSession(client: ImmuServiceClient) {
     const openSessionGrpc = immuGrpc.unaryCall.createOpenSession(client)
     /**
-     * Requests session metadata ({@link types.UserDatabaseSession}) from ImmuDb
+     * Requests session metadata ({@link immu.UserDatabaseSession}) from ImmuDb
      * server for user and database.
      */
-    return function openSession(sessionInfo: types.UserDatabaseSession) {
+    return function openSession(sessionInfo: immu.UserDatabaseSession) {
         return openSessionGrpc({
-            request: immuConvert.toOpenSessionRequestFromUserDatabaseSession(sessionInfo),
+            request: igs.userDatabaseSessionToGrpcOpenSession(sessionInfo),
         })
         .then(maybeResponse => maybeResponse 
             ? maybeResponse 
             : Promise.reject('session tokens must be defined')
         )
-        .then(immuConvert.toSessionTokensFromOpenSessionResponse__Output)
+        .then(igs.grpcOpenSessionToSessionTokens)
     }
 }
 
@@ -30,7 +30,7 @@ export function createOpenSession(client: ImmuServiceClient) {
 export function createCloseSession(client: ImmuServiceClient) {
     const closeSessionGrpc = immuGrpc.unaryCall.createCloseSession(client)
     /**
-     * Closes session heaving {@link types.SessionTokens} 
+     * Closes session heaving {@link immu.SessionTokens} 
      * embedded in {@link grpcjs.CallCredentials}.
      */
     return function closeSession(props: grpcjs.CallCredentials) {
