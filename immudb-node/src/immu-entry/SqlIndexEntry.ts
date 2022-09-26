@@ -1,10 +1,17 @@
 import * as buffer from '../buffer.js'
 import { Buffer } from 'node:buffer'
-import * as immu from '../types/index.js'
+import type * as immu from '../types/index.js'
 import { 
     PrefixKeySql, 
     TagSqlIndex, 
 } from '../immu-hash/consts.js'
+
+
+
+
+
+
+
 
 
 
@@ -88,7 +95,7 @@ export function isBinEntryKeySqlIndexEntryPart(b: Buffer) {
  * - indexId: UInt32BE,
  * 
  */
-function binEntryPrefixedKeyToSqlIndexEntryPart(
+export function binEntryPrefixedKeyToSqlIndexEntryPart(
     b: Buffer
 ) {
     const sqlTag = TagSqlIndex
@@ -150,7 +157,7 @@ export function sqlIndexEntryToLeafEntryPrefixedKey(
  * - isAscDesc: bytes (boolean),
  * 
  */
-function binEntryPrefixedValToSqlIndexEntryPart(
+export function binEntryPrefixedValToSqlIndexEntryPart(
     b: Buffer
 ): {
     indexIsPrimary: number,
@@ -181,7 +188,7 @@ function binEntryPrefixedValToSqlIndexEntryPart(
 
 
 
-function sqlIndexEntryToBinEntryPrefixedVal(
+export function sqlIndexEntryToBinEntryPrefixedVal(
     props: immu.SqlIndexEntry
 ): Buffer {
     return Buffer.concat([

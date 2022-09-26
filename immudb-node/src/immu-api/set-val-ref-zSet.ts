@@ -1,4 +1,4 @@
-import { type ImmuServiceClient } from 'immudb-grpcjs/immudb/schema/ImmuService.js'
+import type * as igrpc from 'immudb-grpcjs'
 import type * as immu from '../types/index.js'
 import * as igp from '../immu-grpc-precond/index.js'
 import * as igt from '../immu-grpc-tx/index.js'
@@ -6,11 +6,11 @@ import * as grpcjs from '@grpc/grpc-js'
 import * as immuGrpc from '../immu-grpc/index.js'
 import * as ike from '../immu-kvm-entry/index.js'
 import Long from 'long'
-import { Op } from 'immudb-grpcjs/immudb/schema/Op.js'
-import { SetVEntryProps } from './set-val-entry.js'
+
+import { SetValEntryProps } from './set-val-entry.js'
 import { SetRefEntryProps } from './set-ref-entry.js'
-import { SetZEntryProps } from './set-z-entry.js'
-import { Chunk } from 'immudb-grpcjs/immudb/schema/Chunk.js'
+import { SetZSetEntryProps } from './set-z-entry.js'
+
 
 
 /**
@@ -48,10 +48,10 @@ export type SetEntryProps = {
 export type SetOperation = 
     | ({ type: 'val'  } & immu.KeyValMeta)
     | ({ type: 'ref'  } & SetRefEntryProps) 
-    | ({ type: 'zSet' } & SetZEntryProps)
+    | ({ type: 'zSet' } & SetZSetEntryProps)
 
 
-export function createSetEntries(client: ImmuServiceClient) {
+export function createSetEntries(client: igrpc.ImmuServiceClient) {
     const execAllGrpc = immuGrpc.unaryCall.createExecAll(client)
 
     
@@ -91,7 +91,7 @@ export function createSetEntries(client: ImmuServiceClient) {
 
 
 
-function operationToGrpcOperation(op: SetOperation): Op {
+function operationToGrpcOperation(op: SetOperation): igrpc.Op {
     
     switch(op.type) {
         case 'val': return {
@@ -176,10 +176,10 @@ function operationToVerifiableOperation(
 
 
 export type SetEntriesStreamingProps = {
-    chunks: AsyncIterable<Chunk>
+    chunks: AsyncIterable<igrpc.Chunk>
 }
 
-export function createSetEntriesStreaming(client: ImmuServiceClient) {
+export function createSetEntriesStreaming(client: igrpc.ImmuServiceClient) {
     const streamExecAllGrpc = immuGrpc.writerCall.createStreamExecAll(client)
 
     

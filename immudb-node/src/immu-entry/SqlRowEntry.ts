@@ -1,6 +1,6 @@
 import * as buffer from '../buffer.js'
 import { Buffer } from 'node:buffer'
-import * as immu from '../types/index.js'
+import type * as immu from '../types/index.js'
 import { PrefixKeySql, TagSqlRow } from '../immu-hash/consts.js'
 
 
@@ -70,7 +70,7 @@ export function isBinEntryKeySqlRowEntryPart(b: Buffer) {
  *   - ?
  * - pk: Bytes
  */
-function decodeBinEntryKeyToSqlRowEntryPart(
+export function decodeBinEntryKeyToSqlRowEntryPart(
     b: Buffer
 ) {
     const sqlTag = TagSqlRow
@@ -142,7 +142,7 @@ export function sqlRowEntryToLeafEntryPrefixedKey(
  *   - columnByteLength: UInt32BE,
  *   - columnValue: bytes of length columnByteLength
  */
-function decodeValueSqlRow(b: Buffer): {
+export function decodeValueSqlRow(b: Buffer): {
     columnsCount: number,
     columnsValues: (immu.SqlRowColumn  & {binLength: number})[],
 } {
@@ -168,7 +168,7 @@ function decodeValueSqlRow(b: Buffer): {
  * 
  * Returns decoded row column value and rest of buffer.
  */
-function decodeSqlRowColumnValue(
+export function decodeSqlRowColumnValue(
     b: Buffer
 ): {
     rowColumn: immu.SqlRowColumn & {binLength: number},
@@ -202,7 +202,7 @@ function decodeSqlRowColumnValue(
  *   - columnValue: bytes of length columnByteLength
  * 
  */
-function decodeSqlRowColumnsValues(
+export function decodeSqlRowColumnsValues(
     b: Buffer
 ): (immu.SqlRowColumn & {binLength: number})[] {
 
@@ -219,7 +219,7 @@ function decodeSqlRowColumnsValues(
 
 
 
-function encodeValueSqlRow(
+export function encodeValueSqlRow(
     props: immu.SqlRowColumn[]
 ): Buffer {
 

@@ -1,5 +1,5 @@
 import Long from "long"
-import * as immu from "../types/index.js"
+import type * as immu from "../types/index.js"
 
 
 

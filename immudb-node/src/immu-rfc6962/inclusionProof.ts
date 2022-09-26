@@ -78,14 +78,9 @@ import * as hash from '../immu-hash/hash.js'
     }
      
     
-    // assert currentNodeIndex is 0 === root
-    if (currentNodeIndex.notEquals(0)) {
-        // throw 'computed node is not root node for tree of provided size'
-        console.log(
-            'Inclusion proof: computed node is not root node for tree of provided size',
-            currentNodeIndex
-        )
-    }
+    // check index is root.
+    // how???
+
 
     return currentNode
 }

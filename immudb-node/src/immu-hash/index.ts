@@ -11,7 +11,7 @@ export * from './sqlEntry.js'
 
 
 export * from './binEntry.js'
-export * from './leafEntry.js'
+export * from './hashEntry.js'
 
 
 export * from './kvm.js'

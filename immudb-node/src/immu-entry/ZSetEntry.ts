@@ -1,10 +1,11 @@
 import * as buffer from '../buffer.js'
 import { Buffer } from 'node:buffer'
-import * as immu from '../types/index.js'
+import type * as immu from '../types/index.js'
 import { 
     PrefixKeyVal, 
     PrefixKeyZSet 
 } from '../immu-hash/consts.js'
+
 
 
 
@@ -74,7 +75,7 @@ export function zSetEntryToLeafEntryPrefixedKey(entry: immu.ZSetEntry): Buffer {
 
 
 
-function decodeBinEntryKeyAsZSetEntryPart(zKey: Buffer, offset?: number) {
+export function decodeBinEntryKeyAsZSetEntryPart(zKey: Buffer, offset?: number) {
     let index = offset ?? 0
 
     const prefix = zKey[index]

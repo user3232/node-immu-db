@@ -1,7 +1,6 @@
-import { KeyValue } from 'immudb-grpcjs/immudb/schema/KeyValue.js';
-import { KVMetadata } from 'immudb-grpcjs/immudb/schema/KVMetadata.js';
-import Long from 'long';
-import * as immu from '../types/index.js'
+import type * as igrpc from 'immudb-grpcjs'
+import type * as immu from '../types/index.js'
+import Long from 'long'
 
 
 
@@ -44,7 +43,7 @@ export function kvmToValEntry(
 
 export function kvmToGrpcKeyValue(
     props: immu.KeyValMeta
-): KeyValue {
+): igrpc.KeyValue {
     return {
         key:        props.key, 
         value:      props.val,
@@ -54,7 +53,7 @@ export function kvmToGrpcKeyValue(
 
 function metaToGrpcKVMetadata(
     meta?: immu.EntryMetadata
-): KVMetadata | undefined {
+): igrpc.KVMetadata | undefined {
     if(meta == undefined) {
         return undefined
     }

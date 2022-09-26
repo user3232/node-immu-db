@@ -1,9 +1,8 @@
-import { type ImmuServiceClient } from 'immudb-grpcjs/immudb/schema/ImmuService.js'
 import type * as immu from '../types/index.js'
 import * as igd from '../immu-grpc-db.js'
 import * as grpcjs from '@grpc/grpc-js'
 import * as immuGrpc from '../immu-grpc/index.js'
-import { DatabaseWithSettings__Output } from 'immudb-grpcjs/immudb/schema/DatabaseWithSettings.js'
+import type * as igrpc from 'immudb-grpcjs'
 
 
 
@@ -25,7 +24,7 @@ export type CreateDatabaseProps = {
 }
 
 
-export function createCreateDb(client: ImmuServiceClient) {
+export function createCreateDb(client: igrpc.ImmuServiceClient) {
     const createDbGrpc = immuGrpc.unaryCall.createCreateDatabaseV2(client)
 
     
@@ -68,7 +67,7 @@ export type DeleteDatabaseProps = {
 
 
 
-export function createDeleteDb(client: ImmuServiceClient) {
+export function createDeleteDb(client: igrpc.ImmuServiceClient) {
     const deleteDbGrpc = immuGrpc.unaryCall.createDeleteDatabase(client)
 
     
@@ -122,7 +121,7 @@ export type FlushDatabaseIndexProps = {
     synced: boolean,
 }
 
-export function createFlushDbIndex(client: ImmuServiceClient) {
+export function createFlushDbIndex(client: igrpc.ImmuServiceClient) {
     const flushIndexGrpc = immuGrpc.unaryCall.createFlushIndex(client)
 
     
@@ -150,7 +149,7 @@ export function createFlushDbIndex(client: ImmuServiceClient) {
 }
 
 
-export function createCompactDbIndex(client: ImmuServiceClient) {
+export function createCompactDbIndex(client: igrpc.ImmuServiceClient) {
     const compactIndexGrpc = immuGrpc.unaryCall.createCompactIndex(client)
 
     
@@ -177,7 +176,7 @@ export function createCompactDbIndex(client: ImmuServiceClient) {
 
 
 
-export function createGetDbSettings(client: ImmuServiceClient) {
+export function createGetDbSettings(client: igrpc.ImmuServiceClient) {
     const getDatabaseSettingsV2Grpc = immuGrpc.unaryCall.createGetDatabaseSettingsV2(client)
 
     
@@ -209,7 +208,7 @@ export function createGetDbSettings(client: ImmuServiceClient) {
 
 
 
-export function createListDbs(client: ImmuServiceClient) {
+export function createListDbs(client: igrpc.ImmuServiceClient) {
     const databaseListV2Grpc = immuGrpc.unaryCall.createDatabaseListV2(client)
 
     
@@ -235,7 +234,7 @@ export function createListDbs(client: ImmuServiceClient) {
 
 
 function grpcDbRunInfoToDbRunInfo(
-    props: DatabaseWithSettings__Output
+    props: igrpc.DatabaseWithSettings__Output
 ): immu.DBRuntimeInfo {
     return {
         database: props.name,
@@ -255,7 +254,7 @@ export type LoadDbProps = {
 }
 
 
-export function createLoadDb(client: ImmuServiceClient) {
+export function createLoadDb(client: igrpc.ImmuServiceClient) {
     const loadDatabaseGrpc = immuGrpc.unaryCall.createLoadDatabase(client)
 
     
@@ -291,7 +290,7 @@ export type UnloadDbProps = {
 }
 
 
-export function createUnloadDb(client: ImmuServiceClient) {
+export function createUnloadDb(client: igrpc.ImmuServiceClient) {
     const unloadDatabaseGrpc = immuGrpc.unaryCall.createUnloadDatabase(client)
 
     
@@ -330,7 +329,7 @@ export type SetDbSettingsProps = {
 }
 
 
-export function createSetDbSettings(client: ImmuServiceClient) {
+export function createSetDbSettings(client: igrpc.ImmuServiceClient) {
     const updateDatabaseV2Grpc = immuGrpc.unaryCall.createUpdateDatabaseV2(client)
 
     
@@ -362,7 +361,7 @@ export function createSetDbSettings(client: ImmuServiceClient) {
 
 
 
-export function createGetDbCurrentState(client: ImmuServiceClient) {
+export function createGetDbCurrentState(client: igrpc.ImmuServiceClient) {
     const stateGrpc = immuGrpc.unaryCall.createCurrentState(client)
 
     

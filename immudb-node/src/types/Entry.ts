@@ -3,6 +3,16 @@ import { EntryMetadata } from "./EntryMeta.js"
 
 
 
+
+export type KVMH = {
+    prefixedKey: Buffer,
+    prefixedVal: Buffer,
+    meta?:       EntryMetadata,
+    valHash:     Buffer,
+}
+
+
+
 export type BinEntry = {
     type:               'bin',
     version:            '1',
@@ -12,7 +22,7 @@ export type BinEntry = {
 }
 
 
-export type LeafEntry = {
+export type HashEntry = {
     type:               'hash',
     version:            '1',
     prefixedKey:        Buffer,
@@ -74,8 +84,9 @@ export type SqlColumnEntry = {
     sqlType:            'column',
     dbId:               number,
     tableId:            number,
+    columnId:           number,
     columnType:         string,
-    columnIsNullable:   boolean,
+    columnIsNotNull:    boolean,
     columnIsAutoIncr:   boolean,
     columnName:         string,
     columnMaxLength:    number,
@@ -137,7 +148,7 @@ export type SqlEntry =
 /**
  * ImmuDb entry, one of:
  * - binary entry - {@link BinEntry},
- * - hash entry - {@link LeafEntry},
+ * - hash entry - {@link HashEntry},
  * - value entry - {@link ValEntry},
  * - reference entry - {@link RefEntry},
  * - z-Set entry - {@link ZSetEntry},
@@ -145,7 +156,7 @@ export type SqlEntry =
  */
 export type Entry = 
     | BinEntry
-    | LeafEntry
+    | HashEntry
     | ValEntry
     | RefEntry
     | ZSetEntry

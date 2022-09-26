@@ -1,17 +1,14 @@
-import { type ImmuServiceClient } from 'immudb-grpcjs/immudb/schema/ImmuService.js'
+import type * as igrpc from 'immudb-grpcjs'
 import type * as immu from '../types/index.js'
 import * as grpcjs from '@grpc/grpc-js'
 import * as immuGrpc from '../immu-grpc/index.js'
 import * as igt from '../immu-grpc-tx/index.js'
-import * as ige from '../immu-grpc-entry/index.js'
 import * as igp from '../immu-grpc-precond/index.js'
-import * as ver from '../immu-verification/index.js'
 import * as ike from '../immu-kvm-entry/index.js'
-import { Chunk } from 'immudb-grpcjs/immudb/schema/Chunk.js'
-import Long from 'long'
 
 
-export type SetVEntryProps = {
+
+export type SetValEntryProps = {
     /**
      * Array of key value pairs to set.
      */
@@ -40,13 +37,13 @@ export type SetVEntryProps = {
 }
 
 
-export function createSetValEntries(client: ImmuServiceClient) {
+export function createSetValEntries(client: igrpc.ImmuServiceClient) {
     const setGrpc = immuGrpc.unaryCall.createSet(client)
 
     /**
      * Sets key-value pair(s) for given session defined in credentials
      */
-    return function setVEntries(props: SetVEntryProps & {
+    return function setVEntries(props: SetValEntryProps & {
         credentials: grpcjs.CallCredentials,
     }) {
 
@@ -83,10 +80,10 @@ export function createSetValEntries(client: ImmuServiceClient) {
 
 
 export type SetValEntriesStreamingProps = {
-    chunks: AsyncIterable<Chunk>
+    chunks: AsyncIterable<igrpc.Chunk>
 }
 
-export function createSetValEntriesStreaming(client: ImmuServiceClient) {
+export function createSetValEntriesStreaming(client: igrpc.ImmuServiceClient) {
     const streamSetGrpc = immuGrpc.writerCall.createStreamSet(client)
 
     
@@ -125,61 +122,6 @@ export function createSetValEntriesStreaming(client: ImmuServiceClient) {
         
     }
 }
-
-
-
-export type ProofRequestProps = {
-    refTxId:    Long,
-    refHash:    Buffer,
-}
-
-
-
-export function createSetValEntriesGetProof(client: ImmuServiceClient) {
-    const setGrpc = immuGrpc.unaryCall.createVerifiableSet(client)
-
-    /**
-     * Sets key-value pair(s) for given session defined in credentials
-     */
-    return function setValEntriesGetProof(props: SetVEntryProps & ProofRequestProps & {
-        credentials: grpcjs.CallCredentials,
-    }) {
-
-        
-
-        return setGrpc({
-            request: {
-                setRequest: {
-                    KVs:            props.kvms.map(ike.kvmToGrpcKeyValue),
-                    noWait:         props.options?.dontWaitForIndexer,
-                    preconditions:  props.preconditions?.map(
-                        igp.precondToGrpcPrecond
-                    ),
-                },
-                proveSinceTx: props.refTxId,
-            },
-            options: {
-                credentials: props.credentials,
-            },
-        })
-        .then(maybeResponse => maybeResponse 
-            ? maybeResponse 
-            : Promise.reject('VerifiableTx__Output must be defined')
-        )
-        .then(grpcVerTx => {
-            if(grpcVerTx.tx?.header == undefined) {
-                throw 'grpcVerTx.tx?.header must be defined'
-            }
-            return ver.verificationAndTxFromGrpcVerTx({
-                grpcVerTx,
-                refHash: props.refHash,
-                refTxId: props.refTxId,
-            })
-            
-        })
-    }
-}
-
 
 
 

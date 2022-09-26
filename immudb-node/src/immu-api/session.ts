@@ -1,4 +1,4 @@
-import { ImmuServiceClient } from 'immudb-grpcjs/immudb/schema/ImmuService.js'
+import type * as igrpc from 'immudb-grpcjs'
 import type * as immu from '../types/index.js'
 import * as igs from '../immu-grpc-session/index.js'
 import * as grpcjs from '@grpc/grpc-js'
@@ -7,7 +7,7 @@ import * as immuGrpc from '../immu-grpc/index.js'
 
 
 
-export function createOpenSession(client: ImmuServiceClient) {
+export function createOpenSession(client: igrpc.ImmuServiceClient) {
     const openSessionGrpc = immuGrpc.unaryCall.createOpenSession(client)
     /**
      * Requests session metadata ({@link immu.UserDatabaseSession}) from ImmuDb
@@ -27,7 +27,7 @@ export function createOpenSession(client: ImmuServiceClient) {
 
 
 
-export function createCloseSession(client: ImmuServiceClient) {
+export function createCloseSession(client: igrpc.ImmuServiceClient) {
     const closeSessionGrpc = immuGrpc.unaryCall.createCloseSession(client)
     /**
      * Closes session heaving {@link immu.SessionTokens} 
@@ -53,7 +53,7 @@ export function createCloseSession(client: ImmuServiceClient) {
 }
 
 
-export function createKeepAlive(client: ImmuServiceClient) {
+export function createKeepAlive(client: igrpc.ImmuServiceClient) {
     const keepAliveGrpc = immuGrpc.unaryCall.createKeepAlive(client)
     /**
      * Asks ImmuDb to not close (idle?) connection.
@@ -85,7 +85,7 @@ export type UseDbProps = {
 
 
 
-export function createUseDb(client: ImmuServiceClient) {
+export function createUseDb(client: igrpc.ImmuServiceClient) {
     const useDatabaseGrpc = immuGrpc.unaryCall.createUseDatabase(client)
 
     

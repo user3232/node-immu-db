@@ -7,4 +7,9 @@
     {
         "composite": true,
     },
+    "references": [
+        {
+            "path": "../immudb-node/tsconfig.ref.json"
+        }
+    ]
 }

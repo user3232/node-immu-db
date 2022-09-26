@@ -1,4 +1,4 @@
-import { type ImmuServiceClient } from 'immudb-grpcjs/immudb/schema/ImmuService.js'
+import type * as igrpc       from 'immudb-grpcjs'
 import * as grpcjs      from '@grpc/grpc-js'
 import * as immuGrpc    from '../immu-grpc/index.js'
 import * as ige         from '../immu-grpc-entry/index.js'
@@ -40,7 +40,7 @@ export type GetHistoryProps = {
     seenSinceTxId?: Long,
 }
 
-export function createScanHistory(client: ImmuServiceClient) {
+export function createScanHistory(client: igrpc.ImmuServiceClient) {
 
     const historyGrpc = immuGrpc.unaryCall.createHistory(client)
 
@@ -74,7 +74,7 @@ export function createScanHistory(client: ImmuServiceClient) {
 
 
 
-export function createScanHistoryStreaming(client: ImmuServiceClient) {
+export function createScanHistoryStreaming(client: igrpc.ImmuServiceClient) {
 
     const streamScanHistoryGrpc = immuGrpc.readerCall.createStreamHistory(client)
 

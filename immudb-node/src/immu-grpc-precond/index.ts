@@ -1,11 +1,11 @@
-import { Precondition } from "immudb-grpcjs/immudb/schema/Precondition.js";
-import * as immu from "../types/index.js";
+import type * as igrpc from 'immudb-grpcjs'
+import type * as immu from '../types/index.js'
 
 
 
 export function precondToGrpcPrecond(
     props: immu.ValOrRefKeyPrecondition
-): Precondition {
+): igrpc.Precondition {
 
     switch (props.type) {
         case 'key-must-exist': return {

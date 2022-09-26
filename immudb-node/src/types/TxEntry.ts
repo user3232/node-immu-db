@@ -1,7 +1,7 @@
 import Long from "long"
 import { 
     BinEntry, 
-    LeafEntry, 
+    HashEntry, 
     RefEntry, 
     SqlColumnEntry, 
     SqlDbEntry, 
@@ -37,7 +37,7 @@ export type SqlTxEntry =
 
 
 export type BinTxEntry  = TxContext & BinEntry
-export type LeafTxEntry = TxContext & LeafEntry
+export type LeafTxEntry = TxContext & HashEntry
 export type ValTxEntry  = TxContext & ValEntry
 export type RefTxEntry  = TxContext & RefEntry
 export type ZSetTxEntry = TxContext & ZSetEntry

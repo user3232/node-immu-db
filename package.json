@@ -4,7 +4,7 @@
   "description": "ImmuDb js packages",
   "author": "MK",
   "license": "ISC",
-  "workspaces":[
+  "workspaces": [
     "immudb-grpcjs",
     "immudb-pbjs",
     "immudb-node",
@@ -13,6 +13,11 @@
     "immudb-node-doc"
   ],
   "scripts": {
-    
+    "clean": "tsc --build --clean",
+    "build": "tsc --build",
+    "watch": "tsc --build --watch"
+  },
+  "dependencies": {
+    "typedoc": "^0.23.15"
   }
 }

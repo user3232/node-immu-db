@@ -1,4 +1,4 @@
-import { type ImmuServiceClient } from 'immudb-grpcjs/immudb/schema/ImmuService.js'
+import type * as igrpc from 'immudb-grpcjs'
 import * as grpcjs from '@grpc/grpc-js'
 import * as immuGrpc from '../immu-grpc/index.js'
 import * as igt from '../immu-grpc-tx/index.js'
@@ -38,7 +38,7 @@ export type DeleteValRefProps = {
 }
 
 
-export function createDeleteValRef(client: ImmuServiceClient) {
+export function createDeleteValRef(client: igrpc.ImmuServiceClient) {
     const deleteGrpc = immuGrpc.unaryCall.createDelete(client)
 
     /**

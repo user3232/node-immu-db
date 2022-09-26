@@ -1,15 +1,12 @@
-import * as immu from "../types/index.js";
-import { NamedParam, NamedParam__Output } from "immudb-grpcjs/immudb/schema/NamedParam.js";
-import type { SQLQueryResult__Output } from "immudb-grpcjs/immudb/schema/SQLQueryResult.js";
-import { SQLValue__Output } from "immudb-grpcjs/immudb/schema/SQLValue.js";
-import { Row__Output } from "immudb-grpcjs/immudb/schema/Row.js";
+import type * as immu from "../types/index.js";
+import type * as igrpc from 'immudb-grpcjs'
 
 
 
 
 export function grpcSqlObjectNamedValueToNamedValues(
     objectNamedValue: {
-        [key: string]: SQLValue__Output;
+        [key: string]: igrpc.SQLValue__Output;
     }
 ): immu.SqlNamedValue[] {
 
@@ -24,14 +21,14 @@ export function grpcSqlObjectNamedValueToNamedValues(
 
 
 export function grpcQueryResultToListoOfSqlNamedValues(
-    queryResult: SQLQueryResult__Output
+    queryResult: igrpc.SQLQueryResult__Output
 ): immu.SqlNamedValue[][] {
     
     return queryResult.rows.map(grpcSqlRowToSqlNamedValues)
 }
 
 export function grpcSqlRowToSqlNamedValues(
-    grpcRow: Row__Output
+    grpcRow: igrpc.Row__Output
 ): immu.SqlNamedValue[] {
     return grpcRow.values.map((val, i) => ({
         name: grpcRow.columns[i],
@@ -44,7 +41,7 @@ export function grpcSqlRowToSqlNamedValues(
 
 export function sqlNamedValueToGrpcSqlNamedParam(
     param: immu.SqlNamedValue
-): NamedParam {
+): igrpc.NamedParam {
     switch(param.type) {
         case 'BOOLEAN': 
             return {name: param.name, value: { value: 'b',  b: param.value}}
@@ -63,9 +60,30 @@ export function sqlNamedValueToGrpcSqlNamedParam(
 
 
 
+export function sqlValueToGrpcSqlValue(
+    param: immu.SqlValue
+): igrpc.SQLValue__Output {
+    switch(param.type) {
+        case 'BOOLEAN': 
+            return {value: 'b',  b: param.value}
+        case 'BLOB':       
+            return {value: 'bs', bs: param.value}
+        case 'INTEGER':       
+            return {value: 'n',  n: param.value}
+        case 'NULL':        
+            return {value: 'null'}
+        case 'VARCHAR':      
+            return {value: 's',  s: param.value}
+        case 'TIMESTAMP':   
+            return {value: 'ts',  ts: param.value}
+    }
+}
+
+
+
 /** Maps grpc sql value and value name to more js friendly value.  */
 export function grpcSqlNamedParamToSqlNamedValue(
-    param: NamedParam__Output
+    param: igrpc.NamedParam__Output
 ): immu.SqlNamedValue {
     
     if(param.value == undefined) {
@@ -83,7 +101,7 @@ export function grpcSqlNamedParamToSqlNamedValue(
 
 /** Maps grpc sql value to more js friendly value.  */
 export function grpcSqlValueToSqlValue(
-    param: SQLValue__Output
+    param: igrpc.SQLValue__Output
 ): immu.SqlValue {
     
     switch(param.value) {

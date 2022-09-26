@@ -1,6 +1,4 @@
-import Long from 'long'
 import { Buffer } from 'node:buffer'
-import { VerifiableEntry__Output } from 'immudb-grpcjs/immudb/schema/VerifiableEntry'
 import * as pbImmu from 'immudb-pbjs'
 // import * as _pbImmu from '../pb/immu.js'
 // import pbImmu = _pbImmu.immudb.schema

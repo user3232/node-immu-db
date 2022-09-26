@@ -1,5 +1,5 @@
 import Long from 'long'
-import { type ImmuServiceClient } from 'immudb-grpcjs/immudb/schema/ImmuService.js'
+import type * as igrpc from 'immudb-grpcjs'
 import * as grpcjs from '@grpc/grpc-js'
 import * as immuGrpc from '../immu-grpc/index.js'
 import * as ige from '../immu-grpc-entry/index.js'
@@ -70,7 +70,7 @@ export type GetValRefProps = {
 }
 
 
-export function createGetValRef(client: ImmuServiceClient) {
+export function createGetValRef(client: igrpc.ImmuServiceClient) {
     const getGrpc = immuGrpc.unaryCall.createGet(client)
 
     /**
@@ -126,7 +126,7 @@ export type GetAllValRefsProps = {
 }
 
 
-export function createGetValRefs(client: ImmuServiceClient) {
+export function createGetValRefs(client: igrpc.ImmuServiceClient) {
     const getAllGrpc = immuGrpc.unaryCall.createGetAll(client)
 
     /**
@@ -238,7 +238,7 @@ export type GetTxWithEntriesProps = {
 }
 
 
-export function createGetTxWithEntries(client: ImmuServiceClient) {
+export function createGetTxWithEntries(client: igrpc.ImmuServiceClient) {
     const getTxByIdGrpc = immuGrpc.unaryCall.createTxById(client)
 
     /**
@@ -326,7 +326,7 @@ export type GetTxGenericEntriesProps = {
 }
 
 
-export function createGetTxGenericEntries(client: ImmuServiceClient) {
+export function createGetTxGenericEntries(client: igrpc.ImmuServiceClient) {
     const getTxByIdGrpc = immuGrpc.unaryCall.createTxById(client)
 
     /**
@@ -371,7 +371,7 @@ export function createGetTxGenericEntries(client: ImmuServiceClient) {
 
 
 
-export function createGetValRefStreaming(client: ImmuServiceClient) {
+export function createGetValRefStreaming(client: igrpc.ImmuServiceClient) {
 
     const streamGetGrpc = immuGrpc.readerCall.createStreamGet(client)
 

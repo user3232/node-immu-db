@@ -1,4 +1,4 @@
-import * as immu from '../types/index.js'
+import type * as immu from '../types/index.js'
 import { 
     binEntryToSqlColumnEntry, 
     isBinEntryKeySqlColumnEntryPart, 
@@ -36,6 +36,11 @@ import {
 
 
 
+
+
+
+
+
 export function binEntryToSqlEntryType(
     props: immu.BinEntry
 ): immu.SqlEntry['sqlType'] | 'bin' {
@@ -62,6 +67,11 @@ export function binEntryToSqlEntryType(
 
     return 'bin'
 }
+
+
+
+
+
 
 
 

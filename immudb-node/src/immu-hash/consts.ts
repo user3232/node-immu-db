@@ -58,9 +58,15 @@ export const PrefixKeySql           = Buffer.of(0x02)
 
 
 /** `0b00000001` byte */
-export const FlagNullable = Buffer.of(0b00000001)
+export const FlagNotNullValue = 0b00000001
+/** `0b00000001` byte */
+export const FlagNullable = Buffer.of(FlagNotNullValue)
+
+
 /** `0b00000010` byte */
-export const FlagAutoIncrement = Buffer.of(0b00000010)
+export const FlagAutoIncrementValue = 0b00000010
+/** `0b00000010` byte */
+export const FlagAutoIncrement = Buffer.of(FlagAutoIncrementValue)
 
 
 
@@ -68,21 +74,21 @@ export const FlagAutoIncrement = Buffer.of(0b00000010)
 
 
 /** Checks if byte value have {@link FlagNullable} bit set. */
-export function isFlagNullableSet(byte: number): boolean {
-    return (byte & 0b00000001) === 0b00000001
+export function isFlagNotNullSet(byte: number): boolean {
+    return (byte & FlagNotNullValue) === FlagNotNullValue
 }
 /** Checks if byte value have {@link FlagAutoIncrement} bit set. */
 export function isFlagAutoIncrementSet(byte: number): boolean {
-    return (byte & 0b00000010) === 0b00000010
+    return (byte & FlagAutoIncrementValue) === FlagAutoIncrementValue
 }
 
 /** Returns byte value with {@link FlagNullable} bit set. */
-export function setColumnFlagNullable(byte: number): number {
-    return byte | 0b00000001
+export function setColumnFlagNotNull(byte: number): number {
+    return byte | FlagNotNullValue
 }
 /** Returns byte value with {@link FlagAutoIncrement} bit set. */
 export function setColumnFlagAutoIncrement(byte: number): number {
-    return byte | 0b00000010
+    return byte | FlagAutoIncrementValue
 }
 /** 
  * Returns byte value with {@link FlagAutoIncrement} and {@link FlagNullable}
@@ -90,14 +96,14 @@ export function setColumnFlagAutoIncrement(byte: number): number {
  */
 export function setColumnFlags(props: {
     columnIsAutoIncr?: boolean,
-    columnIsNullable?: boolean,
+    columnIsNotNull?: boolean,
 }): number {
     let result = 0
     if(props.columnIsAutoIncr === true) {
         result = setColumnFlagAutoIncrement(result)
     } 
-    if(props.columnIsNullable === true) {
-        result = setColumnFlagNullable(result)
+    if(props.columnIsNotNull === true) {
+        result = setColumnFlagNotNull(result)
     } 
     return result
 }

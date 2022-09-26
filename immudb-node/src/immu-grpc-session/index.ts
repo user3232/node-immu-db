@@ -1,12 +1,11 @@
-import { OpenSessionRequest } from "immudb-grpcjs/immudb/schema/OpenSessionRequest.js";
-import { OpenSessionResponse__Output } from "immudb-grpcjs/immudb/schema/OpenSessionResponse";
+import type * as igrpc from 'immudb-grpcjs'
 import { Buffer } from 'node:buffer'
-import * as immu from "../types/index.js";
+import type * as immu from '../types/index.js'
 
 
 
 export function grpcOpenSessionToSessionTokens(
-    props: OpenSessionResponse__Output
+    props: igrpc.OpenSessionResponse__Output
 ): immu.SessionTokens {
     return {
         "immudb-uuid": props.serverUUID,
@@ -16,7 +15,7 @@ export function grpcOpenSessionToSessionTokens(
 
 export function userDatabaseSessionToGrpcOpenSession(
     props: immu.UserDatabaseSession
-): OpenSessionRequest {
+): igrpc.OpenSessionRequest {
     return {
         databaseName: props.database,
         password: Buffer.from(props.password),

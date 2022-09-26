@@ -1,5 +1,4 @@
-import { TxEntry__Output } from 'immudb-grpcjs/immudb/schema/TxEntry.js'
-import * as immu from '../types/index.js'
+import type * as immu from '../types/index.js'
 import { 
     binEntryToRefEntry, 
     refEntryToBinEntry, 
@@ -25,13 +24,24 @@ import {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
 export function binEntryToEntryType(
     props: immu.BinEntry
 ): immu.Entry['type'] {
     switch(props.prefixedKey[0]) {
         case 0x00: {
             switch(props.prefixedVal.length) {
-                case 0:         return 'val'
+                case 0:         return 'hash'
                 default: switch(props.prefixedVal[0]) {
                     case 0x00:  return 'val'
                     case 0x01:  return 'ref'
@@ -44,6 +54,13 @@ export function binEntryToEntryType(
         default:    return 'bin'
     }
 }
+
+
+
+
+
+
+
 
 
 export function binEntryToEntry(
@@ -62,7 +79,7 @@ export function binEntryToEntry(
 
 export function entryToBinEntry(
     props: immu.Entry
-): immu.BinEntry | immu.LeafEntry {
+): immu.BinEntry | immu.HashEntry {
     switch(props.type) {
         case 'bin':     return props
         case 'hash':    return props
@@ -88,31 +105,15 @@ export function entryToLeafEntryPrefixedKey(
 }
 
 
-export function grpcEntryToEntry(
-    grpcEntry: TxEntry__Output
-): immu.Entry {
-    return binEntryToEntry(grpcEntryToBinEntry(grpcEntry))
-}
 
 
 
-export function grpcEntryToBinEntry(
-    grpcEntry: TxEntry__Output
-): immu.BinEntry {
 
-    const meta = grpcEntry.metadata == undefined 
-        ? undefined
-        : {
-            deleted: grpcEntry.metadata?.deleted,
-            nonIndexable: grpcEntry.metadata?.nonIndexable,
-            expiresAt: grpcEntry.metadata?.expiration?.expiresAt,
-        }
 
-    return {
-        type: 'bin',
-        version: '1',
-        meta,
-        prefixedKey: grpcEntry.key,
-        prefixedVal: grpcEntry.value,
-    }
-}
+
+
+
+
+
+
+

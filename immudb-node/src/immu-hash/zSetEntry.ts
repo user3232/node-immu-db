@@ -1,8 +1,8 @@
-import * as immu from '../types/index.js'
+import type * as immu from '../types/index.js'
 import * as hash from './hash.js'
 import * as buffer from '../buffer.js'
 import { Buffer } from 'node:buffer'
-import { PrefixKeyVal, PrefixValVal } from './consts.js'
+import * as consts from './consts.js'
 import { entryMetaToBuffer } from './EntryMetadata.js'
 
 
@@ -34,18 +34,15 @@ import { entryMetaToBuffer } from './EntryMetadata.js'
  * - metadata - metadata - bytes
  * - prefixedZSetKeyLength - UInt16BE,
  * - prefixedZSetKey:
- *   - prefixKey - `0x00` - byte
- *   - zSetKey:
  *     - prefixZSet - `0x01` - byte
- *     - zSetLength - UInt16BE,
+ *     - zSetLength - UInt64BE,
  *     - zSet - bytes,
  *     - score - Double64BE,
- *     - prefixedRefKeyLength - UInt16BE,
+ *     - prefixedRefKeyLength - UInt64BE,
  *     - prefixedRefKey:
  *       - prefix - `0x00` - byte,
  *       - refKey - bytes
  * - sha256 of:
- *   - prefixValue - `0x00` - byte
  *   - value - empty
  * 
  */
@@ -56,27 +53,25 @@ import { entryMetaToBuffer } from './EntryMetadata.js'
     const metaLength = meta.byteLength
 
 
-    const prefixKey = PrefixKeyVal
-    const prefixKeyLength = prefixKey.byteLength
+    const prefixZKey = consts.PrefixKeyZSet
 
-
-    const prefixZSet = Buffer.of(0x01)
-    const zSetLength = buffer.fromUInt16BE(props.zSet.length)
     const zSet = props.zSet
+    const zSetLength = buffer.fromUInt64BEAsNumber(props.zSet.length)
     const zSetRefScore = buffer.fromDoubleBe(props.referredKeyScore)
 
-    const prefixReferredKey = Buffer.of(0x00)
+
+    const prefixReferredKey = consts.PrefixKeyVal
     const referredKey = props.referredKey
-    const prefixReferredKeyLength = prefixReferredKey.byteLength
-    const referredKeyLength = props.referredKey.byteLength
-    const prefixedReferredKeyLength = buffer.fromUInt16BE(
-        prefixReferredKeyLength 
-        + referredKeyLength
+    const prefixedReferredKeyLength = buffer.fromUInt64BEAsNumber(
+        prefixReferredKey.byteLength 
+        + referredKey.byteLength 
     )
+
+
     const referredKeyAtTxId = Buffer.from(props.referredAtTxId.toBytesBE())
 
     const zSetKey = [
-        prefixZSet, 
+        prefixZKey, 
         zSetLength,
         zSet,
         zSetRefScore,
@@ -89,7 +84,7 @@ import { entryMetaToBuffer } from './EntryMetadata.js'
     ]
     
     const zSetKeyLength = 
-        prefixZSet.byteLength
+        prefixZKey.byteLength
         + zSetLength.byteLength
         + zSet.byteLength
         + zSetRefScore.byteLength
@@ -97,24 +92,18 @@ import { entryMetaToBuffer } from './EntryMetadata.js'
         + prefixReferredKey.byteLength
         + referredKey.byteLength
         + referredKeyAtTxId.byteLength
-        + prefixReferredKey.byteLength
 
 
 
-    const prefixValue = PrefixValVal
     const value = Buffer.of()
 
 
     const entryHash = hash.ofTreeBuffers(
         buffer.fromUInt16BE(metaLength),
         meta,
-        buffer.fromUInt16BE(prefixKeyLength + zSetKeyLength), 
-        [
-            prefixKey,
-            zSetKey,
-        ],
+        buffer.fromUInt16BE(zSetKeyLength), 
+        zSetKey,
         hash.ofTreeBuffers(
-            prefixValue, 
             value, 
         )
     )

@@ -1,4 +1,4 @@
-import { type ImmuServiceClient } from 'immudb-grpcjs/immudb/schema/ImmuService.js'
+import type * as igrpc from 'immudb-grpcjs'
 import type * as immu from '../types/index.js'
 import * as grpcjs from '@grpc/grpc-js'
 import * as immuGrpc from '../immu-grpc/index.js'
@@ -40,7 +40,7 @@ export type SqlQueryProps = {
 
 
 
-export function createSqlQuery(client: ImmuServiceClient) {
+export function createSqlQuery(client: igrpc.ImmuServiceClient) {
     const sqlQueryGrpc = immuGrpc.unaryCall.createSqlQuery(client)
 
     
@@ -71,7 +71,7 @@ export function createSqlQuery(client: ImmuServiceClient) {
 
 
 
-export function createSqlQueryTables(client: ImmuServiceClient) {
+export function createSqlQueryTables(client: igrpc.ImmuServiceClient) {
     const sqlQueryTablesGrpc = immuGrpc.unaryCall.createListTables(client)
 
     
@@ -108,7 +108,7 @@ export type SqlQueryTableProps = {
 }
 
 
-export function createSqlQueryTable(client: ImmuServiceClient) {
+export function createSqlQueryTable(client: igrpc.ImmuServiceClient) {
     const sqlQueryTableGrpc = immuGrpc.unaryCall.createDescribeTable(client)
 
     

@@ -1,9 +1,9 @@
 import * as buffer from '../buffer.js'
 import { Buffer } from 'node:buffer'
-import * as immu from '../types/index.js'
+import type * as immu from '../types/index.js'
 import { 
     isFlagAutoIncrementSet, 
-    isFlagNullableSet, 
+    isFlagNotNullSet, 
     PrefixKeySql, 
     setColumnFlags, 
     TagSqlColumn, 
@@ -12,23 +12,47 @@ import {
 
 
 
+
+
+
+
+
+
 export function binEntryToSqlColumnEntry(props: immu.BinEntry): immu.SqlColumnEntry {
 
     const decodedBinKey = binEntryPrefixedKeyToSqlColumnEntryPart(props.prefixedKey)
     const decodedBinVal = binEntryPrefixedValToSqlColumnEntryPart(props.prefixedVal)
-    return {
+    const columnEntry: immu.SqlColumnEntry = {
         type:               'sql',
         sqlType:            'column',
         version:            '1',
         meta:               props.meta,
         dbId:               decodedBinKey.dbId,
         tableId:            decodedBinKey.tableId,
+        columnId:           decodedBinKey.columnId,
         columnIsAutoIncr:   isFlagAutoIncrementSet(decodedBinVal.columnAttribute),
-        columnIsNullable:   isFlagNullableSet(decodedBinVal.columnAttribute),
+        columnIsNotNull:    isFlagNotNullSet(decodedBinVal.columnAttribute),
         columnType:         decodedBinKey.columnType,
         columnName:         decodedBinVal.columnName,
         columnMaxLength:    decodedBinVal.columnMaxLength,
     }
+
+    // const checkBinKey = sqlColumnEntryToLeafEntryPrefixedKey(columnEntry)
+    // if(checkBinKey.equals(props.prefixedKey) === false) {
+    //     throw `
+    //         prefixedKey: ${props.prefixedVal}
+    //         encodedKey: ${checkBinKey}
+    //     `
+    // }
+    // const checkBinVal = sqlColumnEntryToLeafEntryPrefixedVal(columnEntry)
+    // if(checkBinVal.equals(props.prefixedVal) === false) {
+    //     throw `
+    //         prefixedVal: ${props.prefixedVal}
+    //         encodedVal: ${checkBinVal}
+    //     `
+    // }
+
+    return columnEntry
 }
 
 
@@ -51,17 +75,17 @@ export function sqlColumnEntryToLeafEntryPrefixedKey(props: immu.SqlColumnEntry)
         TagSqlColumn,
         buffer.fromUInt32BE(props.dbId),
         buffer.fromUInt32BE(props.tableId),
-        buffer.fromUInt32BE(Buffer.from(props.columnType).byteLength),
+        buffer.fromUInt32BE(props.columnId),
         Buffer.from(props.columnType),
     ])
 }
 
 
-function sqlColumnEntryToLeafEntryPrefixedVal(props: immu.SqlColumnEntry): Buffer {
+export function sqlColumnEntryToLeafEntryPrefixedVal(props: immu.SqlColumnEntry): Buffer {
     return Buffer.concat([
         Buffer.of(setColumnFlags({
             columnIsAutoIncr: props.columnIsAutoIncr,
-            columnIsNullable: props.columnIsNullable,
+            columnIsNotNull: props.columnIsNotNull,
         })),
         buffer.fromUInt32BE(props.columnMaxLength),
         Buffer.from(props.columnName),
@@ -77,7 +101,7 @@ function sqlColumnEntryToLeafEntryPrefixedVal(props: immu.SqlColumnEntry): Buffe
  * 
  * Meaning {@link Buffer} is sql column.
  */
- export function isBinEntryKeySqlColumnEntryPart(b: Buffer) {
+export function isBinEntryKeySqlColumnEntryPart(b: Buffer) {
     
     if(b[0] !== PrefixKeySql[0]) {
         return false
@@ -100,7 +124,7 @@ function sqlColumnEntryToLeafEntryPrefixedVal(props: immu.SqlColumnEntry): Buffe
  * - columnType: utf8 encoded string,
  * 
  */
-function binEntryPrefixedKeyToSqlColumnEntryPart(
+export function binEntryPrefixedKeyToSqlColumnEntryPart(
     b: Buffer
 ) {
     const sqlTag = TagSqlColumn
@@ -113,7 +137,7 @@ function binEntryPrefixedKeyToSqlColumnEntryPart(
     index += 4
     const tableId = buffer.toUInt32BE(b, index)
     index += 4
-    const columnTypeLength = buffer.toUInt32BE(b, index)
+    const columnId = buffer.toUInt32BE(b, index)
     index += 4
     const columnType = b.subarray(index)
     index += columnType.byteLength
@@ -127,7 +151,7 @@ function binEntryPrefixedKeyToSqlColumnEntryPart(
         tag: tag.toString(),
         dbId,
         tableId,
-        columnTypeLength,
+        columnId,
         columnType: columnType.toString('utf8'),
     }
 }
@@ -140,7 +164,7 @@ function binEntryPrefixedKeyToSqlColumnEntryPart(
  * - columnMaxLength: UInt32BE,
  * - columnName: utf8 encoded string,
  */
-function binEntryPrefixedValToSqlColumnEntryPart(
+export function binEntryPrefixedValToSqlColumnEntryPart(
     b: Buffer
 ) {
     let index = 0

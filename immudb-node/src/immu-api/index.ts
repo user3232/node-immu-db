@@ -24,4 +24,10 @@ export * from './user.js'
 export * from './db.js'
 
 
-export * from './verification.js'
+export * from './verification-get-sql-row.js'
+export * from './verification-get-tx.js'
+export * from './verification-get-val-ref.js'
+
+export * from './verification-set-val.js'
+export * from './verification-set-ref.js'
+export * from './verification-set-zSet.js'

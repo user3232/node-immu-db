@@ -1,4 +1,4 @@
-import { type ImmuServiceClient } from 'immudb-grpcjs/immudb/schema/ImmuService.js'
+import type * as igrpc from 'immudb-grpcjs'
 import type * as immu from '../types/index.js'
 import * as igp from '../immu-grpc-precond/index.js'
 import * as grpcjs from '@grpc/grpc-js'
@@ -58,7 +58,7 @@ export type SetRefEntryProps = {
 }
 
 
-export function createSetRefEntry(client: ImmuServiceClient) {
+export function createSetRefEntry(client: igrpc.ImmuServiceClient) {
     const setRefEntryGrpc = immuGrpc.unaryCall.createSetReference(client)
 
     

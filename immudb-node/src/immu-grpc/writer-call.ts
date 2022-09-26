@@ -1,8 +1,6 @@
-import { ImmuServiceClient } from 'immudb-grpcjs/immudb/schema/ImmuService.js'
+import type * as igrpc from 'immudb-grpcjs'
 import * as promis from '../grpc-promis/index.js'
-import { Chunk } from 'immudb-grpcjs/immudb/schema/Chunk.js'
-import { TxHeader__Output } from 'immudb-grpcjs/immudb/schema/TxHeader.js'
-import { VerifiableTx__Output } from 'immudb-grpcjs/immudb/schema/VerifiableTx.js'
+
 
 
 
@@ -10,14 +8,14 @@ import { VerifiableTx__Output } from 'immudb-grpcjs/immudb/schema/VerifiableTx.j
 // Set Values
 // **************************
 
-export function createStreamSet(client: ImmuServiceClient) {
-    return promis.promisifyGrpcWriter<Chunk, TxHeader__Output>(
+export function createStreamSet(client: igrpc.ImmuServiceClient) {
+    return promis.promisifyGrpcWriter<igrpc.Chunk, igrpc.TxHeader__Output>(
         client.streamSet.bind(client)
     )
 }
 
-export function createStreamExecAll(client: ImmuServiceClient) {
-    return promis.promisifyGrpcWriter<Chunk, TxHeader__Output>(
+export function createStreamExecAll(client: igrpc.ImmuServiceClient) {
+    return promis.promisifyGrpcWriter<igrpc.Chunk, igrpc.TxHeader__Output>(
         client.streamExecAll.bind(client)
     )
 }
@@ -26,8 +24,8 @@ export function createStreamExecAll(client: ImmuServiceClient) {
 // Set Values and proof
 // **************************
 
-export function createStreamVerifiableSet(client: ImmuServiceClient) {
-    return promis.promisifyGrpcWriter<Chunk, VerifiableTx__Output>(
+export function createStreamVerifiableSet(client: igrpc.ImmuServiceClient) {
+    return promis.promisifyGrpcWriter<igrpc.Chunk, igrpc.VerifiableTx__Output>(
         client.streamVerifiableSet.bind(client)
     )
 }
@@ -37,8 +35,8 @@ export function createStreamVerifiableSet(client: ImmuServiceClient) {
 // Instance
 // **************************
 
-export function createReplicateTx(client: ImmuServiceClient) {
-    return promis.promisifyGrpcWriter<Chunk, TxHeader__Output>(
+export function createReplicateTx(client: igrpc.ImmuServiceClient) {
+    return promis.promisifyGrpcWriter<igrpc.Chunk, igrpc.TxHeader__Output>(
         client.replicateTx.bind(client)
     )
 }

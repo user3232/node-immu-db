@@ -1,13 +1,13 @@
-import { type ImmuServiceClient } from 'immudb-grpcjs/immudb/schema/ImmuService.js'
+import type * as igrpc from 'immudb-grpcjs'
 import type * as immu from '../types/index.js'
 import * as grpcjs from '@grpc/grpc-js'
 import * as immuGrpc from '../immu-grpc/index.js'
 import * as igt from '../immu-grpc-tx/index.js'
 import Long from 'long'
-import { Chunk } from 'immudb-grpcjs/immudb/schema/Chunk.js'
 
 
-export function createServerInfo(client: ImmuServiceClient) {
+
+export function createServerInfo(client: igrpc.ImmuServiceClient) {
     const healthGrpc = immuGrpc.unaryCall.createHealth(client)
 
     
@@ -35,7 +35,7 @@ export type ExportTxProps = {
     txId: Long
 }
 
-export function createExportTx(client: ImmuServiceClient) {
+export function createExportTx(client: igrpc.ImmuServiceClient) {
     const exportTxGrpc = immuGrpc.readerCall.createExportTx(client)
 
     
@@ -57,10 +57,10 @@ export function createExportTx(client: ImmuServiceClient) {
 
 
 export type ReplicateTxProps = {
-    chunks: AsyncIterable<Chunk>
+    chunks: AsyncIterable<igrpc.Chunk>
 }
 
-export function createReplicateTx(client: ImmuServiceClient) {
+export function createReplicateTx(client: igrpc.ImmuServiceClient) {
     const replicateTxGrpc = immuGrpc.writerCall.createReplicateTx(client)
 
     

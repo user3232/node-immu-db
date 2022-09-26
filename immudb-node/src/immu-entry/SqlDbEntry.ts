@@ -1,10 +1,14 @@
 import * as buffer from '../buffer.js'
 import { Buffer } from 'node:buffer'
-import * as immu from '../types/index.js'
+import type * as immu from '../types/index.js'
 import { 
     PrefixKeySql, 
     TagSqlDb, 
 } from '../immu-hash/consts.js'
+
+
+
+
 
 
 
@@ -84,7 +88,7 @@ export function isBinEntryKeySqlDbEntryPart(b: Buffer) {
  * - tableId: UInt32BE,
  * 
  */
-function binEntryPrefixedKeyToSqlDbEntryPart(
+export function binEntryPrefixedKeyToSqlDbEntryPart(
     b: Buffer
 ) {
     const sqlTag = TagSqlDb
@@ -135,7 +139,7 @@ export function sqlDbEntryToLeafEntryPrefixedKey(
  * - isAscDesc: bytes (boolean),
  * 
  */
-function binEntryPrefixedValToSqlDbEntryName(
+export function binEntryPrefixedValToSqlDbEntryName(
     b: Buffer
 ): string {
     return b.toString('utf8')
@@ -143,7 +147,7 @@ function binEntryPrefixedValToSqlDbEntryName(
 
 
 
-function sqlDbEntryToBinEntryPrefixedVal(
+export function sqlDbEntryToBinEntryPrefixedVal(
     props: immu.SqlDbEntry
 ): Buffer {
     return Buffer.from(props.dbName)

@@ -1,4 +1,4 @@
-import { type ImmuServiceClient } from 'immudb-grpcjs/immudb/schema/ImmuService.js'
+import type * as igrpc from 'immudb-grpcjs'
 import * as grpcjs from '@grpc/grpc-js'
 import * as immuGrpc from '../immu-grpc/index.js'
 import Long from 'long'
@@ -85,7 +85,7 @@ export type ScanTxesProps = {
 
 
 
-export function createScanTxes(client: ImmuServiceClient) {
+export function createScanTxes(client: igrpc.ImmuServiceClient) {
 
     const scanTxesGrpc = immuGrpc.unaryCall.createTxScan(client)
 
@@ -173,7 +173,7 @@ export type ScanDBProps = {
 
 
 
-export function createScanDb(client: ImmuServiceClient) {
+export function createScanDb(client: igrpc.ImmuServiceClient) {
 
     const scanTxes = createScanTxes(client)
 

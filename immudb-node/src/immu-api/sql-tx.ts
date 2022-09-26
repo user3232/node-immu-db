@@ -1,4 +1,4 @@
-import { type ImmuServiceClient } from 'immudb-grpcjs/immudb/schema/ImmuService.js'
+import type * as igrpc from 'immudb-grpcjs'
 import type * as immu from '../types/index.js'
 import * as grpcjs from '@grpc/grpc-js'
 import * as immuGrpc from '../immu-grpc/index.js'
@@ -17,7 +17,7 @@ export type SqlTxNewProps = {
     mode?: "ReadOnly" | "WriteOnly" | "ReadWrite"
 }
 
-export function createSqlTxNew(client: ImmuServiceClient) {
+export function createSqlTxNew(client: igrpc.ImmuServiceClient) {
     const sqlTxNewGrpc = immuGrpc.unaryCall.createNewTx(client)
 
     /**
@@ -52,7 +52,7 @@ export function createSqlTxNew(client: ImmuServiceClient) {
 }
 
 
-export function createSqlTxCommit(client: ImmuServiceClient) {
+export function createSqlTxCommit(client: igrpc.ImmuServiceClient) {
     const sqlTxCommitGrpc = immuGrpc.unaryCall.createCommit(client)
 
     /**
@@ -99,7 +99,7 @@ export function createSqlTxCommit(client: ImmuServiceClient) {
 
 
 
-export function createSqlTxRollback(client: ImmuServiceClient) {
+export function createSqlTxRollback(client: igrpc.ImmuServiceClient) {
     const sqlTxRollbackGrpc = immuGrpc.unaryCall.createRollback(client)
 
     /**
@@ -169,7 +169,7 @@ export type SqlTxExecProps = {
     
 }
 
-export function createSqlTxExec(client: ImmuServiceClient) {
+export function createSqlTxExec(client: igrpc.ImmuServiceClient) {
     const sqlTxExecGrpc = immuGrpc.unaryCall.createTxSqlExec(client)
 
     
@@ -229,7 +229,7 @@ export type SqlTxQueryProps = {
 
 
 
-export function createSqlTxQuery(client: ImmuServiceClient) {
+export function createSqlTxQuery(client: igrpc.ImmuServiceClient) {
     const sqlTxQueryGrpc = immuGrpc.unaryCall.createTxSqlQuery(client)
 
     

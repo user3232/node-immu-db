@@ -1,4 +1,4 @@
-import { type ImmuServiceClient } from 'immudb-grpcjs/immudb/schema/ImmuService.js'
+import type * as igrpc from 'immudb-grpcjs'
 import { Buffer } from 'node:buffer'
 import Long from 'long'
 import * as grpcjs from '@grpc/grpc-js'
@@ -61,7 +61,7 @@ export type ScanValRefEntriesProps = {
     dontWaitForLatestKeys?: boolean
 }
 
-export function createScanValRefEntries(client: ImmuServiceClient) {
+export function createScanValRefEntries(client: igrpc.ImmuServiceClient) {
 
     const scanKVEntriesGrpc = immuGrpc.unaryCall.createScan(client)
 
@@ -97,7 +97,7 @@ export function createScanValRefEntries(client: ImmuServiceClient) {
 
 
 
-export function createScanValRefEntriesStreaming(client: ImmuServiceClient) {
+export function createScanValRefEntriesStreaming(client: igrpc.ImmuServiceClient) {
 
     const streamScanGrpc = immuGrpc.readerCall.createStreamScan(client)
 

@@ -1,7 +1,9 @@
 import * as buffer from '../buffer.js'
 import { Buffer } from 'node:buffer'
-import * as immu from '../types/index.js'
+import type * as immu from '../types/index.js'
 import { PrefixKeyRef, PrefixValRef } from '../immu-hash/consts.js'
+
+
 
 
 
@@ -46,7 +48,7 @@ export function refEntryToLeafEntryPrefixedKey(props: immu.RefEntry): Buffer {
 }
 
 
-function binEntryKeyToRefEntryKey(keyBytes: Buffer, offset?: number) {
+export function binEntryKeyToRefEntryKey(keyBytes: Buffer, offset?: number) {
     let index = offset ?? 0
 
     const keyPrefix = keyBytes[index]
@@ -57,7 +59,7 @@ function binEntryKeyToRefEntryKey(keyBytes: Buffer, offset?: number) {
 }
 
 
-function decodeBinEntryValAsRefEntryPart(valBytes: Buffer, offset?: number) {
+export function decodeBinEntryValAsRefEntryPart(valBytes: Buffer, offset?: number) {
     let index = offset ?? 0
 
     const refPrefix = valBytes[index]

@@ -53,13 +53,9 @@ export function rootFromLastLeafInclusionProof(proofData: {
         currentNodeIndex = currentNodeIndex.shiftRight(1)
     }
 
-    // assert currentNodeIndex is root (currentNodeIndex === 0)
-    if (currentNodeIndex.notEquals(0)) {
-        console.log(
-            'Last Inclusion proof: computed node is not root node for tree of provided size',
-            currentNodeIndex
-        )
-    }
+    // check index is root.
+    // how???
+
 
     // end at root
     return currentNode

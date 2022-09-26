@@ -1,31 +1,16 @@
 {
     "name": "immudb-grpcjs",
     "type": "module",
-    "main": "./dist/schema.js",
+    "main": "./dist/main.js",
     "files": [
         "dist",
         "schema.proto",
         "LICENSE"
     ],
     "exports": {
-        "./schema.proto": "./schema.proto",
-        "./*.js": "./dist/*.js",
-        "./*": "./dist/*.js",
-        "./immudb/schema/*.js": "./dist/immudb/schema/*.js",
-        "./immudb/schema/*": "./dist/immudb/schema/*.js",
-        "./google/protobuf/*.js": "./dist/google/protobuf/*.js",
-        "./google/protobuf/*": "./dist/google/protobuf/*.js"
+        ".": "./dist/main.js"
     },
-    "typesVersions": {
-        "*": {
-            "schema.js": ["dist/schema.d.ts"],
-            "schema": ["dist/schema.d.ts"],
-            "immudb/schema/*.js": ["dist/immudb/schema/*.d.ts"],
-            "immudb/schema/*": ["dist/immudb/schema/*.d.ts"],
-            "google/protobuf/*.js": ["dist/google/protobuf/*.d.ts"],
-            "google/protobuf/*": ["dist/google/protobuf/*.d.ts"]
-        }
-    },
+    "types": "dist/main.d.ts",
     "dependencies": {
         "@grpc/grpc-js": "^1.7.0",
         "@grpc/proto-loader": "^0.7.2",
@@ -33,5 +18,8 @@
     },
     "devDependencies": {
         "typescript": "^4.8.3"
+    },
+    "scripts": {
+        "build": "tsc"
     }
 }

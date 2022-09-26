@@ -1,17 +1,16 @@
-import { type ImmuServiceClient } from 'immudb-grpcjs/immudb/schema/ImmuService.js'
+import type * as igrpc from 'immudb-grpcjs'
 import type * as immu from '../types/index.js'
 import * as ip from '../immu-permission.js'
 import * as grpcjs from '@grpc/grpc-js'
 import * as immuGrpc from '../immu-grpc/index.js'
 import { Buffer } from 'node:buffer'
-import { User__Output } from 'immudb-grpcjs/immudb/schema/User.js'
-import { Permission__Output } from 'immudb-grpcjs/immudb/schema/Permission.js'
 
 
 
 
 
-export function createListUsers(client: ImmuServiceClient) {
+
+export function createListUsers(client: igrpc.ImmuServiceClient) {
     const sqlQueryGrpc = immuGrpc.unaryCall.createListUsers(client)
 
     
@@ -41,7 +40,7 @@ export function createListUsers(client: ImmuServiceClient) {
 /**
  * Transforms User__Output to more friendly object.
  */
-function grpcUserInfoToUserInfo(userResponse: User__Output): immu.UserInfo {
+function grpcUserInfoToUserInfo(userResponse: igrpc.User__Output): immu.UserInfo {
     
     return {
         
@@ -58,7 +57,7 @@ function grpcUserInfoToUserInfo(userResponse: User__Output): immu.UserInfo {
  * Transforms grpc user permissions to more friendly output.
  */
 function grpcPermissionToDatabasePermission(
-    p: Permission__Output
+    p: igrpc.Permission__Output
 ): immu.DatabasePermission {
     return {
         database:       p.database,
@@ -95,7 +94,7 @@ export type CreateUsersProps = {
 }
 
 
-export function createCreateUser(client: ImmuServiceClient) {
+export function createCreateUser(client: igrpc.ImmuServiceClient) {
     const createUsersGrpc = immuGrpc.unaryCall.createCreateUsers(client)
 
     
@@ -146,7 +145,7 @@ export type SetUserPasswordProps = {
 }
 
 
-export function createSetUserPassword(client: ImmuServiceClient) {
+export function createSetUserPassword(client: igrpc.ImmuServiceClient) {
     const changePasswordGrpc = immuGrpc.unaryCall.createChangePassword(client)
 
     
@@ -186,7 +185,7 @@ export type SetUserActiveProps = {
 }
 
 
-export function createSetUserActive(client: ImmuServiceClient) {
+export function createSetUserActive(client: igrpc.ImmuServiceClient) {
     const setActiveUserGrpc = immuGrpc.unaryCall.createSetActiveUser(client)
 
     
@@ -233,7 +232,7 @@ export type SetUserDbPermissionsProps = {
 }
 
 
-export function createSetUserDbPermissions(client: ImmuServiceClient) {
+export function createSetUserDbPermissions(client: igrpc.ImmuServiceClient) {
     const changePermissionGrpc = immuGrpc.unaryCall.createChangePermission(client)
 
     

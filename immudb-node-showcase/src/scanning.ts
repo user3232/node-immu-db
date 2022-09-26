@@ -211,7 +211,7 @@ async function scanningShowcase() {
     console.log(stateAt8)
 
 
-    const setAndProof9 = await client.setValEntriesAndVerify({
+    const setAndProof9 = await client.setValEntriesGetVerification({
         kvms: [{key: Buffer.from('yo'), val: Buffer.from('man')}],
         refTxId: stateAt8.txId,
         refHash: stateAt8.txHash,
@@ -228,6 +228,8 @@ async function scanningShowcase() {
     console.log('stateAt9')
     console.log(stateAt9)
 
+
+    // entries2
     const getTx2AndVerification = await client.getTxAndVerification({
         txId: Long.fromInt(2, true),
         refHash: stateAt9.txHash,
@@ -235,15 +237,58 @@ async function scanningShowcase() {
     })
     console.log('getTx2AndVerification')
     console.dir(getTx2AndVerification, {depth: 10})
-
     console.log('verifyVerification(getTx2AndVerification) result:')
     console.log(verifyVerification(getTx2AndVerification.verification))
 
 
+
+
+    // entries6
+    const getTx6AndVerification = await client.getTxAndVerification({
+        txId:    entries6.tx.id,
+        refHash: stateAt9.txHash,
+        refTxId: stateAt9.txId,
+    })
+    console.log('getTx6AndVerification')
+    console.dir(getTx6AndVerification, {depth: 10})
+    console.log('verifyVerification(getTx6AndVerification) result:')
+    console.log(verifyVerification(getTx6AndVerification.verification))
+
+
+
+    // sqlExecCreateTable7.subTxes[0].tx?.id
+    const getTx7AndVerification = await client.getTxAndVerification({
+        txId:    Long.fromInt(7, true),
+        refHash: stateAt9.txHash,
+        refTxId: stateAt9.txId,
+    })
+    console.log('getTx7AndVerification')
+    console.dir(getTx7AndVerification, {depth: 10})
+    console.log('verifyVerification(getTx7AndVerification) result:')
+    console.log(verifyVerification(getTx7AndVerification.verification))
+
+
+    // sqlExecUpsert8
+    const getTx8AndVerification = await client.getTxAndVerification({
+        txId:    Long.fromInt(8, true),
+        refHash: stateAt9.txHash,
+        refTxId: stateAt9.txId,
+    })
+    console.log('getTx8AndVerification')
+    console.dir(getTx8AndVerification, {depth: 10})
+    console.log('verifyVerification(getTx8AndVerification) result:')
+    console.log(verifyVerification(getTx8AndVerification.verification))
+    
+
+
+
+
+
+
+
+
+
     await client.close()
-
-
-
 }
 
 

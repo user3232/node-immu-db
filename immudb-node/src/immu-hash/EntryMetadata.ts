@@ -1,5 +1,5 @@
 import { Buffer } from 'node:buffer'
-import * as immu from '../types/index.js'
+import type * as immu from '../types/index.js'
 import * as consts from './consts.js'
 
 

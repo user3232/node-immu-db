@@ -1,4 +1,5 @@
-import * as immu from '../types/index.js'
+import type * as immu from '../types/index.js'
+import { hashOfHashEntry } from './hashEntry.js'
 import { hashOfBinEntry } from './binEntry.js'
 import { hashOfValEntry } from './valEntry.js'
 import { hashOfRefEntry } from './refEntry.js'
@@ -10,7 +11,6 @@ import {
     hashOfSqlRowEntry, 
     hashOfSqlTableEntry 
 } from './sqlEntry.js'
-import { hashOfLeafEntry } from './leafEntry.js'
 
 
 
@@ -20,7 +20,7 @@ export function hashOfEntry(entry: immu.Entry): Buffer {
         case 'val':     return hashOfValEntry(entry)
         case 'ref':     return hashOfRefEntry(entry)
         case 'zSet':    return hashOfZSetEntry(entry)
-        case 'hash':    return hashOfLeafEntry(entry)
+        case 'hash':    return hashOfHashEntry(entry)
         case 'bin':     return hashOfBinEntry(entry)
         case 'sql': 
             switch(entry.sqlType) {

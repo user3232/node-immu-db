@@ -1,4 +1,4 @@
-import * as immu from '../types/index.js'
+import type * as immu from '../types/index.js'
 import * as hash from './hash.js'
 import * as buffer from '../buffer.js'
 

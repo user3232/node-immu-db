@@ -1,16 +1,21 @@
-import type { Entry__Output } from 'immudb-grpcjs/immudb/schema/Entry.js'
-import type { KVMetadata__Output } from 'immudb-grpcjs/immudb/schema/KVMetadata'
-import { Tx__Output } from 'immudb-grpcjs/immudb/schema/Tx.js'
-import { TxEntry__Output } from 'immudb-grpcjs/immudb/schema/TxEntry.js'
-import { ZEntry__Output } from 'immudb-grpcjs/immudb/schema/ZEntry.js'
-import * as ie from '../immu-entry/index.js'
+import type * as igrpc from 'immudb-grpcjs'
 import type * as immu from '../types/index.js'
+import { kvmhToEntry } from './kvmh.js'
+
+
+
+
+
+
+
+
+
 
 
 
 
 export function grpcZEntryToZSetEntryAndValTxEntryAndRefTxEntry(
-    entry: ZEntry__Output
+    entry: igrpc.ZEntry__Output
 ): {
     zSetEntry: immu.ZSetEntry,
     valTxEntry: immu.ValTxEntry,
@@ -43,16 +48,15 @@ export function grpcZEntryToZSetEntryAndValTxEntryAndRefTxEntry(
 
 
 export function grpcTxEntryToTxEntry(
-    tx: Tx__Output,
-    grpcEntry: TxEntry__Output
+    tx: igrpc.Tx__Output,
+    grpcEntry: igrpc.TxEntry__Output
 ): immu.TxEntry {
 
     if(tx.header == undefined) {
         throw 'transaction must be defined'
     }
 
-    const binEntry = grpcEntryToBinEntry(grpcEntry)
-    const entry = ie.binEntryToEntry(binEntry)
+    const entry = grpcTxEntryToEntry(grpcEntry)
     const foundableEntry: immu.TxEntry = {
         ...entry,
         id: tx.header.id,
@@ -61,31 +65,30 @@ export function grpcTxEntryToTxEntry(
 }
 
 
-export function grpcEntryToBinEntry(
-    grpcEntry: TxEntry__Output
-): immu.BinEntry {
 
-    const meta = grpcEntry.metadata == undefined 
-        ? undefined
-        : {
-            deleted: grpcEntry.metadata?.deleted,
-            nonIndexable: grpcEntry.metadata?.nonIndexable,
-            expiresAt: grpcEntry.metadata?.expiration?.expiresAt,
-        }
 
-    return {
-        type: 'bin',
-        version: '1',
-        meta,
-        prefixedKey: grpcEntry.key,
-        prefixedVal: grpcEntry.value,
-    }
+export function grpcTxEntryToEntry(
+    grpcEntry: igrpc.TxEntry__Output
+): immu.Entry {
+
+    
+
+    return kvmhToEntry({
+        prefixedKey:    grpcEntry.key,
+        prefixedVal:    grpcEntry.value,
+        meta:           grpcMetaToEntryMeta(grpcEntry.metadata),
+        valHash:        grpcEntry.hValue,
+    })
 }
 
 
 
+
+
+
+
 export function grpcEntryToValTxEntryAndRefTxEntry(
-    entry: Entry__Output
+    entry: igrpc.Entry__Output
 ): {
     valTxEntry:   immu.ValTxEntry & immu.IndexerInfo, 
     refTxEntry?:  immu.RefTxEntry & immu.IndexerInfo,
@@ -125,7 +128,7 @@ export function grpcEntryToValTxEntryAndRefTxEntry(
 
 
 export function grpcMetaToEntryMeta(
-    props?: KVMetadata__Output | null
+    props?: igrpc.KVMetadata__Output | null
 ): immu.EntryMetadata | undefined {
     if(props == null) {
         return undefined

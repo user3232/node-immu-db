@@ -1,4 +1,4 @@
-import { type ImmuServiceClient } from 'immudb-grpcjs/immudb/schema/ImmuService.js'
+import type * as igrpc from 'immudb-grpcjs'
 import type * as immu from '../types/index.js'
 import * as igt from '../immu-grpc-tx/index.js'
 import * as grpcjs from '@grpc/grpc-js'
@@ -7,7 +7,7 @@ import Long from 'long'
 
 
 
-export type SetZEntryProps = {
+export type SetZSetEntryProps = {
     /**
      * Operation options.
      */
@@ -30,7 +30,7 @@ export type SetZEntryProps = {
      */
     zSet: Buffer,
     /**
-     * Key to include in set {@link SetZEntryProps.zSet}.
+     * Key to include in set {@link SetZSetEntryProps.zSet}.
      */
     referredKey: Buffer,
     /**
@@ -44,9 +44,9 @@ export type SetZEntryProps = {
     referredKeyAtTxId?: Long,
     /**
      * Setting this value to:
-     * - `true` and if {@link SetZEntryProps.referredKeyAtTxId} is not set, then immudb
-     *   will set {@link SetZEntryProps.referredKeyAtTxId} to latest transaction id.
-     * - `true` and if {@link SetZEntryProps.referredKeyAtTxId} is set
+     * - `true` and if {@link SetZSetEntryProps.referredKeyAtTxId} is not set, then immudb
+     *   will set {@link SetZSetEntryProps.referredKeyAtTxId} to latest transaction id.
+     * - `true` and if {@link SetZSetEntryProps.referredKeyAtTxId} is set
      *   than operation behaviour is unknown.
      * - `false` or `undefinde` (default) operation behaviour will
      *   not be changed.
@@ -55,11 +55,11 @@ export type SetZEntryProps = {
 }
 
 
-export function createSetZSetEntry(client: ImmuServiceClient) {
+export function createSetZSetEntry(client: igrpc.ImmuServiceClient) {
     const setZEntryGrpc = immuGrpc.unaryCall.createZAdd(client)
 
     
-    return function setZEntry(props: SetZEntryProps & {
+    return function setZEntry(props: SetZSetEntryProps & {
         credentials: grpcjs.CallCredentials,
     }) {
 

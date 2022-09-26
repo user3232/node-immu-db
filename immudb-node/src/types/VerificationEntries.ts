@@ -7,7 +7,7 @@ import Long from "long"
 
 export type VerificationEntriesOneOf = {
     type:                   'one-of'
-    allEntriesMht:             Buffer,
+    allEntriesMht:          Buffer,
     entry:                  Entry,
     entryId:                number,
     allEntriesCount:        number,

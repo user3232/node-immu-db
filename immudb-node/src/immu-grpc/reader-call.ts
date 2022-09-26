@@ -1,12 +1,6 @@
-import { ImmuServiceClient } from 'immudb-grpcjs/immudb/schema/ImmuService.js'
+import * as igrpc from 'immudb-grpcjs'
 import * as promis from '../grpc-promis/index.js'
-import { KeyRequest } from 'immudb-grpcjs/immudb/schema/KeyRequest.js'
-import { Chunk__Output } from 'immudb-grpcjs/immudb/schema/Chunk.js'
-import { ScanRequest } from 'immudb-grpcjs/immudb/schema/ScanRequest.js'
-import { ZScanRequest } from 'immudb-grpcjs/immudb/schema/ZScanRequest.js'
-import { HistoryRequest } from 'immudb-grpcjs/immudb/schema/HistoryRequest.js'
-import { VerifiableGetRequest } from 'immudb-grpcjs/immudb/schema/VerifiableGetRequest.js'
-import { ExportTxRequest } from 'immudb-grpcjs/immudb/schema/ExportTxRequest.js'
+
 
 
 // **************************
@@ -14,26 +8,26 @@ import { ExportTxRequest } from 'immudb-grpcjs/immudb/schema/ExportTxRequest.js'
 // **************************
 
 
-export function createStreamGet(client: ImmuServiceClient) {
-    return promis.promisifyGrpcReaderAsync<KeyRequest, Chunk__Output>(
+export function createStreamGet(client: igrpc.ImmuServiceClient) {
+    return promis.promisifyGrpcReaderAsync<igrpc.KeyRequest, igrpc.Chunk__Output>(
         client.streamGet.bind(client)
     )
 }
 
-export function createStreamScan(client: ImmuServiceClient) {
-    return promis.promisifyGrpcReaderAsync<ScanRequest, Chunk__Output>(
+export function createStreamScan(client: igrpc.ImmuServiceClient) {
+    return promis.promisifyGrpcReaderAsync<igrpc.ScanRequest, igrpc.Chunk__Output>(
         client.streamScan.bind(client)
     )
 }
 
-export function createStreamZScan(client: ImmuServiceClient) {
-    return promis.promisifyGrpcReaderAsync<ZScanRequest, Chunk__Output>(
+export function createStreamZScan(client: igrpc.ImmuServiceClient) {
+    return promis.promisifyGrpcReaderAsync<igrpc.ZScanRequest, igrpc.Chunk__Output>(
         client.streamZScan.bind(client)
     )
 }
 
-export function createStreamHistory(client: ImmuServiceClient) {
-    return promis.promisifyGrpcReaderAsync<HistoryRequest, Chunk__Output>(
+export function createStreamHistory(client: igrpc.ImmuServiceClient) {
+    return promis.promisifyGrpcReaderAsync<igrpc.HistoryRequest, igrpc.Chunk__Output>(
         client.streamHistory.bind(client)
     )
 }
@@ -42,8 +36,8 @@ export function createStreamHistory(client: ImmuServiceClient) {
 // Get Values and proof
 // **************************
 
-export function createStreamVerifiableGet(client: ImmuServiceClient) {
-    return promis.promisifyGrpcReaderAsync<VerifiableGetRequest, Chunk__Output>(
+export function createStreamVerifiableGet(client: igrpc.ImmuServiceClient) {
+    return promis.promisifyGrpcReaderAsync<igrpc.VerifiableGetRequest, igrpc.Chunk__Output>(
         client.streamVerifiableGet.bind(client)
     )
 }
@@ -53,8 +47,8 @@ export function createStreamVerifiableGet(client: ImmuServiceClient) {
 // Instance
 // **************************
 
-export function createExportTx(client: ImmuServiceClient) {
-    return promis.promisifyGrpcReaderAsync<ExportTxRequest, Chunk__Output>(
+export function createExportTx(client: igrpc.ImmuServiceClient) {
+    return promis.promisifyGrpcReaderAsync<igrpc.ExportTxRequest, igrpc.Chunk__Output>(
         client.exportTx.bind(client)
     )
 }

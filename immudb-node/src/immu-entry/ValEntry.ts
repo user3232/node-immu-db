@@ -1,5 +1,5 @@
 import { Buffer } from 'node:buffer'
-import * as immu from '../types/index.js'
+import type * as immu from '../types/index.js'
 import * as consts from '../immu-hash/consts.js'
 
 
@@ -42,7 +42,7 @@ export function valEntryToLeafEntryPrefixedKey(props: immu.ValEntry) {
 
 
 
-function binEntryKeyToValEntryKey(keyBytes: Buffer, offset?: number) {
+export function binEntryKeyToValEntryKey(keyBytes: Buffer, offset?: number) {
     let index = offset ?? 0
 
     const keyPrefix = keyBytes[index]
@@ -53,7 +53,7 @@ function binEntryKeyToValEntryKey(keyBytes: Buffer, offset?: number) {
 }
 
 
-function binEntryValToValEntryVal(valBytes: Buffer, offset?: number) {
+export function binEntryValToValEntryVal(valBytes: Buffer, offset?: number) {
     let index = offset ?? 0
 
     const valPrefix = valBytes[index]

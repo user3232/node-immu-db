@@ -1,4 +1,4 @@
-import { type ImmuServiceClient } from 'immudb-grpcjs/immudb/schema/ImmuService.js'
+import type * as igrpc from 'immudb-grpcjs'
 import * as grpcjs from '@grpc/grpc-js'
 import * as immuGrpc from '../immu-grpc/index.js'
 import * as ige from '../immu-grpc-entry/index.js'
@@ -66,7 +66,7 @@ export type ScanZSetEntriesProps = {
     dontWaitForLatestKeys?: boolean
 }
 
-export function createScanZEntries(client: ImmuServiceClient) {
+export function createScanZEntries(client: igrpc.ImmuServiceClient) {
 
     const zScanGrpc = immuGrpc.unaryCall.createZScan(client)
 
@@ -112,7 +112,7 @@ export function createScanZEntries(client: ImmuServiceClient) {
 
 
 
-export function createScanZEntriesStreaming(client: ImmuServiceClient) {
+export function createScanZEntriesStreaming(client: igrpc.ImmuServiceClient) {
 
     const streamScanZGrpc = immuGrpc.readerCall.createStreamZScan(client)
 

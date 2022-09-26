@@ -1,9 +1,9 @@
-import { TxHeader__Output } from 'immudb-grpcjs/immudb/schema/TxHeader.js'
+import type * as igrpc from 'immudb-grpcjs'
 import type * as immu from '../types/index.js'
 
 
 export function grpcTxHeaderToTxCore(
-    grpcTxHeader: TxHeader__Output | null | undefined
+    grpcTxHeader: igrpc.TxHeader__Output | null | undefined
 ): immu.TxCore {
 
     if(grpcTxHeader == undefined) {

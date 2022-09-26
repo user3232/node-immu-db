@@ -1,4 +1,4 @@
-import { type ImmuServiceClient } from 'immudb-grpcjs/immudb/schema/ImmuService.js'
+import type * as igrpc from 'immudb-grpcjs'
 import type * as immu from '../types/index.js'
 import * as grpcjs from '@grpc/grpc-js'
 import * as immuGrpc from '../immu-grpc/index.js'
@@ -50,7 +50,7 @@ export type SqlExecProps = {
 
 
 
-export function createSqlExec(client: ImmuServiceClient) {
+export function createSqlExec(client: igrpc.ImmuServiceClient) {
     // const sqlExecGrpc = immuGrpc.unaryCall.createTxSqlExec(client)
     const sqlExecGrpc = immuGrpc.unaryCall.createSqlExec(client)
 

@@ -1,4 +1,4 @@
-import * as immu from '../types/index.js'
+import type * as immu from '../types/index.js'
 import * as hash from './hash.js'
 import * as buffer from '../buffer.js'
 import { PrefixKeyVal, PrefixValVal } from './consts.js'
@@ -6,7 +6,7 @@ import { entryMetaToBuffer } from './EntryMetadata.js'
 
 
 /**
- * Hashes key-value entry as hash of fallowing buffers:
+ * Hashes value entry in {@link immu.KeyValMeta} representation:
  * - metadata binary format length as UInt16 BE
  * - metadata binary
  * - key prefix length plus key length as UInt16 BE

@@ -1,9 +1,8 @@
 import * as api from './immu-api/index.js'
 import * as session from './immu-session.js'
 import * as grpcjs from '@grpc/grpc-js'
+import * as igrpc from 'immudb-grpcjs'
 import type * as immu from './types/index.js'
-import { grpcClientFactory } from './grpc-client.js'
-import { ImmuServiceClient } from 'immudb-grpcjs/immudb/schema/ImmuService.js'
 
 
 
@@ -12,8 +11,7 @@ import { ImmuServiceClient } from 'immudb-grpcjs/immudb/schema/ImmuService.js'
 
 
 
-
-function createImmuGrpcApi(grpcClient: ImmuServiceClient) {
+function createImmuGrpcApi(grpcClient: igrpc.ImmuServiceClient) {
     return {
         // session
         openSession:            api.createOpenSession(grpcClient),
@@ -89,8 +87,13 @@ function createImmuGrpcApi(grpcClient: ImmuServiceClient) {
         
         
         // with verification
-        setValEntriesGetProof:      api.createSetValEntriesGetProof(grpcClient),
         getTxAndVerification:       api.createGetTxAndVerification(grpcClient),
+        getSqlRowEntryAndVerification:      api.createGetSqlRowEntryAndVerification(grpcClient),
+        getValRefAndVerification:   api.createGetValRefAndVerification(grpcClient),
+
+        setValEntriesGetVerification:   api.createSetValEntriesGetVerification(grpcClient),
+        setRefEntryGetVerification:     api.createSetRefEntryGetVerification(grpcClient),
+        setZSetEntryGetVerification:    api.createSetZSetEntryGetVerification(grpcClient),
     }
 }
 
@@ -104,14 +107,16 @@ function createImmuGrpcApi(grpcClient: ImmuServiceClient) {
 
 export class Client {
     private readonly conf:              Config
-    private readonly immuGrpcClient:    ImmuServiceClient
+    private readonly immuGrpcClient:    igrpc.ImmuServiceClient
     private readonly immuGrpcApi:       ReturnType<typeof createImmuGrpcApi>
     private sessionTokens?:             immu.SessionTokens
     private callCredentials?:           grpcjs.CallCredentials
 
     constructor(conf: Config) {
         this.conf = conf
-        this.immuGrpcClient = grpcClientFactory({
+        
+        
+        this.immuGrpcClient = igrpc.grpcClientFactory({
             address:        buildAddress(this.conf),
             credentials:    grpcjs.credentials.createInsecure(),
             options: {
@@ -229,7 +234,7 @@ export class Client {
      * Sets all value entries in one transaction.
      */
     async setValEntries(
-        props: api.SetVEntryProps
+        props: api.SetValEntryProps
     ) {
         return this.immuGrpcApi.setValEntries({
             kvms:            props.kvms,
@@ -240,20 +245,7 @@ export class Client {
     }
 
 
-    /** 
-     * Sets all value entries in one transaction. Verifies verification
-     * structure.
-     *
-     * Returns entries set and verification structure of transaction.
-     */
-    async setValEntriesAndVerify(
-        props: api.SetVEntryProps & api.ProofRequestProps
-    ) {
-        return this.immuGrpcApi.setValEntriesGetProof({
-            ...props,
-            credentials:    await this.getCallCredentials()
-        })
-    }
+    
 
     /** 
      * Sets multiple ValEntries in one transaction.
@@ -271,7 +263,7 @@ export class Client {
      * Sets ZEntry in one transaction.
      */
     async setZSetEntry(
-        props: api.SetZEntryProps
+        props: api.SetZSetEntryProps
     ) {
         return this.immuGrpcApi.setZSetEntry({
             ...props,
@@ -924,7 +916,10 @@ export class Client {
 
 
 
-
+    /**
+     * Gets Tx, its entries and its verification structure, by looking for
+     * transaction id.
+     */
     async getTxAndVerification(props: api.GetTxAndVerificationProps) {
         return this.immuGrpcApi.getTxAndVerification({
             ...props,
@@ -933,6 +928,74 @@ export class Client {
     }
 
 
+    /**
+     * Gets SqlRowEntry and its verification structure by looking
+     * for sql row primary key (which can be composite).
+     */
+    async getSqlRowEntryAndVerification(props: api.GetSqlRowEntryAndVerificationProps) {
+        return this.immuGrpcApi.getSqlRowEntryAndVerification({
+            ...props,
+            credentials: await this.getCallCredentials(),
+        })
+    }
+
+
+    /**
+     * Gets ValEntry or RefEntry (and ref associated ValEntry) and its (val or
+     * ref) verification structure by looking for ValEntry or RefEntry key.
+     */
+     async getValRefAndVerification(props: api.GetValRefAndVerificationProps) {
+        return this.immuGrpcApi.getValRefAndVerification({
+            ...props,
+            credentials: await this.getCallCredentials(),
+        })
+    }
+
+
+
+    /** 
+     * Sets all value entries in one transaction.
+     *
+     * Returns entries set and its verification structure.
+     */
+    async setValEntriesGetVerification(
+        props: api.SetValEntryProps & api.ProofRequestProps
+    ) {
+        return this.immuGrpcApi.setValEntriesGetVerification({
+            ...props,
+            credentials:    await this.getCallCredentials()
+        })
+    }
+
+
+    /** 
+     * Sets RefEntry in one transaction.
+     *
+     * Returns RefEntry set and its verification structure.
+     */
+     async setRefEntryGetVerification(
+        props: api.SetRefEntryProps & api.ProofRequestProps
+    ) {
+        return this.immuGrpcApi.setRefEntryGetVerification({
+            ...props,
+            credentials:    await this.getCallCredentials()
+        })
+    }
+
+
+    /** 
+     * Sets ZSetEntry in one transaction.
+     *
+     * Returns ZSetEntry set and its verification structure.
+     */
+     async setZSetEntryGetVerification(
+        props: api.SetZSetEntryProps & api.ProofRequestProps
+    ) {
+        return this.immuGrpcApi.setZSetEntryGetVerification({
+            ...props,
+            credentials:    await this.getCallCredentials()
+        })
+    }
 }
 
 
