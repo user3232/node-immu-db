@@ -4,5 +4,5 @@
 Documentation is generated using command:
 
 ```ps1
-npx typedoc --plugin typedoc-plugin-markdown --out immudb-node ..\immudb-node\src
+npx typedoc --plugin typedoc-plugin-markdown --out immudb-node --entryPointStrategy expand ..\immudb-node\src
 ```
