@@ -1,6 +1,6 @@
 
 
-# ImmuDb mono repository
+# ImmuDb node mono repository
 
 
 If you don't plan developing this project, you will be only interested with:
