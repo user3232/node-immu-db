@@ -1,5 +1,5 @@
 {
-    "name": "immudb-grpcjs",
+    "name": "immudb-node-grpcjs",
     "type": "module",
     "main": "./dist/main.js",
     "files": [

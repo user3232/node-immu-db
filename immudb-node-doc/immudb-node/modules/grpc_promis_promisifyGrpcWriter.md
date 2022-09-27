@@ -50,4 +50,4 @@
 
 #### Defined in
 
-[immudb-node/src/grpc-promis/promisifyGrpcWriter.ts:7](https://github.com/user3232/node-immu-db/blob/2e88686/immudb-node/src/grpc-promis/promisifyGrpcWriter.ts#L7)
+[immudb-node/src/grpc-promis/promisifyGrpcWriter.ts:7](https://github.com/user3232/node-immu-db/blob/30c0d74/immudb-node/src/grpc-promis/promisifyGrpcWriter.ts#L7)

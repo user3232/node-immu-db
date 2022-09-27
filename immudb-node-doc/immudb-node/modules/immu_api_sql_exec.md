@@ -29,7 +29,7 @@
 
 #### Defined in
 
-[immudb-node/src/immu-api/sql-exec.ts:10](https://github.com/user3232/node-immu-db/blob/2e88686/immudb-node/src/immu-api/sql-exec.ts#L10)
+[immudb-node/src/immu-api/sql-exec.ts:10](https://github.com/user3232/node-immu-db/blob/30c0d74/immudb-node/src/immu-api/sql-exec.ts#L10)
 
 ## Functions
 
@@ -61,4 +61,4 @@
 
 #### Defined in
 
-[immudb-node/src/immu-api/sql-exec.ts:53](https://github.com/user3232/node-immu-db/blob/2e88686/immudb-node/src/immu-api/sql-exec.ts#L53)
+[immudb-node/src/immu-api/sql-exec.ts:53](https://github.com/user3232/node-immu-db/blob/30c0d74/immudb-node/src/immu-api/sql-exec.ts#L53)

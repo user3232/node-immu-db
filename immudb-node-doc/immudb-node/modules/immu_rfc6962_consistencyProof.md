@@ -42,4 +42,4 @@ computed roots
 
 #### Defined in
 
-[immudb-node/src/immu-rfc6962/consistencyProof.ts:16](https://github.com/user3232/node-immu-db/blob/2e88686/immudb-node/src/immu-rfc6962/consistencyProof.ts#L16)
+[immudb-node/src/immu-rfc6962/consistencyProof.ts:16](https://github.com/user3232/node-immu-db/blob/30c0d74/immudb-node/src/immu-rfc6962/consistencyProof.ts#L16)

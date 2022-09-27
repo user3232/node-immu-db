@@ -25,4 +25,4 @@ Grpc call metadata and options.
 
 #### Defined in
 
-[immudb-node/src/types/GrpcCallMetaAndOpts.ts:7](https://github.com/user3232/node-immu-db/blob/2e88686/immudb-node/src/types/GrpcCallMetaAndOpts.ts#L7)
+[immudb-node/src/types/GrpcCallMetaAndOpts.ts:7](https://github.com/user3232/node-immu-db/blob/30c0d74/immudb-node/src/types/GrpcCallMetaAndOpts.ts#L7)

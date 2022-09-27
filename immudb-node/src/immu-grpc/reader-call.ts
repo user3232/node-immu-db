@@ -1,4 +1,4 @@
-import * as igrpc from 'immudb-grpcjs'
+import * as igrpc from 'immudb-node-grpcjs'
 import * as promis from '../grpc-promis/index.js'
 
 

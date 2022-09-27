@@ -40,7 +40,7 @@ in Java client
 
 #### Defined in
 
-[immudb-node/src/immu-rfc6962/inclusionProof.ts:100](https://github.com/user3232/node-immu-db/blob/2e88686/immudb-node/src/immu-rfc6962/inclusionProof.ts#L100)
+[immudb-node/src/immu-rfc6962/inclusionProof.ts:100](https://github.com/user3232/node-immu-db/blob/30c0d74/immudb-node/src/immu-rfc6962/inclusionProof.ts#L100)
 
 ___
 
@@ -70,4 +70,4 @@ Computes MHT root from:
 
 #### Defined in
 
-[immudb-node/src/immu-rfc6962/inclusionProof.ts:14](https://github.com/user3232/node-immu-db/blob/2e88686/immudb-node/src/immu-rfc6962/inclusionProof.ts#L14)
+[immudb-node/src/immu-rfc6962/inclusionProof.ts:14](https://github.com/user3232/node-immu-db/blob/30c0d74/immudb-node/src/immu-rfc6962/inclusionProof.ts#L14)

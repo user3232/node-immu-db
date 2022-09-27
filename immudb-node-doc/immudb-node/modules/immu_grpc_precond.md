@@ -26,4 +26,4 @@
 
 #### Defined in
 
-[immudb-node/src/immu-grpc-precond/index.ts:6](https://github.com/user3232/node-immu-db/blob/2e88686/immudb-node/src/immu-grpc-precond/index.ts#L6)
+[immudb-node/src/immu-grpc-precond/index.ts:6](https://github.com/user3232/node-immu-db/blob/30c0d74/immudb-node/src/immu-grpc-precond/index.ts#L6)

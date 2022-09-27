@@ -27,7 +27,7 @@
 
 #### Defined in
 
-[immudb-node/src/immu-grpc-session/index.ts:7](https://github.com/user3232/node-immu-db/blob/2e88686/immudb-node/src/immu-grpc-session/index.ts#L7)
+[immudb-node/src/immu-grpc-session/index.ts:7](https://github.com/user3232/node-immu-db/blob/30c0d74/immudb-node/src/immu-grpc-session/index.ts#L7)
 
 ___
 
@@ -47,4 +47,4 @@ ___
 
 #### Defined in
 
-[immudb-node/src/immu-grpc-session/index.ts:16](https://github.com/user3232/node-immu-db/blob/2e88686/immudb-node/src/immu-grpc-session/index.ts#L16)
+[immudb-node/src/immu-grpc-session/index.ts:16](https://github.com/user3232/node-immu-db/blob/30c0d74/immudb-node/src/immu-grpc-session/index.ts#L16)

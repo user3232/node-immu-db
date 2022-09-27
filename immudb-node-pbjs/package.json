@@ -1,5 +1,5 @@
 {
-    "name": "immudb-pbjs",
+    "name": "immudb-node-pbjs",
     "type": "module",
     "main": "./src/main.js",
     "types": "src/main.d.ts",

@@ -37,7 +37,7 @@
 
 #### Defined in
 
-[immudb-node/src/immu-api/scan-zSet-entries.ts:11](https://github.com/user3232/node-immu-db/blob/2e88686/immudb-node/src/immu-api/scan-zSet-entries.ts#L11)
+[immudb-node/src/immu-api/scan-zSet-entries.ts:11](https://github.com/user3232/node-immu-db/blob/30c0d74/immudb-node/src/immu-api/scan-zSet-entries.ts#L11)
 
 ## Functions
 
@@ -69,7 +69,7 @@
 
 #### Defined in
 
-[immudb-node/src/immu-api/scan-zSet-entries.ts:69](https://github.com/user3232/node-immu-db/blob/2e88686/immudb-node/src/immu-api/scan-zSet-entries.ts#L69)
+[immudb-node/src/immu-api/scan-zSet-entries.ts:69](https://github.com/user3232/node-immu-db/blob/30c0d74/immudb-node/src/immu-api/scan-zSet-entries.ts#L69)
 
 ___
 
@@ -101,4 +101,4 @@ ___
 
 #### Defined in
 
-[immudb-node/src/immu-api/scan-zSet-entries.ts:115](https://github.com/user3232/node-immu-db/blob/2e88686/immudb-node/src/immu-api/scan-zSet-entries.ts#L115)
+[immudb-node/src/immu-api/scan-zSet-entries.ts:115](https://github.com/user3232/node-immu-db/blob/30c0d74/immudb-node/src/immu-api/scan-zSet-entries.ts#L115)

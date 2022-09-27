@@ -5,8 +5,8 @@
   "author": "MK",
   "license": "ISC",
   "workspaces": [
-    "immudb-grpcjs",
-    "immudb-pbjs",
+    "immudb-node-grpcjs",
+    "immudb-node-pbjs",
     "immudb-node",
     "immudb-node-showcase",
     "immudb-node-test",

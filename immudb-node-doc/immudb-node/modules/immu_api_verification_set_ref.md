@@ -38,4 +38,4 @@
 
 #### Defined in
 
-[immudb-node/src/immu-api/verification-set-ref.ts:17](https://github.com/user3232/node-immu-db/blob/2e88686/immudb-node/src/immu-api/verification-set-ref.ts#L17)
+[immudb-node/src/immu-api/verification-set-ref.ts:17](https://github.com/user3232/node-immu-db/blob/30c0d74/immudb-node/src/immu-api/verification-set-ref.ts#L17)

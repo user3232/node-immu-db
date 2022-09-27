@@ -25,4 +25,4 @@ Entry and additional informations from ImmuDb server indexer.
 
 #### Defined in
 
-[immudb-node/src/types/Indexer.ts:9](https://github.com/user3232/node-immu-db/blob/2e88686/immudb-node/src/types/Indexer.ts#L9)
+[immudb-node/src/types/Indexer.ts:9](https://github.com/user3232/node-immu-db/blob/30c0d74/immudb-node/src/types/Indexer.ts#L9)

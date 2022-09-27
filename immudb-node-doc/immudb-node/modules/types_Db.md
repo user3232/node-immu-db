@@ -31,7 +31,7 @@
 
 #### Defined in
 
-[immudb-node/src/types/Db.ts:5](https://github.com/user3232/node-immu-db/blob/2e88686/immudb-node/src/types/Db.ts#L5)
+[immudb-node/src/types/Db.ts:5](https://github.com/user3232/node-immu-db/blob/30c0d74/immudb-node/src/types/Db.ts#L5)
 
 ___
 
@@ -52,7 +52,7 @@ Database settings.
 
 #### Defined in
 
-[immudb-node/src/types/Db.ts:36](https://github.com/user3232/node-immu-db/blob/2e88686/immudb-node/src/types/Db.ts#L36)
+[immudb-node/src/types/Db.ts:36](https://github.com/user3232/node-immu-db/blob/30c0d74/immudb-node/src/types/Db.ts#L36)
 
 ___
 
@@ -74,7 +74,7 @@ Database unchangable settings
 
 #### Defined in
 
-[immudb-node/src/types/Db.ts:105](https://github.com/user3232/node-immu-db/blob/2e88686/immudb-node/src/types/Db.ts#L105)
+[immudb-node/src/types/Db.ts:105](https://github.com/user3232/node-immu-db/blob/30c0d74/immudb-node/src/types/Db.ts#L105)
 
 ___
 
@@ -102,7 +102,7 @@ Database changable settings
 
 #### Defined in
 
-[immudb-node/src/types/Db.ts:42](https://github.com/user3232/node-immu-db/blob/2e88686/immudb-node/src/types/Db.ts#L42)
+[immudb-node/src/types/Db.ts:42](https://github.com/user3232/node-immu-db/blob/30c0d74/immudb-node/src/types/Db.ts#L42)
 
 ___
 
@@ -114,7 +114,7 @@ Indexing settings
 
 #### Defined in
 
-[immudb-node/src/types/Db.ts:182](https://github.com/user3232/node-immu-db/blob/2e88686/immudb-node/src/types/Db.ts#L182)
+[immudb-node/src/types/Db.ts:182](https://github.com/user3232/node-immu-db/blob/30c0d74/immudb-node/src/types/Db.ts#L182)
 
 ___
 
@@ -132,7 +132,7 @@ Indexing unchangable settings
 
 #### Defined in
 
-[immudb-node/src/types/Db.ts:189](https://github.com/user3232/node-immu-db/blob/2e88686/immudb-node/src/types/Db.ts#L189)
+[immudb-node/src/types/Db.ts:189](https://github.com/user3232/node-immu-db/blob/30c0d74/immudb-node/src/types/Db.ts#L189)
 
 ___
 
@@ -159,7 +159,7 @@ ___
 
 #### Defined in
 
-[immudb-node/src/types/Db.ts:199](https://github.com/user3232/node-immu-db/blob/2e88686/immudb-node/src/types/Db.ts#L199)
+[immudb-node/src/types/Db.ts:199](https://github.com/user3232/node-immu-db/blob/30c0d74/immudb-node/src/types/Db.ts#L199)
 
 ___
 
@@ -182,4 +182,4 @@ Replication settings
 
 #### Defined in
 
-[immudb-node/src/types/Db.ts:150](https://github.com/user3232/node-immu-db/blob/2e88686/immudb-node/src/types/Db.ts#L150)
+[immudb-node/src/types/Db.ts:150](https://github.com/user3232/node-immu-db/blob/30c0d74/immudb-node/src/types/Db.ts#L150)

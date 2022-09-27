@@ -29,7 +29,7 @@
 
 #### Defined in
 
-[immudb-node/src/immu-api/delete-val-ref.ts:8](https://github.com/user3232/node-immu-db/blob/2e88686/immudb-node/src/immu-api/delete-val-ref.ts#L8)
+[immudb-node/src/immu-api/delete-val-ref.ts:8](https://github.com/user3232/node-immu-db/blob/30c0d74/immudb-node/src/immu-api/delete-val-ref.ts#L8)
 
 ## Functions
 
@@ -61,4 +61,4 @@
 
 #### Defined in
 
-[immudb-node/src/immu-api/delete-val-ref.ts:41](https://github.com/user3232/node-immu-db/blob/2e88686/immudb-node/src/immu-api/delete-val-ref.ts#L41)
+[immudb-node/src/immu-api/delete-val-ref.ts:41](https://github.com/user3232/node-immu-db/blob/30c0d74/immudb-node/src/immu-api/delete-val-ref.ts#L41)

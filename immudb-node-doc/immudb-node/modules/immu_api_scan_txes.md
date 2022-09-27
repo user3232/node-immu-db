@@ -32,7 +32,7 @@
 
 #### Defined in
 
-[immudb-node/src/immu-api/scan-txes.ts:141](https://github.com/user3232/node-immu-db/blob/2e88686/immudb-node/src/immu-api/scan-txes.ts#L141)
+[immudb-node/src/immu-api/scan-txes.ts:141](https://github.com/user3232/node-immu-db/blob/30c0d74/immudb-node/src/immu-api/scan-txes.ts#L141)
 
 ___
 
@@ -55,7 +55,7 @@ ___
 
 #### Defined in
 
-[immudb-node/src/immu-api/scan-txes.ts:9](https://github.com/user3232/node-immu-db/blob/2e88686/immudb-node/src/immu-api/scan-txes.ts#L9)
+[immudb-node/src/immu-api/scan-txes.ts:9](https://github.com/user3232/node-immu-db/blob/30c0d74/immudb-node/src/immu-api/scan-txes.ts#L9)
 
 ## Functions
 
@@ -87,7 +87,7 @@ ___
 
 #### Defined in
 
-[immudb-node/src/immu-api/scan-txes.ts:176](https://github.com/user3232/node-immu-db/blob/2e88686/immudb-node/src/immu-api/scan-txes.ts#L176)
+[immudb-node/src/immu-api/scan-txes.ts:176](https://github.com/user3232/node-immu-db/blob/30c0d74/immudb-node/src/immu-api/scan-txes.ts#L176)
 
 ___
 
@@ -119,4 +119,4 @@ ___
 
 #### Defined in
 
-[immudb-node/src/immu-api/scan-txes.ts:88](https://github.com/user3232/node-immu-db/blob/2e88686/immudb-node/src/immu-api/scan-txes.ts#L88)
+[immudb-node/src/immu-api/scan-txes.ts:88](https://github.com/user3232/node-immu-db/blob/30c0d74/immudb-node/src/immu-api/scan-txes.ts#L88)

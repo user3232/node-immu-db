@@ -2,9 +2,13 @@
 
 # Install & use
 
+To include client in your code, do:
+
 ```sh
 npm install immudb-node
 ```
+
+Then use (see detailed examples in [showcases](../immudb-node-showcase/)):
 
 ```ts
 import { Client } from 'immudb-node'

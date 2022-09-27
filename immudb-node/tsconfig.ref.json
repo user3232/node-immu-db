@@ -9,7 +9,7 @@
     },
     "references": [
         {
-            "path": "../immudb-grpcjs/tsconfig.ref.json"
+            "path": "../immudb-node-grpcjs/tsconfig.ref.json"
         }
     ]
 }

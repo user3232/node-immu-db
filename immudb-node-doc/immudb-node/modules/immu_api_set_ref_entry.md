@@ -34,7 +34,7 @@ Specifies how to set RefEntry.
 
 #### Defined in
 
-[immudb-node/src/immu-api/set-ref-entry.ts:13](https://github.com/user3232/node-immu-db/blob/2e88686/immudb-node/src/immu-api/set-ref-entry.ts#L13)
+[immudb-node/src/immu-api/set-ref-entry.ts:13](https://github.com/user3232/node-immu-db/blob/30c0d74/immudb-node/src/immu-api/set-ref-entry.ts#L13)
 
 ## Functions
 
@@ -66,4 +66,4 @@ Specifies how to set RefEntry.
 
 #### Defined in
 
-[immudb-node/src/immu-api/set-ref-entry.ts:61](https://github.com/user3232/node-immu-db/blob/2e88686/immudb-node/src/immu-api/set-ref-entry.ts#L61)
+[immudb-node/src/immu-api/set-ref-entry.ts:61](https://github.com/user3232/node-immu-db/blob/30c0d74/immudb-node/src/immu-api/set-ref-entry.ts#L61)

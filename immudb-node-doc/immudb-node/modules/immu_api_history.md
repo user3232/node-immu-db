@@ -31,7 +31,7 @@
 
 #### Defined in
 
-[immudb-node/src/immu-api/history.ts:12](https://github.com/user3232/node-immu-db/blob/2e88686/immudb-node/src/immu-api/history.ts#L12)
+[immudb-node/src/immu-api/history.ts:12](https://github.com/user3232/node-immu-db/blob/30c0d74/immudb-node/src/immu-api/history.ts#L12)
 
 ## Functions
 
@@ -63,7 +63,7 @@
 
 #### Defined in
 
-[immudb-node/src/immu-api/history.ts:43](https://github.com/user3232/node-immu-db/blob/2e88686/immudb-node/src/immu-api/history.ts#L43)
+[immudb-node/src/immu-api/history.ts:43](https://github.com/user3232/node-immu-db/blob/30c0d74/immudb-node/src/immu-api/history.ts#L43)
 
 ___
 
@@ -95,4 +95,4 @@ ___
 
 #### Defined in
 
-[immudb-node/src/immu-api/history.ts:77](https://github.com/user3232/node-immu-db/blob/2e88686/immudb-node/src/immu-api/history.ts#L77)
+[immudb-node/src/immu-api/history.ts:77](https://github.com/user3232/node-immu-db/blob/30c0d74/immudb-node/src/immu-api/history.ts#L77)

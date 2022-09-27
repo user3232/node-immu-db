@@ -29,7 +29,7 @@
 
 #### Defined in
 
-[immudb-node/src/immu-api/set-val-ref-zSet.ts:178](https://github.com/user3232/node-immu-db/blob/2e88686/immudb-node/src/immu-api/set-val-ref-zSet.ts#L178)
+[immudb-node/src/immu-api/set-val-ref-zSet.ts:178](https://github.com/user3232/node-immu-db/blob/30c0d74/immudb-node/src/immu-api/set-val-ref-zSet.ts#L178)
 
 ___
 
@@ -50,7 +50,7 @@ Specifies how to set Entry.
 
 #### Defined in
 
-[immudb-node/src/immu-api/set-val-ref-zSet.ts:19](https://github.com/user3232/node-immu-db/blob/2e88686/immudb-node/src/immu-api/set-val-ref-zSet.ts#L19)
+[immudb-node/src/immu-api/set-val-ref-zSet.ts:19](https://github.com/user3232/node-immu-db/blob/30c0d74/immudb-node/src/immu-api/set-val-ref-zSet.ts#L19)
 
 ___
 
@@ -60,7 +60,7 @@ ___
 
 #### Defined in
 
-[immudb-node/src/immu-api/set-val-ref-zSet.ts:48](https://github.com/user3232/node-immu-db/blob/2e88686/immudb-node/src/immu-api/set-val-ref-zSet.ts#L48)
+[immudb-node/src/immu-api/set-val-ref-zSet.ts:48](https://github.com/user3232/node-immu-db/blob/30c0d74/immudb-node/src/immu-api/set-val-ref-zSet.ts#L48)
 
 ## Functions
 
@@ -92,7 +92,7 @@ ___
 
 #### Defined in
 
-[immudb-node/src/immu-api/set-val-ref-zSet.ts:54](https://github.com/user3232/node-immu-db/blob/2e88686/immudb-node/src/immu-api/set-val-ref-zSet.ts#L54)
+[immudb-node/src/immu-api/set-val-ref-zSet.ts:54](https://github.com/user3232/node-immu-db/blob/30c0d74/immudb-node/src/immu-api/set-val-ref-zSet.ts#L54)
 
 ___
 
@@ -124,4 +124,4 @@ ___
 
 #### Defined in
 
-[immudb-node/src/immu-api/set-val-ref-zSet.ts:182](https://github.com/user3232/node-immu-db/blob/2e88686/immudb-node/src/immu-api/set-val-ref-zSet.ts#L182)
+[immudb-node/src/immu-api/set-val-ref-zSet.ts:182](https://github.com/user3232/node-immu-db/blob/30c0d74/immudb-node/src/immu-api/set-val-ref-zSet.ts#L182)

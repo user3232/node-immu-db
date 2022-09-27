@@ -30,7 +30,7 @@ useful for referring to transaction.
 
 #### Defined in
 
-[immudb-node/src/types/Tx.ts:143](https://github.com/user3232/node-immu-db/blob/2e88686/immudb-node/src/types/Tx.ts#L143)
+[immudb-node/src/types/Tx.ts:143](https://github.com/user3232/node-immu-db/blob/30c0d74/immudb-node/src/types/Tx.ts#L143)
 
 ___
 
@@ -55,7 +55,7 @@ Transaction without specified entries.
 
 #### Defined in
 
-[immudb-node/src/types/Tx.ts:30](https://github.com/user3232/node-immu-db/blob/2e88686/immudb-node/src/types/Tx.ts#L30)
+[immudb-node/src/types/Tx.ts:30](https://github.com/user3232/node-immu-db/blob/30c0d74/immudb-node/src/types/Tx.ts#L30)
 
 ___
 
@@ -74,7 +74,7 @@ ___
 
 #### Defined in
 
-[immudb-node/src/types/Tx.ts:8](https://github.com/user3232/node-immu-db/blob/2e88686/immudb-node/src/types/Tx.ts#L8)
+[immudb-node/src/types/Tx.ts:8](https://github.com/user3232/node-immu-db/blob/30c0d74/immudb-node/src/types/Tx.ts#L8)
 
 ___
 
@@ -102,4 +102,4 @@ when the transaction was last database transaction.
 
 #### Defined in
 
-[immudb-node/src/types/Tx.ts:96](https://github.com/user3232/node-immu-db/blob/2e88686/immudb-node/src/types/Tx.ts#L96)
+[immudb-node/src/types/Tx.ts:96](https://github.com/user3232/node-immu-db/blob/30c0d74/immudb-node/src/types/Tx.ts#L96)

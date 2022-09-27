@@ -28,7 +28,7 @@
 
 #### Defined in
 
-[immudb-node/src/immu-api/set-val-entry.ts:82](https://github.com/user3232/node-immu-db/blob/2e88686/immudb-node/src/immu-api/set-val-entry.ts#L82)
+[immudb-node/src/immu-api/set-val-entry.ts:82](https://github.com/user3232/node-immu-db/blob/30c0d74/immudb-node/src/immu-api/set-val-entry.ts#L82)
 
 ___
 
@@ -47,7 +47,7 @@ ___
 
 #### Defined in
 
-[immudb-node/src/immu-api/set-val-entry.ts:11](https://github.com/user3232/node-immu-db/blob/2e88686/immudb-node/src/immu-api/set-val-entry.ts#L11)
+[immudb-node/src/immu-api/set-val-entry.ts:11](https://github.com/user3232/node-immu-db/blob/30c0d74/immudb-node/src/immu-api/set-val-entry.ts#L11)
 
 ## Functions
 
@@ -79,7 +79,7 @@ ___
 
 #### Defined in
 
-[immudb-node/src/immu-api/set-val-entry.ts:40](https://github.com/user3232/node-immu-db/blob/2e88686/immudb-node/src/immu-api/set-val-entry.ts#L40)
+[immudb-node/src/immu-api/set-val-entry.ts:40](https://github.com/user3232/node-immu-db/blob/30c0d74/immudb-node/src/immu-api/set-val-entry.ts#L40)
 
 ___
 
@@ -111,4 +111,4 @@ ___
 
 #### Defined in
 
-[immudb-node/src/immu-api/set-val-entry.ts:86](https://github.com/user3232/node-immu-db/blob/2e88686/immudb-node/src/immu-api/set-val-entry.ts#L86)
+[immudb-node/src/immu-api/set-val-entry.ts:86](https://github.com/user3232/node-immu-db/blob/30c0d74/immudb-node/src/immu-api/set-val-entry.ts#L86)

@@ -26,7 +26,7 @@ As list of transaction also can be proved, whole database composed of entries
 
 #### Defined in
 
-[immudb-node/src/types/Provable.ts:50](https://github.com/user3232/node-immu-db/blob/2e88686/immudb-node/src/types/Provable.ts#L50)
+[immudb-node/src/types/Provable.ts:50](https://github.com/user3232/node-immu-db/blob/30c0d74/immudb-node/src/types/Provable.ts#L50)
 
 ___
 
@@ -66,4 +66,4 @@ will be verified, even if not specified.
 
 #### Defined in
 
-[immudb-node/src/types/Provable.ts:28](https://github.com/user3232/node-immu-db/blob/2e88686/immudb-node/src/types/Provable.ts#L28)
+[immudb-node/src/types/Provable.ts:28](https://github.com/user3232/node-immu-db/blob/30c0d74/immudb-node/src/types/Provable.ts#L28)

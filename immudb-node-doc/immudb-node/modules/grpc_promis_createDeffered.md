@@ -59,4 +59,4 @@ run()
 
 #### Defined in
 
-[immudb-node/src/grpc-promis/createDeffered.ts:32](https://github.com/user3232/node-immu-db/blob/2e88686/immudb-node/src/grpc-promis/createDeffered.ts#L32)
+[immudb-node/src/grpc-promis/createDeffered.ts:32](https://github.com/user3232/node-immu-db/blob/30c0d74/immudb-node/src/grpc-promis/createDeffered.ts#L32)

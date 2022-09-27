@@ -28,7 +28,7 @@ Represents ImmuDb user session tokens
 
 #### Defined in
 
-[immudb-node/src/types/Session.ts:32](https://github.com/user3232/node-immu-db/blob/2e88686/immudb-node/src/types/Session.ts#L32)
+[immudb-node/src/types/Session.ts:32](https://github.com/user3232/node-immu-db/blob/30c0d74/immudb-node/src/types/Session.ts#L32)
 
 ___
 
@@ -46,7 +46,7 @@ Represents ImmuDb user session transaction token
 
 #### Defined in
 
-[immudb-node/src/types/Session.ts:47](https://github.com/user3232/node-immu-db/blob/2e88686/immudb-node/src/types/Session.ts#L47)
+[immudb-node/src/types/Session.ts:47](https://github.com/user3232/node-immu-db/blob/30c0d74/immudb-node/src/types/Session.ts#L47)
 
 ___
 
@@ -58,7 +58,7 @@ Informations needed to connect user with ImmuDb database.
 
 #### Defined in
 
-[immudb-node/src/types/Session.ts:21](https://github.com/user3232/node-immu-db/blob/2e88686/immudb-node/src/types/Session.ts#L21)
+[immudb-node/src/types/Session.ts:21](https://github.com/user3232/node-immu-db/blob/30c0d74/immudb-node/src/types/Session.ts#L21)
 
 ___
 
@@ -77,4 +77,4 @@ User credentials needed for ImmuDb session.
 
 #### Defined in
 
-[immudb-node/src/types/Session.ts:6](https://github.com/user3232/node-immu-db/blob/2e88686/immudb-node/src/types/Session.ts#L6)
+[immudb-node/src/types/Session.ts:6](https://github.com/user3232/node-immu-db/blob/30c0d74/immudb-node/src/types/Session.ts#L6)

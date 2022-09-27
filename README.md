@@ -1,45 +1,34 @@
 
 
-# Install & use
+# ImmuDb mono repository
+
+
+If you don't plan developing this project, you will be only interested with:
+- [immudb-node](immudb-node) - ImmuDb client, or
+- [immudb-node-showcase](immudb-node-showcase) - ImmuDb client examples of usage.
+
+
+
+This repository contains following projects:
+
+- [immudb-node](immudb-node) - ImmuDb client,
+- [immudb-node-showcase](immudb-node-showcase) - ImmuDb client examples of usage,
+- [immudb-node-doc](immudb-node-doc) - Documentation of ImmuDb client,
+- [immudb-node-grpcjs](immudb-node-grpcjs) - ImmuDb low lewel gprc bindings,
+- [immudb-node-pbjs](immudb-node-pbjs) - ImmuDb low lewel protobufers bindings,
+- [immudb-node-test](immudb-node-test) - ImmuDb client tests.
+
+
+
+# Building project
+
+
+To (re)build all projects run in root directory:
 
 ```sh
-npm install immudb-node
+npm install
+npm run build
+# cleaning:
+npm run clean
 ```
 
-```ts
-import { Client } from 'immudb-node'
-
-myShowcase()
-.catch(console.error)
-function myShowcase() {
-
-    const defaultClient = new Client({
-        host:       '127.0.0.1',
-        port:       3322,
-        user:       'immudb',
-        password:   'immudb',
-        database:   'defaultdb',
-    })
-
-    await client.setValEntries({
-        kvs: [
-            {key: Buffer.of(0), val: Buffer.of(0)},
-            {key: Buffer.of(1), val: Buffer.of(1)},
-        ]
-    })
-
-    console.log(await client.scanDbEntries({
-        scanStartAtTxId: Long.fromInt(1, true)
-    }))
-
-
-    await defaultClient.close()
-}
-```
-
-
-Remember to have server running:
-
-```sh
-docker run -d -it --rm -p 8080:8080 -p 3322:3322 -p 9497:9497 -p 5432:5432 --name immudb codenotary/immudb:latest
-```

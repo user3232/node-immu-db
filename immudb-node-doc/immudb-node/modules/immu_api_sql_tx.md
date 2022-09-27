@@ -35,7 +35,7 @@
 
 #### Defined in
 
-[immudb-node/src/immu-api/sql-tx.ts:132](https://github.com/user3232/node-immu-db/blob/2e88686/immudb-node/src/immu-api/sql-tx.ts#L132)
+[immudb-node/src/immu-api/sql-tx.ts:132](https://github.com/user3232/node-immu-db/blob/30c0d74/immudb-node/src/immu-api/sql-tx.ts#L132)
 
 ___
 
@@ -51,7 +51,7 @@ ___
 
 #### Defined in
 
-[immudb-node/src/immu-api/sql-tx.ts:10](https://github.com/user3232/node-immu-db/blob/2e88686/immudb-node/src/immu-api/sql-tx.ts#L10)
+[immudb-node/src/immu-api/sql-tx.ts:10](https://github.com/user3232/node-immu-db/blob/30c0d74/immudb-node/src/immu-api/sql-tx.ts#L10)
 
 ___
 
@@ -69,7 +69,7 @@ ___
 
 #### Defined in
 
-[immudb-node/src/immu-api/sql-tx.ts:200](https://github.com/user3232/node-immu-db/blob/2e88686/immudb-node/src/immu-api/sql-tx.ts#L200)
+[immudb-node/src/immu-api/sql-tx.ts:200](https://github.com/user3232/node-immu-db/blob/30c0d74/immudb-node/src/immu-api/sql-tx.ts#L200)
 
 ## Functions
 
@@ -102,7 +102,7 @@ ___
 
 #### Defined in
 
-[immudb-node/src/immu-api/sql-tx.ts:55](https://github.com/user3232/node-immu-db/blob/2e88686/immudb-node/src/immu-api/sql-tx.ts#L55)
+[immudb-node/src/immu-api/sql-tx.ts:55](https://github.com/user3232/node-immu-db/blob/30c0d74/immudb-node/src/immu-api/sql-tx.ts#L55)
 
 ___
 
@@ -134,7 +134,7 @@ ___
 
 #### Defined in
 
-[immudb-node/src/immu-api/sql-tx.ts:172](https://github.com/user3232/node-immu-db/blob/2e88686/immudb-node/src/immu-api/sql-tx.ts#L172)
+[immudb-node/src/immu-api/sql-tx.ts:172](https://github.com/user3232/node-immu-db/blob/30c0d74/immudb-node/src/immu-api/sql-tx.ts#L172)
 
 ___
 
@@ -166,7 +166,7 @@ ___
 
 #### Defined in
 
-[immudb-node/src/immu-api/sql-tx.ts:20](https://github.com/user3232/node-immu-db/blob/2e88686/immudb-node/src/immu-api/sql-tx.ts#L20)
+[immudb-node/src/immu-api/sql-tx.ts:20](https://github.com/user3232/node-immu-db/blob/30c0d74/immudb-node/src/immu-api/sql-tx.ts#L20)
 
 ___
 
@@ -198,7 +198,7 @@ ___
 
 #### Defined in
 
-[immudb-node/src/immu-api/sql-tx.ts:232](https://github.com/user3232/node-immu-db/blob/2e88686/immudb-node/src/immu-api/sql-tx.ts#L232)
+[immudb-node/src/immu-api/sql-tx.ts:232](https://github.com/user3232/node-immu-db/blob/30c0d74/immudb-node/src/immu-api/sql-tx.ts#L232)
 
 ___
 
@@ -231,4 +231,4 @@ ___
 
 #### Defined in
 
-[immudb-node/src/immu-api/sql-tx.ts:102](https://github.com/user3232/node-immu-db/blob/2e88686/immudb-node/src/immu-api/sql-tx.ts#L102)
+[immudb-node/src/immu-api/sql-tx.ts:102](https://github.com/user3232/node-immu-db/blob/30c0d74/immudb-node/src/immu-api/sql-tx.ts#L102)

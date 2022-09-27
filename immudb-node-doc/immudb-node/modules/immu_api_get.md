@@ -34,7 +34,7 @@
 
 #### Defined in
 
-[immudb-node/src/immu-api/get.ts:113](https://github.com/user3232/node-immu-db/blob/2e88686/immudb-node/src/immu-api/get.ts#L113)
+[immudb-node/src/immu-api/get.ts:113](https://github.com/user3232/node-immu-db/blob/30c0d74/immudb-node/src/immu-api/get.ts#L113)
 
 ___
 
@@ -54,7 +54,7 @@ ___
 
 #### Defined in
 
-[immudb-node/src/immu-api/get.ts:290](https://github.com/user3232/node-immu-db/blob/2e88686/immudb-node/src/immu-api/get.ts#L290)
+[immudb-node/src/immu-api/get.ts:290](https://github.com/user3232/node-immu-db/blob/30c0d74/immudb-node/src/immu-api/get.ts#L290)
 
 ___
 
@@ -77,7 +77,7 @@ ___
 
 #### Defined in
 
-[immudb-node/src/immu-api/get.ts:160](https://github.com/user3232/node-immu-db/blob/2e88686/immudb-node/src/immu-api/get.ts#L160)
+[immudb-node/src/immu-api/get.ts:160](https://github.com/user3232/node-immu-db/blob/30c0d74/immudb-node/src/immu-api/get.ts#L160)
 
 ___
 
@@ -101,7 +101,7 @@ ___
 
 #### Defined in
 
-[immudb-node/src/immu-api/get.ts:13](https://github.com/user3232/node-immu-db/blob/2e88686/immudb-node/src/immu-api/get.ts#L13)
+[immudb-node/src/immu-api/get.ts:13](https://github.com/user3232/node-immu-db/blob/30c0d74/immudb-node/src/immu-api/get.ts#L13)
 
 ## Functions
 
@@ -133,7 +133,7 @@ ___
 
 #### Defined in
 
-[immudb-node/src/immu-api/get.ts:329](https://github.com/user3232/node-immu-db/blob/2e88686/immudb-node/src/immu-api/get.ts#L329)
+[immudb-node/src/immu-api/get.ts:329](https://github.com/user3232/node-immu-db/blob/30c0d74/immudb-node/src/immu-api/get.ts#L329)
 
 ___
 
@@ -165,7 +165,7 @@ ___
 
 #### Defined in
 
-[immudb-node/src/immu-api/get.ts:241](https://github.com/user3232/node-immu-db/blob/2e88686/immudb-node/src/immu-api/get.ts#L241)
+[immudb-node/src/immu-api/get.ts:241](https://github.com/user3232/node-immu-db/blob/30c0d74/immudb-node/src/immu-api/get.ts#L241)
 
 ___
 
@@ -197,7 +197,7 @@ ___
 
 #### Defined in
 
-[immudb-node/src/immu-api/get.ts:73](https://github.com/user3232/node-immu-db/blob/2e88686/immudb-node/src/immu-api/get.ts#L73)
+[immudb-node/src/immu-api/get.ts:73](https://github.com/user3232/node-immu-db/blob/30c0d74/immudb-node/src/immu-api/get.ts#L73)
 
 ___
 
@@ -229,7 +229,7 @@ ___
 
 #### Defined in
 
-[immudb-node/src/immu-api/get.ts:374](https://github.com/user3232/node-immu-db/blob/2e88686/immudb-node/src/immu-api/get.ts#L374)
+[immudb-node/src/immu-api/get.ts:374](https://github.com/user3232/node-immu-db/blob/30c0d74/immudb-node/src/immu-api/get.ts#L374)
 
 ___
 
@@ -261,4 +261,4 @@ ___
 
 #### Defined in
 
-[immudb-node/src/immu-api/get.ts:129](https://github.com/user3232/node-immu-db/blob/2e88686/immudb-node/src/immu-api/get.ts#L129)
+[immudb-node/src/immu-api/get.ts:129](https://github.com/user3232/node-immu-db/blob/30c0d74/immudb-node/src/immu-api/get.ts#L129)

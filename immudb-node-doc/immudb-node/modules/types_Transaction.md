@@ -27,4 +27,4 @@ composed from TxCore and Entry
 
 #### Defined in
 
-[immudb-node/src/types/Transaction.ts:11](https://github.com/user3232/node-immu-db/blob/2e88686/immudb-node/src/types/Transaction.ts#L11)
+[immudb-node/src/types/Transaction.ts:11](https://github.com/user3232/node-immu-db/blob/30c0d74/immudb-node/src/types/Transaction.ts#L11)
